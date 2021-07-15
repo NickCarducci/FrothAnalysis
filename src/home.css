@@ -1,0 +1,170 @@
+.chartslist {
+  display: flex;
+  flex-wrap: wrap;
+  position: absolute;
+  background-color: white;
+
+  opacity: 1;
+  width: 100%;
+  height: min-content;
+  transform: translateX(0%);
+  transition: 0.3s ease-in;
+}
+.chartslisthide {
+  display: flex;
+  flex-wrap: wrap;
+  position: absolute;
+  background-color: white;
+  opacity: 0;
+  width: 100%;
+  height: min-content;
+  transform: translate(0%, -100%);
+  transition: 0.3s ease-out;
+}
+.fullchart {
+  overflow: auto;
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  font-size: 16px;
+  width: 100%;
+  height: min-content;
+  transition: 0.3s ease-in;
+}
+.charttitle {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin: auto;
+  text-align: left;
+
+  left: 0px;
+  height: 34px;
+  background-color: black;
+  text-decoration: none;
+  color: white;
+  transition: 0.3s ease-in;
+}
+.charttitle1 {
+  z-index: 1;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  margin: auto;
+  text-align: left;
+  left: 10px;
+  top: 120px;
+  height: 34px;
+  background-color: black;
+  text-decoration: none;
+  color: white;
+  transition: 0.3s ease-in;
+}
+.embed-container {
+  display: grid;
+  position: relative;
+  margin-bottom: 40px;
+  height: 500px;
+  width: 100%;
+}
+.embed-container1 {
+  display: grid;
+  position: relative;
+  margin-bottom: 40px;
+  height: 680px;
+  width: 100%;
+}
+.chartlabels {
+  top: 50px;
+  display: flex;
+  position: relative;
+  align-content: center;
+  text-align: left;
+  left: -105px;
+
+  min-width: 280px;
+}
+.fullchartconsumption {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  font-size: 16px;
+  padding: 10px;
+}
+.charttitleconsumption {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin: auto;
+  text-align: left;
+  right: 0px;
+  width: 100%;
+  height: 34px;
+  background-color: black;
+  text-decoration: none;
+  color: white;
+  transition: 0.3s ease-in;
+}
+.embed-containerconsumption {
+  border: none;
+  display: grid;
+  position: relative;
+  height: 360px;
+  width: 100%;
+  transition: 0.3s ease-in;
+}
+.embed-containerconsumptiontall {
+  display: grid;
+  position: relative;
+  height: 440px;
+  width: 100%;
+  transition: 0.3s ease-in;
+}
+.chartlabelsconsumption {
+  top: 50px;
+  display: flex;
+  position: relative;
+  align-content: center;
+  text-align: left;
+  left: -105px;
+
+  min-width: 280px;
+  transition: 0.3s ease-in;
+}
+.donorbox {
+  display: flex;
+  position: fixed;
+}
+.yellowsquare {
+  position: relative;
+  background-color: rgba(255, 255, 191, 0.422);
+  width: 900px;
+  padding: 20px;
+}
+.image {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-width: 1400px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.imagetall {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-width: 400px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.adsbygoogle {
+  display: relative;
+
+  width: 100;
+  height: 100px;
+}
