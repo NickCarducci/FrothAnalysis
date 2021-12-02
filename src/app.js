@@ -819,12 +819,12 @@ class App extends React.Component {
                 }}
               >
                 <Cable
-                  style={{ width: "680px", height: "450px" }}
+                  style={{ width: "680px", height: "850px" }}
                   onError={handleScollImgError}
                   src={
                     this.state.nofred
-                      ? ""
-                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=o0Lb&width=620&height=300"
+                      ? "" //o0Lb
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=JsVv&width=620&height=700"
                   }
                   float="left"
                   title=""
@@ -834,12 +834,12 @@ class App extends React.Component {
                   scrollTop={this.state.scrollTop}
                 />
                 <Cable
-                  style={{ width: "680px", height: "450px" }}
+                  style={{ width: "680px", height: "850px" }}
                   onError={handleScollImgError}
                   src={
                     this.state.nofred
-                      ? ""
-                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=o0Lc&width=620&height=300"
+                      ? "" //o0Lc
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=JsWk&width=620&height=700"
                   }
                   float="left"
                   title=""
@@ -849,12 +849,12 @@ class App extends React.Component {
                   scrollTop={this.state.scrollTop}
                 />
                 <Cable
-                  style={{ width: "680px", height: "450px" }}
+                  style={{ width: "680px", height: "650px" }}
                   onError={handleScollImgError}
                   src={
                     this.state.nofred
-                      ? ""
-                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=o0Lo&width=620&height=300"
+                      ? "" //o0Lo
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=JsWr&width=620&height=500"
                   }
                   float="left"
                   title=""
@@ -864,12 +864,12 @@ class App extends React.Component {
                   scrollTop={this.state.scrollTop}
                 />
                 <Cable
-                  style={{ width: "680px", height: "450px" }}
+                  style={{ width: "680px", height: "650px" }}
                   onError={handleScollImgError}
                   src={
                     this.state.nofred
-                      ? ""
-                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=o0Ls&width=620&height=300"
+                      ? "" //o0Ls
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=JsXt&width=620&height=500"
                   }
                   float="left"
                   title=""
@@ -879,12 +879,12 @@ class App extends React.Component {
                   scrollTop={this.state.scrollTop}
                 />
                 <Cable
-                  style={{ width: "680px", height: "450px" }}
+                  style={{ width: "680px", height: "850px" }}
                   onError={handleScollImgError}
                   src={
                     this.state.nofred
-                      ? ""
-                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=o0LP&width=620&height=300"
+                      ? "" //o0LP
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=JsXG&width=620&height=700"
                   }
                   float="left"
                   title=""
@@ -894,12 +894,12 @@ class App extends React.Component {
                   scrollTop={this.state.scrollTop}
                 />
                 <Cable
-                  style={{ width: "680px", height: "450px" }}
+                  style={{ width: "680px", height: "650px" }}
                   onError={handleScollImgError}
                   src={
                     this.state.nofred
-                      ? ""
-                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=o0M3&width=620&height=300"
+                      ? "" //o0M3
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=JsXQ&width=620&height=500"
                   }
                   float="left"
                   title=""
