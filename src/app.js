@@ -1690,10 +1690,23 @@ class App extends React.Component {
                         : "https://www.dl.dropboxusercontent.com/s/yhtm030usfcmivy/feces.jpeg?dl=0"
                     }
                   />
-                  <TwitterTweetEmbed
+                  {/*<TwitterTweetEmbed
                     tweetId="1429668870151938050"
                     key="1429668870151938050"
-                  />
+                  />*/}
+                  {/**Covid-19: Fully vaccinated people can carry as much delta virus as unvaccinated people, data indicate
+bmj.com
+Covid-19: Fully vaccinated people can carry as much delta virus as unvaccinated people, data...
+Adults who have been fully vaccinated against SARS-CoV-2 can carry the same viral load of the delta variant as those who are unvaccinated, a preliminary analysis of UK data suggests.1 The latest...
+🐿socialism-is-pareto -spore virus protein 4 money
+@ frothanalysis
+·
+Aug 22
+Replying to 
+@ katalin_pota
+ and 
+@ ProMovement1
+We aren’t even sure if virons are merely harmless byproducts and bacteria causes sickness */}
                   <div style={countstyle}>
                     <div style={{ breakInside: "avoid", width: "100%" }}>
                       antibodies likely cleanup the produced virons after
