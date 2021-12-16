@@ -4,8 +4,7 @@ import Positioning from "./Positioning";
 import CovidStuff from "./Covid";
 import TwitterTweetEmbed from "./TwitterTweetEmbed";
 import Employment from "./Employment";
-import { Link, Route, Switch, withRouter } from "react-router-dom";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { Link, withRouter } from "react-router-dom";
 import { UAParser } from "ua-parser-js";
 
 import "./home.css";
@@ -36,6 +35,7 @@ class App extends React.Component {
   componentWillUnmount() {
     clearTimeout(this.scrollTimeout);
     clearTimeout(this.resizeTimer);
+    clearTimeout(this.check);
     window.removeEventListener("resize", this.refresh);
     window.removeEventListener("scroll", this.scroll);
   }
@@ -87,6 +87,20 @@ class App extends React.Component {
       }, 600);
     }
   };
+  componentDidUpdate = (prevProps) => {
+    if (this.props.pathname !== prevProps.pathname) {
+      clearTimeout(this.check);
+      const check = () => {
+        if (this.props.pathname === "/") {
+        } else if (this.props.pathname === "/hadley") {
+          this.setState({ openTopic: "Masks & Physics" });
+          //window.scroll(0, this.polio.current.offsetTop);
+        }
+      };
+      check();
+      this.check = setTimeout(check, 4000);
+    }
+  };
   render() {
     const handleScollImgError = (e) => {
       if (e) {
@@ -127,7 +141,7 @@ class App extends React.Component {
         >
           <div
             className={
-              this.state.pathname === "/consumption"
+              this.props.pathname === "/consumption"
                 ? "openedPage"
                 : !this.state.isTop
                 ? "navbarhide"
@@ -201,7 +215,7 @@ class App extends React.Component {
               position: "relative"
             }}
           >
-            {this.state.pathname === "/work" ? (
+            {this.props.pathname === "/work" ? (
               <div>
                 we have half unemployment to population than when you were our
                 age, and 65+ have half continuing claims, as you can see below
@@ -257,13 +271,13 @@ class App extends React.Component {
                   scrollTop={this.state.scrollTop}
                 />
               </div>
-            ) : this.state.pathname === "/positions" ? (
+            ) : this.props.pathname === "/positions" ? (
               <Positioning
                 settleDropboxFree={this.state.settleDropboxFree}
-                pathname={this.state.pathname}
+                pathname={this.props.pathname}
                 lastWidth={this.state.lastWidth}
               />
-            ) : this.state.pathname === "/debt" ? (
+            ) : this.props.pathname === "/debt" ? (
               <div style={{ width: "100%" }}>
                 <div style={{ padding: "10px 4px" }}>
                   <a href="https://micro-theory.com">Micro-theory.com</a>
@@ -417,7 +431,7 @@ class App extends React.Component {
                   />
                 </div>
               </div>
-            ) : this.state.pathname === "/sectors" ? (
+            ) : this.props.pathname === "/sectors" ? (
               <div>
                 trueGDPbyNonDebtPerPerson
                 <br />
@@ -811,7 +825,7 @@ class App extends React.Component {
                   scrollTop={this.state.scrollTop}
                 />
               </div>
-            ) : this.state.pathname === "/consumption" ? (
+            ) : this.props.pathname === "/consumption" ? (
               <div
                 style={{
                   height: "100px",
@@ -2601,136 +2615,6 @@ We aren’t even sure if virons are merely harmless byproducts and bacteria caus
                 </div>
               </div>
             )}
-            {/*<div
-            style={{
-              top: "0px",
-              zIndex: "1",
-              display: "flex",
-              position: "fixed",
-              width: "100%",
-              height: this.state.pathname !== "/" ? "100%" : "0%",
-              overflowY: "auto",
-              overflowX: "hidden"
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                position: "fixed",
-                width: "100%",
-                height: this.state.pathname !== "/" ? "100%" : "0%",
-                backgroundColor: "rgba(20,20,20,.8)",
-                transition: ".3s ease-in"
-              }}
-            />
-            <div
-              style={{
-                display: "flex",
-                position: "absolute",
-                width: "100%",
-                backgroundColor: "rgba(250,250,250,.8)"
-              }}
-            >*/}
-            <Route
-              render={({ location, history }) => {
-                if (location.pathname !== this.state.pathname) {
-                  clearTimeout(this.pauseRender);
-                  this.pauseRender = setTimeout(() => {
-                    this.setState(
-                      { pathname: location.pathname, history },
-                      () =>
-                        location.pathname === "/stats" &&
-                        this.setState({ openTopic: "Stats" })
-                    );
-                  }, 200);
-                }
-                return (
-                  <TransitionGroup key="1">
-                    <CSSTransition
-                      key="1"
-                      //key={location.key}
-                      timeout={300}
-                      classNames={"fade"}
-                    >
-                      <Switch key={location.key} location={location}>
-                        {/*<Route
-                            exact
-                            path="/positions"
-                            render={(props) => (
-                              <Positioning
-                                settleDropboxFree={this.state.settleDropboxFree}
-                                pathname={this.state.pathname}
-                                lastWidth={this.state.lastWidth}
-                              />
-                            )}
-                          />
-                          <Route
-                            exact
-                            path="/sectors"
-                            render={(props) => (
-                              <Sectors
-                                pathname={
-                                  width === this.state.lastWidth &&
-                                  this.state.pathname
-                                }
-                                width={width}
-                                lastWidth={this.state.lastWidth}
-                                clear={() =>
-                                  this.setState({
-                                    lastWidth: this.props.width
-                                  })
-                                }
-                              />
-                            )}
-                          />
-                          <Route
-                            exact
-                            path="/consumption"
-                            render={(props) => (
-                              <Consumption
-                                pathname={
-                                  width === this.state.lastWidth &&
-                                  this.state.pathname
-                                }
-                                width={width}
-                                lastWidth={this.state.lastWidth}
-                                clear={() =>
-                                  this.setState({
-                                    lastWidth: this.props.width
-                                  })
-                                }
-                              />
-                            )}
-                          />
-                          <Route
-                            exact
-                            path="/debt"
-                            render={(props) => (
-                              <Interest
-                                settleDropboxFree={this.state.settleDropboxFree}
-                                pathname={
-                                  width === this.state.lastWidth &&
-                                  this.state.pathname
-                                }
-                                width={width}
-                                lastWidth={this.state.lastWidth}
-                                clear={() =>
-                                  this.setState({
-                                    lastWidth: this.props.width
-                                  })
-                                }
-                              />
-                            )}
-                          />
-                              <Route path="/" render={(props) => <div />} />*/}
-                      </Switch>
-                    </CSSTransition>
-                  </TransitionGroup>
-                );
-              }}
-            />
-            {/*</div>
-              </div>*/}
             <div
               onClick={() => this.props.history.push("/")}
               style={{
@@ -2783,4 +2667,105 @@ export default withRouter(App);
           }
         />
       );
-    };*/
+    };
+
+    <Route
+    render={({ location, history }) => {
+      if (location.pathname !== this.props.pathname) {
+        clearTimeout(this.pauseRender);
+        this.pauseRender = setTimeout(() => {
+          this.setState(
+            { pathname: location.pathname, history },
+            () =>
+              location.pathname === "/stats" &&
+              this.setState({ openTopic: "Stats" })
+          );
+        }, 200);
+      }
+      return (
+        <TransitionGroup key="1">
+          <CSSTransition
+            key="1"
+            //key={location.key}
+            timeout={300}
+            classNames={"fade"}
+          >
+            <Switch key={location.key} location={location}>
+              {/*<Route
+                  exact
+                  path="/positions"
+                  render={(props) => (
+                    <Positioning
+                      settleDropboxFree={this.state.settleDropboxFree}
+                      pathname={this.props.pathname}
+                      lastWidth={this.state.lastWidth}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/sectors"
+                  render={(props) => (
+                    <Sectors
+                      pathname={
+                        width === this.state.lastWidth &&
+                        this.props.pathname
+                      }
+                      width={width}
+                      lastWidth={this.state.lastWidth}
+                      clear={() =>
+                        this.setState({
+                          lastWidth: this.props.width
+                        })
+                      }
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/consumption"
+                  render={(props) => (
+                    <Consumption
+                      pathname={
+                        width === this.state.lastWidth &&
+                        this.props.pathname
+                      }
+                      width={width}
+                      lastWidth={this.state.lastWidth}
+                      clear={() =>
+                        this.setState({
+                          lastWidth: this.props.width
+                        })
+                      }
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/debt"
+                  render={(props) => (
+                    <Interest
+                      settleDropboxFree={this.state.settleDropboxFree}
+                      pathname={
+                        width === this.state.lastWidth &&
+                        this.props.pathname
+                      }
+                      width={width}
+                      lastWidth={this.state.lastWidth}
+                      clear={() =>
+                        this.setState({
+                          lastWidth: this.props.width
+                        })
+                      }
+                    />
+                  )}
+                />
+                    <Route path="/" render={(props) => <div />} />
+            </Switch>
+          </CSSTransition>
+        </TransitionGroup>
+      );
+    }}
+  />
+  {/*</div>
+    </div>*/
