@@ -1131,6 +1131,10 @@ class App extends React.Component {
                     https://www.carbonbrief.org/explainer-how-the-rise-and-fall-of-co2-levels-influenced-the-ice-ages
                     <br />
                     <br />
+                    why would you use ice cores to estimate CO2 levels instead
+                    of work the other way around?
+                    <br />
+                    <br />
                     <Cable
                       onError={handleScollImgError}
                       src={
