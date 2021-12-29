@@ -2299,6 +2299,7 @@ class CaseMortalAge extends React.Component {
       date,
       mortalZeroNJData,
       mortalFiftyNJData,
+      mortalSixtyFiveNJData,
       mortalSeventyFiveNJData,
       mortalEightyFiveNJData,
       mortalNinetyFiveNJData,
@@ -2467,6 +2468,7 @@ class CaseMortalAge extends React.Component {
             date,
             mortalZeroNJData,
             mortalFiftyNJData,
+            mortalSixtyFiveNJData,
             mortalSeventyFiveNJData,
             mortalEightyFiveNJData,
             mortalNinetyFiveNJData,
@@ -2497,6 +2499,12 @@ class CaseMortalAge extends React.Component {
       ((x - lowDate) / this.state.xAxis) * this.props.lastWidth * 0.9,
       ((y - this.state.lowDeaths) / this.state.yAxis) * 150
     ]);
+    const mortalSixtyFiveNJData = this.state.mortalSixtyFiveNJData.map(
+      ([x, y]) => [
+        ((x - lowDate) / this.state.xAxis) * this.props.lastWidth * 0.9,
+        ((y - this.state.lowDeaths) / this.state.yAxis) * 150
+      ]
+    );
     const mortalSeventyFiveNJData = this.state.mortalSeventyFiveNJData.map(
       ([x, y]) => [
         ((x - lowDate) / this.state.xAxis) * this.props.lastWidth * 0.9,
@@ -2676,7 +2684,7 @@ class CaseMortalAge extends React.Component {
                     y={y}
                     width={2}
                     height={2}
-                    stroke="purple"
+                    stroke="silver"
                     fill="transparent"
                     strokeWidth={1}
                     key={i}
@@ -2696,6 +2704,28 @@ class CaseMortalAge extends React.Component {
             xmlns="http://www.w3.org/2000/svg"
           >
             {mortalFiftyNJData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="purple"
+                    fill="transparent"
+                    strokeWidth={1}
+                    key={i}
+                  />
+                )
+            )}
+          </svg>
+          <svg
+            className="all"
+            style={linecss}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {mortalSixtyFiveNJData.map(
               ([x, y], i) =>
                 !isNaN(x) &&
                 !isNaN(y) && (
@@ -2844,6 +2874,16 @@ class CaseMortalAge extends React.Component {
                 width: "max-content"
               }}
             >
+              <div style={{ width: "max-content" }}>
+                <div
+                  style={{
+                    width: "5px",
+                    height: "5px",
+                    backgroundColor: "silver"
+                  }}
+                />
+                {frequency(this.state.chosenfrequency, 0, true)}&nbsp;&nbsp;
+              </div>
               <div style={{ width: "max-content" }}>
                 <div
                   style={{
