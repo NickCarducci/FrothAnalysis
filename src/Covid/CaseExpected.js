@@ -1,6 +1,5 @@
 import React from "react";
-import { shortNumber } from ".";
-//import { zeroPad } from "./Covid";
+import { shortNumber } from "./";
 
 export const lifeexpdata = [
   { year: 1790, lifeexp: 39.4 },
@@ -1048,136 +1047,146 @@ class CE extends React.Component {
     );
     const noData = this.state.noData.filter((x) => x[0] < chosenDecade + 1);
     const noDat = noData.map(([x, y]) => [
-      `${Math.round(
-        ((x - this.state.lowDate) / this.state.xAxis) * this.props.lastWidth -
-          20
-      )}`,
-      `${Math.round(((y - this.state.lowExp) / this.state.yAxis) * 150)}`
+      ((x - this.state.lowDate) / this.state.xAxis) *
+        this.props.lastWidth *
+        0.9,
+      ((y - this.state.lowExp) / this.state.yAxis) * 150
     ]);
     const popDat = popData.map(([x, y]) => [
-      `${Math.round(
-        ((x - this.state.lowDate) / this.state.xAxis) * this.props.lastWidth -
-          20
-      )}`,
-      `${Math.round(((y - this.state.lowExp) / this.state.yAxis) * 150)}`
+      ((x - this.state.lowDate) / this.state.xAxis) *
+        this.props.lastWidth *
+        0.9,
+      ((y - this.state.lowExp) / this.state.yAxis) * 150
     ]);
     const expDat = expData.map(([x, y]) => [
-      `${Math.round(
-        ((x - this.state.lowDate) / this.state.xAxis) * this.props.lastWidth -
-          20
-      )}`,
-      `${Math.round(((y - this.state.lowExp) / this.state.yAxis) * 150)}`
+      ((x - this.state.lowDate) / this.state.xAxis) *
+        this.props.lastWidth *
+        0.9,
+      ((y - this.state.lowExp) / this.state.yAxis) * 150
     ]);
     const actDat = actData.map(([x, y]) => [
-      `${Math.round(
-        ((x - this.state.lowDate) / this.state.xAxis) * this.props.lastWidth -
-          20
-      )}`,
-      `${Math.round(((y - this.state.lowExp) / this.state.yAxis) * 150)}`
+      ((x - this.state.lowDate) / this.state.xAxis) *
+        this.props.lastWidth *
+        0.9,
+      ((y - this.state.lowExp) / this.state.yAxis) * 150
     ]);
     const mortDat = mortData.map(([x, y]) => [
-      `${Math.round(
-        ((x - this.state.lowDate) / this.state.xAxis) * this.props.lastWidth -
-          20
-      )}`,
-      `${Math.round(((y - this.state.lowExp) / this.state.yAxis) * 150)}`
+      ((x - this.state.lowDate) / this.state.xAxis) *
+        this.props.lastWidth *
+        0.9,
+      ((y - this.state.lowExp) / this.state.yAxis) * 150
     ]);
     const lifeDat = lifeData.map(([x, y]) => [
-      `${Math.round(
-        ((x - this.state.lowDate) / this.state.xAxis) * this.props.lastWidth -
-          20
-      )}`,
-      `${Math.round(((y - 0) / this.state.maxLife) * 150)}`
+      ((x - this.state.lowDate) / this.state.xAxis) *
+        this.props.lastWidth *
+        0.9,
+      ((y - 0) / this.state.maxLife) * 150
     ]);
     const childMortDat = childMortData.map(([x, y]) => [
-      `${Math.round(
-        ((x - this.state.lowDate) / this.state.xAxis) * this.props.lastWidth -
-          20
-      )}`,
-      `${Math.round((y / 1000) * 150)}`
+      ((x - this.state.lowDate) / this.state.xAxis) *
+        this.props.lastWidth *
+        0.9,
+      (y / 1000) * 150
     ]);
     const antivaxxDat = antivaxxData.map(([x, y]) => [
-      `${Math.round(
-        ((x - this.state.lowDate) / this.state.xAxis) * this.props.lastWidth -
-          20
-      )}`,
-      `${Math.round((y / 1000) * 150)}`
+      ((x - this.state.lowDate) / this.state.xAxis) *
+        this.props.lastWidth *
+        0.9,
+      (y / 1000) * 150
     ]);
     const thoughtDat = thoughtData.map(([x, y]) => [
-      `${Math.round(
-        ((x - this.state.lowDate) / this.state.xAxis) * this.props.lastWidth -
-          20
-      )}`,
-      `${Math.round(((y - this.state.lowExp) / this.state.yAxis) * 150)}`
+      ((x - this.state.lowDate) / this.state.xAxis) *
+        this.props.lastWidth *
+        0.9,
+      ((y - this.state.lowExp) / this.state.yAxis) * 150
     ]);
     const birthDat = birthsData.map(([x, y]) => [
-      `${Math.round(
-        ((x - this.state.lowDate) / this.state.xAxis) * this.props.lastWidth -
-          20
-      )}`,
-      `${Math.round(((y - this.state.lowExp) / this.state.yAxis) * 150)}`
+      ((x - this.state.lowDate) / this.state.xAxis) *
+        this.props.lastWidth *
+        0.9,
+      ((y - this.state.lowExp) / this.state.yAxis) * 150
     ]);
     const immigrantDat = immigrantData.map(([x, y]) => [
-      `${Math.round(
-        ((x - this.state.lowDate) / this.state.xAxis) * this.props.lastWidth -
-          20
-      )}`,
-      `${Math.round(((y - this.state.lowExp) / this.state.yAxis) * 150)}`
+      ((x - this.state.lowDate) / this.state.xAxis) *
+        this.props.lastWidth *
+        0.9,
+      ((y - this.state.lowExp) / this.state.yAxis) * 150
     ]);
     const newimmigrantsDat = newimmigrantsData.map(([x, y]) => [
-      `${Math.round(
-        ((x - this.state.lowDate) / this.state.xAxis) * this.props.lastWidth -
-          20
-      )}`,
-      `${Math.round(((y - this.state.lowExp) / this.state.yAxis) * 150)}`
+      ((x - this.state.lowDate) / this.state.xAxis) *
+        this.props.lastWidth *
+        0.9,
+      ((y - this.state.lowExp) / this.state.yAxis) * 150
     ]);
+    const ite = { border: "1px grey dashed", width: "max-content" };
+    const labelstyle = {
+      backgroundColor: "rgba(50,120,200,.6)",
+      top: "0px",
+      height: "min-content",
+      display: "flex",
+      maxWidth: "100%",
+      left: "2px",
+      flexWrap: "wrap"
+    };
+    const buttonStyle = {
+      userSelect: "none",
+      border: "1px solid black",
+      color: "black",
+      backgroundColor: "rgb(220,220,220)",
+      borderRadius: "4px",
+      padding: "5px",
+      margin: "2px"
+    };
     return (
-      <div style={{ ...this.props.countblock, height: "200px" }}>
+      //this.props.style
+      <div
+        style={{
+          paddingBottom: "15px"
+          //backgroundColor: "rgb(190,150,180)"
+        }}
+      >
         <div
           style={{
-            top: "0px",
-            height: "min-content",
-            display: "flex",
-            position: "absolute",
-            right: "20px",
-            flexDirection: "column",
-            zIndex: "9",
-            backgroundColor: "rgba(250,250,250,.6)"
+            width: "100%",
+            minHeight: "230px",
+            backgroundColor: "rgba(50,120,200,.6)"
           }}
         >
-          <span style={{ color: "orange" }}>population&nbsp;-&nbsp;</span>
-          {shortNumber(this.state.highPop)}
-          <br />
-          <span>cum. exp -&nbsp;</span>
-          {shortNumber(this.state.highCumu)}
-          <br />
-          <span>expectation -&nbsp;</span>
-          {shortNumber(this.state.highExp)}
-          <br />
-          <span style={{ color: "red" }}>actual deaths/yr -&nbsp;</span>
-          {shortNumber(this.state.highMort)}
-          <br />
-          <span style={{ color: "green" }}>births/yr -&nbsp;</span>
-          {shortNumber(this.state.highBirths)}
-          <br />
-          <span style={{ color: "pink" }}>immigrants -&nbsp;</span>
-          {shortNumber(this.state.highImmi)}
-          <br />
-          <span style={{ color: "rgb(230,100,150)" }}>
-            immigrants/yr -&nbsp;
-          </span>
-          {shortNumber(this.state.highImmiNew)}
-          <div
-            style={{
-              top: "0px",
-              height: "min-content",
-              display: "flex",
-              position: "relative",
-              right: "0px"
-            }}
-          >
-            {this.state.lowDate}&nbsp;
-            {this.state.highDate}
+          <div style={{}}>
+            <span style={{ color: "orange" }}>population&nbsp;-&nbsp;</span>
+            {shortNumber(this.state.highPop)}
+            <br />
+            <span>cum. exp -&nbsp;</span>
+            {shortNumber(this.state.highCumu)}
+            <br />
+            <span>expectation -&nbsp;</span>
+            {shortNumber(this.state.highExp)}
+            <br />
+            <span style={{ color: "red" }}>actual deaths/yr -&nbsp;</span>
+            {shortNumber(this.state.highMort)}
+            <br />
+            <span style={{ color: "green" }}>births/yr -&nbsp;</span>
+            {shortNumber(this.state.highBirths)}
+            <br />
+            <span style={{ color: "pink" }}>immigrants -&nbsp;</span>
+            {shortNumber(this.state.highImmi)}
+            <br />
+            <span style={{ color: "rgb(230,100,150)" }}>
+              immigrants/yr -&nbsp;
+            </span>
+            {shortNumber(this.state.highImmiNew)}
+            <div
+              style={{
+                top: "0px",
+                height: "min-content",
+                display: "flex",
+                position: "relative",
+                right: "0px"
+              }}
+            >
+              {this.state.lowDate}&nbsp;
+              {this.state.highDate}
+            </div>
           </div>
           {/*<div
               style={{
@@ -1191,240 +1200,231 @@ class CE extends React.Component {
             >
               {this.state.lowExp}
             </div>*/}
+          <svg
+            className="all"
+            style={linecss}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {noDat.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width=".1"
+                    height="100%"
+                    stroke="rgb(230,230,230)"
+                    fill="transparent"
+                    strokeWidth={0}
+                    key={i}
+                  />
+                )
+            )}
+
+            {popDat.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="orange"
+                    fill="transparent"
+                    strokeWidth={1}
+                    key={i}
+                  />
+                )
+            )}
+
+            {expDat.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="black"
+                    fill="transparent"
+                    strokeWidth={1}
+                    key={i}
+                  />
+                )
+            )}
+
+            {actDat.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="red"
+                    fill="transparent"
+                    strokeWidth={1}
+                    key={i}
+                  />
+                )
+            )}
+
+            {mortDat.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="red"
+                    fill="transparent"
+                    strokeWidth={1}
+                    key={i}
+                  />
+                )
+            )}
+
+            {lifeDat.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="purple"
+                    fill="transparent"
+                    strokeWidth={1}
+                    key={i}
+                  />
+                )
+            )}
+
+            {childMortDat.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="blue"
+                    fill="transparent"
+                    strokeWidth={1}
+                    key={i}
+                  />
+                )
+            )}
+
+            {antivaxxDat.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="blue"
+                    fill="transparent"
+                    strokeWidth={1}
+                    key={i}
+                  />
+                )
+            )}
+
+            {thoughtDat.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="black"
+                    fill="transparent"
+                    strokeWidth="1"
+                    key={i}
+                  />
+                )
+            )}
+
+            {birthDat.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="green"
+                    fill="transparent"
+                    strokeWidth={1}
+                    key={i}
+                  />
+                )
+            )}
+
+            {immigrantDat.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="pink"
+                    fill="transparent"
+                    strokeWidth={1}
+                    key={i}
+                  />
+                )
+            )}
+
+            {newimmigrantsDat.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="rgb(230,100,150)"
+                    fill="transparent"
+                    strokeWidth={1}
+                    key={i}
+                  />
+                )
+            )}
+          </svg>
         </div>
-        <svg className="all" style={linecss} xmlns="http://www.w3.org/2000/svg">
-          {noDat.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width=".1"
-                  height="100%"
-                  stroke="rgb(230,230,230)"
-                  fill="black"
-                  strokeWidth={1}
-                  key={i}
-                />
-              )
-          )}
-        </svg>
-        <svg className="all" style={linecss} xmlns="http://www.w3.org/2000/svg">
-          {popDat.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="orange"
-                  fill="transparent"
-                  strokeWidth={1}
-                  key={i}
-                />
-              )
-          )}
-        </svg>
-        <svg className="all" style={linecss} xmlns="http://www.w3.org/2000/svg">
-          {expDat.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="black"
-                  fill="transparent"
-                  strokeWidth={1}
-                  key={i}
-                />
-              )
-          )}
-        </svg>
-        <svg className="all" style={linecss} xmlns="http://www.w3.org/2000/svg">
-          {actDat.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="red"
-                  fill="transparent"
-                  strokeWidth={1}
-                  key={i}
-                />
-              )
-          )}
-        </svg>
-        <svg className="all" style={linecss} xmlns="http://www.w3.org/2000/svg">
-          {mortDat.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="red"
-                  fill="transparent"
-                  strokeWidth={1}
-                  key={i}
-                />
-              )
-          )}
-        </svg>
-        <svg className="all" style={linecss} xmlns="http://www.w3.org/2000/svg">
-          {lifeDat.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="purple"
-                  fill="transparent"
-                  strokeWidth={1}
-                  key={i}
-                />
-              )
-          )}
-        </svg>
-        <svg className="all" style={linecss} xmlns="http://www.w3.org/2000/svg">
-          {childMortDat.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="blue"
-                  fill="transparent"
-                  strokeWidth={1}
-                  key={i}
-                />
-              )
-          )}
-        </svg>
-        <svg className="all" style={linecss} xmlns="http://www.w3.org/2000/svg">
-          {antivaxxDat.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="blue"
-                  fill="transparent"
-                  strokeWidth={1}
-                  key={i}
-                />
-              )
-          )}
-        </svg>
-        <svg className="all" style={linecss} xmlns="http://www.w3.org/2000/svg">
-          {thoughtDat.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="black"
-                  fill="transparent"
-                  strokeWidth="1"
-                  key={i}
-                />
-              )
-          )}
-        </svg>
-        <svg className="all" style={linecss} xmlns="http://www.w3.org/2000/svg">
-          {birthDat.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="green"
-                  fill="transparent"
-                  strokeWidth={1}
-                  key={i}
-                />
-              )
-          )}
-        </svg>
-        <svg className="all" style={linecss} xmlns="http://www.w3.org/2000/svg">
-          {immigrantDat.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="pink"
-                  fill="transparent"
-                  strokeWidth={1}
-                  key={i}
-                />
-              )
-          )}
-        </svg>
-        <svg className="all" style={linecss} xmlns="http://www.w3.org/2000/svg">
-          {newimmigrantsDat.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="rgb(230,100,150)"
-                  fill="transparent"
-                  strokeWidth={1}
-                  key={i}
-                />
-              )
-          )}
-        </svg>
         <div
           style={{
-            backgroundColor: "rgba(250,250,250,0.6)",
-            top: "10px",
+            backgroundColor: "rgba(50,120,200,.6)",
+            top: "0px",
             height: "60px",
             display: "flex",
             position: "relative",
-            width: "400px",
-            maxWidth: "100%",
-            left: "2px",
-            zIndex: "0",
+            width: "100%",
             overflowX: "auto",
             overflowY: "hidden"
           }}
         >
           <div
             style={{
+              fontSize: "12px",
               height: "60px",
               wordBreak: "normal",
               display: "flex",
@@ -1521,23 +1521,33 @@ class CE extends React.Component {
   }
 }
 
-class CaseExpected extends React.Component {
+class Epiology extends React.Component {
   state = {
     chosenDecade: 2020,
     chosenDecadeInx: popdata.length
   };
   render() {
-    const { lastWidth, linecss } = this.props;
     const { chosenDecade } = this.state;
+    const lastWidth = this.props.lastWidth - 40; /**-120 */
+    const linecss = {
+      top: "0px",
+      display: "flex",
+      position: "absolute",
+      width: lastWidth,
+      height: "200px",
+      transform: "scale(1,-1)"
+    };
     return (
       <div
         style={{
+          backgroundColor: "rgba(250,250,250,0.6)",
           top: "0px",
           display: "inline-block",
           position: "relative",
-          width: "100%",
+          width: "calc(100% - 40px)",
           height: "min-content",
-          flexDirection: "column"
+          flexDirection: "column",
+          margin: "10px 20px"
         }}
       >
         <CE
@@ -1562,9 +1572,9 @@ class CaseExpected extends React.Component {
         </div>
         <div
           style={{
-            margin: "10px 50px",
+            margin: "10px 20px",
             display: "flex",
-            width: "70%",
+            width: "calc(100% - 40px)",
             justifyContent: "space-between"
           }}
         >
@@ -1606,4 +1616,4 @@ class CaseExpected extends React.Component {
     );
   }
 }
-export default CaseExpected;
+export default Epiology;
