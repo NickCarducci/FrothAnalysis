@@ -2,8 +2,8 @@ import React from "react";
 import { shortNumber } from "./Covid";
 const startup = {
   "2013-01-01": {
-    renovationsResidential: 374.9,
-    renovationsCommercial: 479.5,
+    structuresResidential: 374.9,
+    structuresCommercial: 479.5,
     family: 170.8,
     improvements: 162.8,
     commissionBonusTitle: 124.6,
@@ -36,8 +36,8 @@ const startup = {
     miscellaneous: 1.5
   },
   "2014-01-01": {
-    renovationsResidential: 423.5,
-    renovationsCommercial: 562.2,
+    structuresResidential: 423.5,
+    structuresCommercial: 562.2,
     family: 193.6,
     improvements: 178.3,
     commissionBonusTitle: 126.1,
@@ -70,8 +70,8 @@ const startup = {
     miscellaneous: 1.6
   },
   "2015-01-01": {
-    renovationsResidential: 481.8,
-    renovationsCommercial: 566.5,
+    structuresResidential: 481.8,
+    structuresCommercial: 566.5,
     family: 221.1,
     improvements: 196.9,
     commissionBonusTitle: 140.7,
@@ -104,8 +104,8 @@ const startup = {
     miscellaneous: 1.9
   },
   "2016-01-01": {
-    renovationsResidential: 535.3,
-    renovationsCommercial: 541.1,
+    structuresResidential: 535.3,
+    structuresCommercial: 541.1,
     family: 242.5,
     improvements: 217.4,
     commissionBonusTitle: 152.1,
@@ -138,8 +138,8 @@ const startup = {
     miscellaneous: 1.1
   },
   "2017-01-01": {
-    renovationsResidential: 584.9,
-    renovationsCommercial: 580.4,
+    structuresResidential: 584.9,
+    structuresCommercial: 580.4,
     family: 270.2,
     improvements: 237.3,
     commissionBonusTitle: 161.7,
@@ -172,8 +172,8 @@ const startup = {
     miscellaneous: 1
   },
   "2018-01-01": {
-    renovationsResidential: 623.9,
-    renovationsCommercial: 613.5,
+    structuresResidential: 623.9,
+    structuresCommercial: 613.5,
     family: 289.6,
     improvements: 252.6,
     commissionBonusTitle: 162.2,
@@ -206,8 +206,8 @@ const startup = {
     miscellaneous: 1.5
   },
   "2019-01-01": {
-    renovationsResidential: 632.2,
-    renovationsCommercial: 651.1,
+    structuresResidential: 632.2,
+    structuresCommercial: 651.1,
     family: 280,
     improvements: 266.2,
     commissionBonusTitle: 169.4,
@@ -240,8 +240,8 @@ const startup = {
     miscellaneous: 2.2
   },
   "2020-01-01": {
-    renovationsResidential: 689.6,
-    renovationsCommercial: 576.8,
+    structuresResidential: 689.6,
+    structuresCommercial: 576.8,
     family: 309.4,
     improvements: 290.9,
     commissionBonusTitle: 193.4,
@@ -279,10 +279,10 @@ class Startup extends React.Component {
     super(props);
     let date = [];
     let noData = [];
-    var renovationsResidential = [];
-    var renovationsResidentialData = [];
-    var renovationsCommercial = [];
-    var renovationsCommercialData = [];
+    var structuresResidential = [];
+    var structuresResidentialData = [];
+    var structuresCommercial = [];
+    var structuresCommercialData = [];
     var family = [];
     var familyData = [];
     var improvements = [];
@@ -315,12 +315,12 @@ class Startup extends React.Component {
       const year = new Date(yr).getTime();
       noData.push([year, 0]);
       date.push(year);
-      const moto = Object.values(startup)[i].renovationsResidential;
-      renovationsResidential.push(moto);
-      renovationsResidentialData.push([year, moto]);
-      const furns = Object.values(startup)[i].renovationsCommercial;
-      renovationsCommercial.push(furns);
-      renovationsCommercialData.push([year, furns]);
+      const moto = Object.values(startup)[i].structuresResidential;
+      structuresResidential.push(moto);
+      structuresResidentialData.push([year, moto]);
+      const furns = Object.values(startup)[i].structuresCommercial;
+      structuresCommercial.push(furns);
+      structuresCommercialData.push([year, furns]);
       const recs = Object.values(startup)[i].family;
       family.push(recs);
       familyData.push([year, recs]);
@@ -367,8 +367,8 @@ class Startup extends React.Component {
     var lowDate = Math.min(...date);
     var highDate = Math.max(...date);
     const all = [
-      ...renovationsResidential,
-      ...renovationsCommercial,
+      ...structuresResidential,
+      ...structuresCommercial,
       ...family,
       ...improvements,
       ...commissionBonusTitle,
@@ -388,11 +388,11 @@ class Startup extends React.Component {
     var lowpop = Math.min(...all);
     var highpop = Math.max(...all);
     noData.sort((a, b) => a[0] - b[0]);
-    renovationsResidentialData.sort((a, b) => a[0] - b[0]);
+    structuresResidentialData.sort((a, b) => a[0] - b[0]);
     var state = {
       date,
-      renovationsResidentialData,
-      renovationsCommercialData,
+      structuresResidentialData,
+      structuresCommercialData,
       familyData,
       improvementsData,
       commissionBonusTitleData,
@@ -424,7 +424,7 @@ class Startup extends React.Component {
       ((x - this.state.lowDate) / this.props.lastWidth) * 0.9,
       "0"
     ]);
-    const renovationsResidentialData = this.state.renovationsResidentialData.map(
+    const structuresResidentialData = this.state.structuresResidentialData.map(
       ([x, y]) => [
         ((x - this.state.lowDate) / this.state.xAxis) *
           this.props.lastWidth *
@@ -432,7 +432,7 @@ class Startup extends React.Component {
         ((y - 0) / this.state.yAxis) * 150
       ]
     );
-    const renovationsCommercialData = this.state.renovationsCommercialData.map(
+    const structuresCommercialData = this.state.structuresCommercialData.map(
       ([x, y]) => [
         ((x - this.state.lowDate) / this.state.xAxis) *
           this.props.lastWidth *
@@ -716,7 +716,7 @@ class Startup extends React.Component {
                 />
               )
           )}
-          {renovationsResidentialData.map(
+          {structuresResidentialData.map(
             ([x, y], i) =>
               !isNaN(x) &&
               !isNaN(y) && (
@@ -796,7 +796,7 @@ class Startup extends React.Component {
                 />
               )
           )}
-          {renovationsCommercialData.map(
+          {structuresCommercialData.map(
             ([x, y], i) =>
               !isNaN(x) &&
               !isNaN(y) && (
@@ -868,8 +868,8 @@ class Startup extends React.Component {
           }}
         >
           {[
-            "renovationsResidential",
-            "renovationsCommercial",
+            "structuresResidential",
+            "structuresCommercial",
             "family",
             "improvements",
             "commissionBonusTitle",
