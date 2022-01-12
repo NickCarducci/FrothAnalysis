@@ -80,7 +80,7 @@ class Cable extends React.Component {
         );*/
         //console.log(cacheStyle);
         //console.log(cache, continuee.offsetHeight, continuee.offsetWidth);
-        if (!cache && this.state.loaded) {
+        if (!cache && (this.state.loaded || this.props.img)) {
           //if (continuee.offsetHeight !== 0)
           this.setState({
             cache: continuee.outerHTML,
@@ -166,7 +166,7 @@ class Cable extends React.Component {
           //minWidth: optionalwidth // "max-content"
         }}
       >
-        {src === "" || (!img && mount) ? (
+        {src === "" || (!img && !mount) ? (
           <span style={{ border: "2px gray solid" }}>{title}</span>
         ) : img ? (
           <img
