@@ -166,22 +166,9 @@ class Cable extends React.Component {
           //minWidth: optionalwidth // "max-content"
         }}
       >
-        {src === "" ? (
+        {src === "" || (!img && mount) ? (
           <span style={{ border: "2px gray solid" }}>{title}</span>
-        ) : !img ? (
-          <iframe
-            onLoad={onLoad}
-            onError={onError}
-            title={title}
-            style={{
-              width: "200px",
-              border: 0,
-              ...this.props.style
-            }}
-            ref={this.props.fwd}
-            src={src}
-          />
-        ) : (
+        ) : img ? (
           <img
             //onLoad={onLoad}
             onError={onError}
@@ -189,6 +176,19 @@ class Cable extends React.Component {
             style={{
               width: "200px",
               border: !mount || src === "" ? "2px gray solid" : 0,
+              ...this.props.style
+            }}
+            ref={this.props.fwd}
+            src={src}
+          />
+        ) : (
+          <iframe
+            onLoad={onLoad}
+            onError={onError}
+            title={title}
+            style={{
+              width: "200px",
+              border: 0,
               ...this.props.style
             }}
             ref={this.props.fwd}
