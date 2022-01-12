@@ -9,6 +9,7 @@ import { UAParser } from "ua-parser-js";
 
 import "./home.css";
 import PCE from "./PCE";
+import Startup from "./Startup";
 
 class App extends React.Component {
   constructor(props) {
@@ -972,6 +973,9 @@ class App extends React.Component {
                 <br />
                 {this.state.width && (
                   <PCE lastWidth={this.state.width} linecss={linecss} />
+                )}
+                {this.state.width && (
+                  <Startup lastWidth={this.state.width} linecss={linecss} />
                 )}
                 <select
                   style={{
