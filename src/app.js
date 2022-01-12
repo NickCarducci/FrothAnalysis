@@ -8,6 +8,7 @@ import { Link, withRouter } from "react-router-dom";
 import { UAParser } from "ua-parser-js";
 
 import "./home.css";
+import PCE from "./PCE";
 
 class App extends React.Component {
   constructor(props) {
@@ -127,6 +128,15 @@ class App extends React.Component {
       position: "relative",
       breakInside: "avoid",
       width: "100%"
+    };
+    const linecss = {
+      left: "0px",
+      top: "0px",
+      display: "flex",
+      position: "absolute",
+      width: "100%",
+      height: "200px",
+      transform: "scale(1,-1)"
     };
     const videostyle = { width: "100%", border: 0, height: "min-content" };
     if (this.state.lastWidth) {
@@ -959,6 +969,10 @@ class App extends React.Component {
                   equity & option chartbook
                 </a>
                 Nick@froth.app
+                <br />
+                {this.state.width && (
+                  <PCE lastWidth={this.state.width} linecss={linecss} />
+                )}
                 <select
                   style={{
                     display: "flex",
