@@ -1008,6 +1008,10 @@ class App extends React.Component {
                   amortized… GDP is mutual funds m2 but not discounted by
                   equities, bonds/collateral/homes, labor, profits flaccid loss,
                   why?!?!
+                  <h2>
+                    Input costs are&nbsp;
+                    <a href="https://vaults.biz/work">transitive</a>
+                  </h2>
                 </div>
                 <select
                   style={{
