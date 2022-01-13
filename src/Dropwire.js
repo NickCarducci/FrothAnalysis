@@ -148,53 +148,68 @@ class Cable extends React.Component {
       ? //!isNaN(this.props.style.width)
         this.props.style.width
       : "200px";
+    const optionalheight = this.state.height
+      ? this.state.height
+      : this.props.style && this.props.style.height // &&
+      ? //!isNaN(this.props.style.width)
+        this.props.style.height
+      : "min-content";
     //console.log(optionalwidth);
     return (
       <div
         ref={this.page}
         style={{
           //width: this.state.framewidth,
-          ...this.props.style,
+          //...this.props.style,
           overflowX: "auto",
           shapeOutside: "rect()",
           float,
           height: this.state.frameheight
-            ? this.state.frameheight + 20
+            ? this.state.frameheight + 50
             : "max-content",
           width: optionalwidth,
           maxWidth: "100%"
           //minWidth: optionalwidth // "max-content"
         }}
       >
-        {src === "" || (!img && !mount) ? (
-          <span style={{ border: "2px gray solid" }}>{title}</span>
-        ) : img ? (
-          <img
-            //onLoad={onLoad}
-            onError={onError}
-            alt={title}
-            style={{
-              width: "200px",
-              border: !mount || src === "" ? "2px gray solid" : 0,
-              ...this.props.style
-            }}
-            ref={this.props.fwd}
-            src={src}
-          />
-        ) : (
-          <iframe
-            onLoad={onLoad}
-            onError={onError}
-            title={title}
-            style={{
-              width: "200px",
-              border: 0,
-              ...this.props.style
-            }}
-            ref={this.props.fwd}
-            src={src}
-          />
-        )}
+        <div
+          style={{
+            width: "200px",
+            ...this.props.style
+          }}
+        >
+          {src === "" || (!img && !mount) ? (
+            <span style={{ border: "2px gray solid" }}>{title}</span>
+          ) : img ? (
+            <img
+              //onLoad={onLoad}
+              onError={onError}
+              alt={title}
+              style={{
+                width: "100%",
+                border: !mount || src === "" ? "2px gray solid" : 0,
+                height: optionalheight
+                //...this.props.style
+              }}
+              ref={this.props.fwd}
+              src={src}
+            />
+          ) : (
+            <iframe
+              onLoad={onLoad}
+              onError={onError}
+              title={title}
+              style={{
+                width: "100%",
+                border: 0,
+                height: optionalheight
+                //...this.props.style
+              }}
+              ref={this.props.fwd}
+              src={src}
+            />
+          )}
+        </div>
       </div>
     );
   }
