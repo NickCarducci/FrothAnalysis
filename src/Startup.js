@@ -384,7 +384,6 @@ class Startup extends React.Component {
       ...commissionSale,
       ...hospitals
     ];
-    console.log(all);
     var lowpop = Math.min(...all);
     var highpop = Math.max(...all);
     noData.sort((a, b) => a[0] - b[0]);
