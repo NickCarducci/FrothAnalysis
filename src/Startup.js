@@ -542,36 +542,7 @@ class Startup extends React.Component {
       >
         <div
           style={{
-            right: "0px",
-            maxWidth: "50%",
-            top: "0px",
-            height: "min-content",
-            display: "flex",
-            position: "absolute",
-            flexDirection: "column",
-            zIndex: "9",
-            backgroundColor: "rgba(250,250,250,.6)"
-          }}
-        >
-          Startup -&nbsp;
-          <br />
-          <div
-            style={{
-              top: "0px",
-              height: "min-content",
-              display: "flex",
-              position: "relative",
-              right: "0px"
-            }}
-          >
-            {new Date(this.state.lowDate).toLocaleDateString()}&nbsp;
-            {new Date(this.state.highDate).toLocaleDateString()}
-          </div>
-          <br />
-          max: {shortNumber(this.state.highpop * 1000000000)}
-        </div>
-        <div
-          style={{
+            maxWidth: "400px",
             display: "flex",
             bottom: "0px",
             width: "100%",
@@ -582,310 +553,352 @@ class Startup extends React.Component {
             return <div>{year}</div>;
           })}
         </div>
-        <svg
-          className="all"
-          style={{ ...linecss, height: "200px", position: "relative" }}
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          {noData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="rgb(230,230,230)"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {multiData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="brown"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {factoryData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="gold"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {shaftsMiningWellsData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="yellow"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {commissionSaleData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="purple"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {windsolarData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="green"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {commissionBonusTitleData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="blue"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {lodgingData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="blue"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {structuresResidentialData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="purple"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {familyData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="green"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {warehouseData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="grey"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {hospitalsData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="red"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {officesData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="pink"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {structuresCommercialData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="red"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {gasData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="navy"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {batteryData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="black"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {improvementsData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="orange"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-        </svg>
         <div
           style={{
-            //transform: "translateY(200px)",
-            width: "100%"
+            width: "100%",
+            display: "flex"
           }}
         >
-          {[
-            "structuresResidential",
-            "structuresCommercial",
-            "family",
-            "improvements",
-            "commissionBonusTitle",
-            "offices",
-            "battery",
-            "shaftsMiningWells",
-            "multi",
-            "factory",
-            "gas",
-            "warehouse",
-            "lodging",
-            "windSolar",
-            "comissionSale",
-            "hospitals"
-          ].map((year) => {
-            return <div>{year}</div>;
-          })}
+          <div
+            style={{
+              left: "0px",
+              maxWidth: "50%",
+              bottom: "0px",
+              height: "min-content",
+              display: "flex",
+              position: "absolute",
+              flexDirection: "column",
+              zIndex: "9",
+              backgroundColor: "rgba(250,250,250,.6)"
+            }}
+          >
+            Startup -&nbsp;
+            <br />
+            <div
+              style={{
+                top: "0px",
+                height: "min-content",
+                display: "flex",
+                position: "relative",
+                right: "0px"
+              }}
+            >
+              {new Date(this.state.lowDate).toLocaleDateString()}&nbsp;
+              {new Date(this.state.highDate).toLocaleDateString()}
+            </div>
+            <br />
+            max: {shortNumber(this.state.highpop * 1000000000)}
+          </div>
+          <svg
+            className="all"
+            style={{
+              ...linecss,
+              maxWidth: "400px",
+              height: "200px",
+              position: "relative"
+            }}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {noData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="rgb(230,230,230)"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {multiData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="brown"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {factoryData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="gold"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {shaftsMiningWellsData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="yellow"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {commissionSaleData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="purple"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {windsolarData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="green"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {commissionBonusTitleData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="blue"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {lodgingData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="blue"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {structuresResidentialData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="purple"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {familyData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="green"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {warehouseData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="grey"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {hospitalsData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="red"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {officesData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="pink"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {structuresCommercialData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="red"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {gasData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="navy"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {batteryData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="black"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {improvementsData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="orange"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+          </svg>
+          <div
+            style={{
+              //transform: "translateY(200px)",
+              width: "150px"
+            }}
+          >
+            {[
+              "structuresResidential",
+              "structuresCommercial",
+              "family",
+              "improvements",
+              "commissionBonusTitle",
+              "offices",
+              "battery",
+              "shaftsMiningWells",
+              "multi",
+              "factory",
+              "gas",
+              "warehouse",
+              "lodging",
+              "windSolar",
+              "comissionSale",
+              "hospitals"
+            ].map((year) => {
+              return <div>{year}</div>;
+            })}
+          </div>
         </div>
       </div>
     );
