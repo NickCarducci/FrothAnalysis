@@ -577,36 +577,7 @@ class PCE extends React.Component {
       >
         <div
           style={{
-            right: "0px",
-            maxWidth: "50%",
-            top: "0px",
-            height: "min-content",
-            display: "flex",
-            position: "absolute",
-            flexDirection: "column",
-            zIndex: "9",
-            backgroundColor: "rgba(250,250,250,.6)"
-          }}
-        >
-          PCE -&nbsp;
-          <br />
-          <div
-            style={{
-              top: "0px",
-              height: "min-content",
-              display: "flex",
-              position: "relative",
-              right: "0px"
-            }}
-          >
-            {new Date(this.state.lowDate).toLocaleDateString()}&nbsp;
-            {new Date(this.state.highDate).toLocaleDateString()}
-          </div>
-          <br />
-          max: {shortNumber(this.state.highpop * 1000000000)}
-        </div>
-        <div
-          style={{
+            maxWidth: "400px",
             display: "flex",
             bottom: "0px",
             width: "100%",
@@ -617,310 +588,352 @@ class PCE extends React.Component {
             return <div>{year}</div>;
           })}
         </div>
-        <svg
-          className="all"
-          style={{ ...linecss, height: "200px", position: "relative" }}
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          {noData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="rgb(230,230,230)"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {rentUtilData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="brown"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {healthcareData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="gold"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {miscellaneousMaterialData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="yellow"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {miscellaneousServicesData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="purple"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {financeData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="green"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {foodBevData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="blue"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {foodServicesData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="blue"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {motorData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="purple"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {recreationalData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="green"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {recreationServicesData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="grey"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {nonprofitData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="red"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {clothingData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="pink"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {furnishingsData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="red"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {transportationData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="navy"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {gasData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="black"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-          {miscellaneousDurableData.map(
-            ([x, y], i) =>
-              !isNaN(x) &&
-              !isNaN(y) && (
-                <rect
-                  x={x}
-                  y={y}
-                  width={2}
-                  height={2}
-                  stroke="orange"
-                  fill="transparent"
-                  strokeWidth=""
-                  key={i}
-                />
-              )
-          )}
-        </svg>
         <div
           style={{
-            //transform: "translateY(200px)",
-            width: "100%"
+            width: "100%",
+            display: "flex"
           }}
         >
-          {[
-            "rentUtil",
-            "healthcare",
-            "miscellaneousMaterial",
-            "miscellaneousServices",
-            "finance",
-            "foodBev",
-            "foodServices",
-            "motor",
-            "recreational",
-            "recreationServices",
-            "nonprofit",
-            "clothing",
-            "furnishings",
-            "transportation",
-            "gas",
-            "miscellaneousDurable"
-          ].map((year) => {
-            return <div>{year}</div>;
-          })}
+          <div
+            style={{
+              left: "0px",
+              maxWidth: "50%",
+              bottom: "0px",
+              height: "min-content",
+              display: "flex",
+              position: "absolute",
+              flexDirection: "column",
+              zIndex: "9",
+              backgroundColor: "rgba(250,250,250,.6)"
+            }}
+          >
+            PCE -&nbsp;
+            <br />
+            <div
+              style={{
+                top: "0px",
+                height: "min-content",
+                display: "flex",
+                position: "relative",
+                right: "0px"
+              }}
+            >
+              {new Date(this.state.lowDate).toLocaleDateString()}&nbsp;
+              {new Date(this.state.highDate).toLocaleDateString()}
+            </div>
+            <br />
+            max: {shortNumber(this.state.highpop * 1000000000)}
+          </div>
+          <svg
+            className="all"
+            style={{
+              ...linecss,
+              maxWidth: "400px",
+              height: "200px",
+              position: "relative"
+            }}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {noData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="rgb(230,230,230)"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {rentUtilData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="brown"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {healthcareData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="gold"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {miscellaneousMaterialData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="yellow"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {miscellaneousServicesData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="purple"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {financeData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="green"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {foodBevData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="blue"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {foodServicesData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="blue"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {motorData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="purple"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {recreationalData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="green"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {recreationServicesData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="grey"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {nonprofitData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="red"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {clothingData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="pink"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {furnishingsData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="red"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {transportationData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="navy"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {gasData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="black"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+            {miscellaneousDurableData.map(
+              ([x, y], i) =>
+                !isNaN(x) &&
+                !isNaN(y) && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={2}
+                    height={2}
+                    stroke="orange"
+                    fill="transparent"
+                    strokeWidth=""
+                    key={i}
+                  />
+                )
+            )}
+          </svg>
+          <div
+            style={{
+              //transform: "translateY(200px)",
+              width: "150px"
+            }}
+          >
+            {[
+              "rentUtil",
+              "healthcare",
+              "miscellaneousMaterial",
+              "miscellaneousServices",
+              "finance",
+              "foodBev",
+              "foodServices",
+              "motor",
+              "recreational",
+              "recreationServices",
+              "nonprofit",
+              "clothing",
+              "furnishings",
+              "transportation",
+              "gas",
+              "miscellaneousDurable"
+            ].map((year) => {
+              return <div>{year}</div>;
+            })}
+          </div>
         </div>
       </div>
     );
