@@ -971,12 +971,44 @@ class App extends React.Component {
                 </a>
                 Nick@froth.app
                 <br />
-                {this.state.width && (
-                  <PCE lastWidth={this.state.width} linecss={linecss} />
-                )}
-                {this.state.width && (
-                  <Startup lastWidth={this.state.width} linecss={linecss} />
-                )}
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap"
+                  }}
+                >
+                  {this.state.width && (
+                    <PCE
+                      lastWidth={Math.min(550, this.state.width) - 150}
+                      linecss={linecss}
+                      countblock={{
+                        width: "100%",
+                        maxWidth: "550px"
+                      }}
+                    />
+                  )}
+                  {this.state.width && (
+                    <Startup
+                      lastWidth={Math.min(550, this.state.width) - 150}
+                      linecss={linecss}
+                      countblock={{
+                        width: "100%",
+                        maxWidth: "550px"
+                      }}
+                    />
+                  )}
+                  <div>
+                    surrendered freedom by implausible landlord use, industry
+                    variable jury to desist or be paid for writing on plaforms,
+                    co-signatories' customers/employers, and Savers. 65% are
+                    Occupy.
+                  </div>
+                  <br />
+                  $88t debt $2t checking -3/2020, $4t/yr 40% debt spending, 99%
+                  amortized… GDP is mutual funds m2 but not discounted by
+                  equities, bonds/collateral/homes, labor, profits flaccid loss,
+                  why?!?!
+                </div>
                 <select
                   style={{
                     display: "flex",
