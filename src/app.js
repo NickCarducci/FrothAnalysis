@@ -139,6 +139,13 @@ class App extends React.Component {
       height: "200px",
       transform: "scale(1,-1)"
     };
+    let arrayOfnumbers = [0];
+    const scrollnum = () => {
+      const num = arrayOfnumbers[arrayOfnumbers.length - 1] + 1;
+      arrayOfnumbers.push(num);
+      return num;
+    };
+    //const space = " ";
     const videostyle = { width: "100%", border: 0, height: "min-content" };
     if (this.state.lastWidth) {
       return (
@@ -243,7 +250,7 @@ class App extends React.Component {
                   float="right"
                   title="https://fred.stlouisfed.org/graph/?g=H5XB"
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 36]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -258,7 +265,7 @@ class App extends React.Component {
                   float="right"
                   title="https://fb.watch/9ruq5dxR9r/"
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 35]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -277,7 +284,7 @@ class App extends React.Component {
                   float="right"
                   title="https://fred.stlouisfed.org/graph/?g=FSwQ"
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 34]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -358,7 +365,7 @@ class App extends React.Component {
                     float="left"
                     title=""
                     scrolling={this.state.scrolling}
-                    fwd={this["scrollImg" + 33]}
+                    fwd={this["scrollImg" + scrollnum()]}
                     scrollTopAndHeight={
                       this.state.scrollTop + window.innerHeight
                     }
@@ -376,7 +383,7 @@ class App extends React.Component {
                     float="left"
                     title=""
                     scrolling={this.state.scrolling}
-                    fwd={this["scrollImg" + 32]}
+                    fwd={this["scrollImg" + scrollnum()]}
                     scrollTopAndHeight={
                       this.state.scrollTop + window.innerHeight
                     }
@@ -395,7 +402,7 @@ class App extends React.Component {
                     float="left"
                     title=""
                     scrolling={this.state.scrolling}
-                    fwd={this["scrollImg" + 31]}
+                    fwd={this["scrollImg" + scrollnum()]}
                     scrollTopAndHeight={
                       this.state.scrollTop + window.innerHeight
                     }
@@ -414,7 +421,7 @@ class App extends React.Component {
                     float="left"
                     title=""
                     scrolling={this.state.scrolling}
-                    fwd={this["scrollImg" + 30]}
+                    fwd={this["scrollImg" + scrollnum()]}
                     scrollTopAndHeight={
                       this.state.scrollTop + window.innerHeight
                     }
@@ -457,7 +464,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 29]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -474,7 +481,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 28]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -491,7 +498,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 27]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -508,7 +515,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 26]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -525,7 +532,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 26]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -542,7 +549,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 25]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -559,7 +566,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 24]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -576,7 +583,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 23]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -593,7 +600,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 22]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -610,7 +617,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 21]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -627,7 +634,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 20]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -644,7 +651,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 19]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -661,7 +668,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 18]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -678,7 +685,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 17]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -695,7 +702,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 16]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -712,7 +719,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 15]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -729,7 +736,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 14]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -746,7 +753,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 13]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -763,7 +770,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 12]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -780,7 +787,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 11]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -797,7 +804,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 10]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -814,7 +821,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 9]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -831,7 +838,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 8]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -854,7 +861,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 6]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -869,7 +876,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 5]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -884,7 +891,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 4]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -899,7 +906,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 3]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -914,7 +921,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 2]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -929,7 +936,7 @@ class App extends React.Component {
                   float="left"
                   title=""
                   scrolling={this.state.scrolling}
-                  fwd={this["scrollImg" + 1]}
+                  fwd={this["scrollImg" + scrollnum()]}
                   scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
                   scrollTop={this.state.scrollTop}
                 />
@@ -977,41 +984,82 @@ class App extends React.Component {
                     flexWrap: "wrap"
                   }}
                 >
-                  {this.state.width && (
-                    <PCE
-                      lastWidth={Math.min(550, this.state.width) - 150}
-                      linecss={linecss}
-                      countblock={{
-                        width: "100%",
-                        maxWidth: "550px"
-                      }}
-                    />
-                  )}
-                  {this.state.width && (
-                    <Startup
-                      lastWidth={Math.min(550, this.state.width) - 150}
-                      linecss={linecss}
-                      countblock={{
-                        width: "100%",
-                        maxWidth: "550px"
-                      }}
-                    />
-                  )}
-                  <div>
-                    surrendered freedom by implausible landlord use, industry
-                    variable jury to desist or be paid for writing on plaforms,
-                    co-signatories' customers/employers, and Savers. 65% are
-                    Occupy.
+                  <div
+                    style={{
+                      width: "100%",
+                      maxWidth: "550px"
+                    }}
+                  >
+                    {this.state.width && (
+                      <PCE
+                        lastWidth={Math.min(550, this.state.width) - 150}
+                        linecss={linecss}
+                        countblock={{
+                          width: "100%",
+                          maxWidth: "550px"
+                        }}
+                      />
+                    )}
+                    {this.state.width && (
+                      <Startup
+                        lastWidth={Math.min(550, this.state.width) - 150}
+                        linecss={linecss}
+                        countblock={{
+                          width: "100%",
+                          maxWidth: "550px"
+                        }}
+                      />
+                    )}
+                    <h3>
+                      surrendered freedom by implausible landlord use, industry
+                      variable jury to desist or be paid for writing on
+                      plaforms, co-signatories' customers/employers, and Savers.
+                      65% are Occupy.
+                    </h3>
+                    $88t debt $2t checking -3/2020, $4t/yr 40% debt spending,
+                    99% amortized… GDP is mutual funds m2 but not discounted by
+                    equities, bonds/collateral/homes, labor, profits flaccid
+                    loss, why?!?!
+                    <h2>
+                      Input costs are&nbsp;
+                      <a href="https://vaults.biz/work">transitive</a>
+                    </h2>
                   </div>
-                  <br />
-                  $88t debt $2t checking -3/2020, $4t/yr 40% debt spending, 99%
-                  amortized… GDP is mutual funds m2 but not discounted by
-                  equities, bonds/collateral/homes, labor, profits flaccid loss,
-                  why?!?!
-                  <h2>
-                    Input costs are&nbsp;
-                    <a href="https://vaults.biz/work">transitive</a>
-                  </h2>
+                  <div
+                    style={{
+                      display: "block",
+                      width: "400px",
+                      maxWidth: "calc(100% - 15px)"
+                    }}
+                  >
+                    <Cable
+                      style={{
+                        height: "auto",
+                        width: "100%"
+                      }}
+                      onError={handleScollImgError}
+                      img={true}
+                      src={
+                        this.state.iosNoPhoto
+                          ? ""
+                          : "https://www.dl.dropboxusercontent.com/s/w7he0a3gqtpt3jn/ssa%20general%20revenue.jpeg?dl=0"
+                      }
+                      float="left"
+                      title="https://www.ssa.gov/OACT/TRSUM/2020/tr20summary.pdf#page=17"
+                      scrolling={this.state.scrolling}
+                      fwd={this["scrollImg" + scrollnum()]}
+                      scrollTopAndHeight={
+                        this.state.scrollTop + window.innerHeight
+                      }
+                      scrollTop={this.state.scrollTop}
+                    />
+                    <div>
+                      <a href="https://www.ssa.gov/OACT/TRSUM/2020/tr20summary.pdf#page=17">
+                        2020 Medicare revenue/44% asset sales,
+                        price/market-concentration running out
+                      </a>
+                    </div>
+                  </div>
                 </div>
                 <select
                   style={{
@@ -1199,7 +1247,7 @@ class App extends React.Component {
                       float="left"
                       title=""
                       scrolling={this.state.scrolling}
-                      fwd={this["scrollImg" + 7]}
+                      fwd={this["scrollImg" + scrollnum()]}
                       scrollTopAndHeight={
                         this.state.scrollTop + window.innerHeight
                       }
