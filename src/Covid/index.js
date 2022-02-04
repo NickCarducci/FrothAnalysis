@@ -664,6 +664,24 @@ class CovidStuff extends React.Component {
           1.25m 1950 population, 39k paralytic polio * 38 years = 2.9m, then fix
           for overall average-starvation-age and you get 2.5m, see my site
           froth.app/states
+          <div
+            style={{
+              color: "white",
+              backgroundColor: "rgb(170,50,90)",
+              width: "100%",
+              padding: "6px 0px",
+              textAlign: "center"
+            }}
+          >
+            <a
+              style={{
+                color: "white"
+              }}
+              href="https://humanharvest.info/polio"
+            >
+              humanharvest.info/polio (updated version)
+            </a>
+          </div>
         </div>
         <div style={countblockswitch}>
           <CaseMortalAge
