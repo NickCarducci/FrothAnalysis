@@ -1020,9 +1020,33 @@ class App extends React.Component {
                     99% amortized… GDP is mutual funds m2 but not discounted by
                     equities, bonds/collateral/homes, labor, profits flaccid
                     loss, why?!?!
+                    <br />
+                    <Cable
+                      style={{
+                        height: "auto",
+                        width: "100%",
+                        maxWidth: "170px"
+                      }}
+                      onError={handleScollImgError}
+                      img={true}
+                      src={
+                        this.state.iosNoPhoto
+                          ? ""
+                          : "https://www.dl.dropboxusercontent.com/s/06e2iibx0mirkng/1937%20notice.jpeg?dl=0"
+                      }
+                      float="left"
+                      title="general revenue asset sales inception 1937 SSA market concentration, by dollar, over labor costs"
+                      scrolling={this.state.scrolling}
+                      fwd={this["scrollImg" + scrollnum()]}
+                      scrollTopAndHeight={
+                        this.state.scrollTop + window.innerHeight
+                      }
+                      scrollTop={this.state.scrollTop}
+                    />
                     <h2>
                       Input costs are&nbsp;
                       <a href="https://vaults.biz/work">transitive</a>
+                      &nbsp;1937-
                     </h2>
                     <div
                       style={{
@@ -1053,6 +1077,8 @@ class App extends React.Component {
                       <br />
                       (material+rent)/income
                     </div>
+                    Article 1.8 certainly doens't permit (education, healthcare,
+                    housing) science rent-seeking and gentrification.
                     <br />
                     <h2>
                       bad for GDP/hour-GDP/p productive-efficiency, GDP/p tech
@@ -2108,12 +2134,14 @@ We aren’t even sure if virons are merely harmless byproducts and bacteria caus
                     froth.app/stats using cdc fluview) so the cause is something
                     else, I suggest all viral-illness is borne by
                     bacterial-infection and viral excrement, especially after
-                    reviewing gold standard diagnosis of lateral/both-lungs
-                    discrepancy of bacterial/viral by Pfizer
-                    pfizer.com/news/hot-topics/viral_vs_bacterial_pneumonia_understanding_the_difference,
-                    and death/hospitalization of bacterial-infection by Harvard
-                    Wyss
-                    https://wyss.harvard.edu/news/the-secret-life-of-bacteria-revealed/
+                    reviewing gold standard diagnosis of lateral/both-lungs{" "}
+                    <a href="pfizer.com/news/hot-topics/viral_vs_bacterial_pneumonia_understanding_the_difference">
+                      discrepancy of bacterial/viral by Pfizer
+                    </a>
+                    , and death/hospitalization of{" "}
+                    <a href="https://wyss.harvard.edu/news/the-secret-life-of-bacteria-revealed/">
+                      bacterial-infection by Harvard Wyss
+                    </a>
                   </div>
                   <div style={countstyle}>
                     <div style={{ padding: "10px 4px" }}>
