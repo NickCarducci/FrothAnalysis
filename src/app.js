@@ -1024,6 +1024,35 @@ class App extends React.Component {
                       Input costs are&nbsp;
                       <a href="https://vaults.biz/work">transitive</a>
                     </h2>
+                    <div
+                      style={{
+                        color: "white",
+                        backgroundColor: "rgb(170,50,90)",
+                        width: "100%",
+                        padding: "6px 0px",
+                        textAlign: "center"
+                      }}
+                    >
+                      <a
+                        style={{
+                          color: "white"
+                        }}
+                        href="https://qr.ae/pGEZyS"
+                      >
+                        employment
+                      </a>
+                      &nbsp;&bull;&nbsp;
+                      <a
+                        style={{
+                          color: "white"
+                        }}
+                        href="https://vaults.biz/party"
+                      >
+                        income/labor-costs
+                      </a>
+                      <br />
+                      (material+rent)/income
+                    </div>
                   </div>
                   <div
                     style={{
