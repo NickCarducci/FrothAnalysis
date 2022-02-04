@@ -1053,6 +1053,30 @@ class App extends React.Component {
                       <br />
                       (material+rent)/income
                     </div>
+                    <br />
+                    <h2>
+                      bad for GDP/hour-GDP/p productive-efficiency, GDP/p tech
+                      advancement
+                    </h2>
+                    (less actual work)
+                    <br />
+                    The reconciliation proposal and H.R. 3590 would maintain and
+                    put into effect a number of policies that might be difficult
+                    to sustain over a long period of time. Under current law,
+                    payment rates for physicians’ services in Medicare would be
+                    reduced by about 21 percent in 2010 and then decline further
+                    in subsequent years; the proposal makes no changes to those
+                    provisions. At the same time, the legislation includes a
+                    number of provisions that would constrain payment rates for
+                    other providers of Medicare services. In particular,
+                    increases in payment rates for many providers would be held
+                    below the rate of inflation (in expectation of ongoing
+                    productivity improvements in the delivery of health care).
+                    The projected longer-term savings for the legislation also
+                    reflect an assumption that the Independent Payment Advisory
+                    Board established by H.R. 3590 would be fairly effective in
+                    reducing costs beyond the reductions that would be achieved
+                    by other aspects of the legislation.8
                   </div>
                   <div
                     style={{
@@ -1087,6 +1111,13 @@ class App extends React.Component {
                         2020 Medicare revenue/44% asset sales,
                         price/market-concentration running out
                       </a>
+                      <br />
+                      <br />
+                      <a href="https://www.cbo.gov/sites/default/files/111th-congress-2009-2010/costestimate/amendreconprop.pdf#page=14">
+                        CBO Insurance Net Loss Damage Report
+                      </a>
+                      <br />
+                      (donee-invoking-risk)
                     </div>
                   </div>
                 </div>
