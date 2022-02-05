@@ -241,6 +241,9 @@ class App extends React.Component {
               position: "relative"
             }}
           >
+            <h2>
+              Saver-dollar v bond donee getting in the way of land exploration
+            </h2>
             <div style={{ width: "max-content", maxWidth: "100%" }}>
               cap rent by units, not price. not operational monopoly investment
               for inefficient (material+rent)/income poverty decline for
