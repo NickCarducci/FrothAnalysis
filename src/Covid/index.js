@@ -426,6 +426,46 @@ class CovidStuff extends React.Component {
         }}
       >
         <div style={countblockswitch}>
+          <h2>"hospitalizations surged during covid"</h2>
+          Total flu hospitalizations us
+          <br />
+          more demographics:{" "}
+          <a href="https://usafacts.org/visualizations/covid-vaccine-tracker-states/">
+            https://usafacts.org/visualizations/covid-vaccine-tracker-states/
+          </a>
+          <br />
+          {this.state.ios ? (
+            "hospitalizations not available in iOS"
+          ) : (
+            <CaseHospitalizationsUS
+              linecss={linecss}
+              statesWithCodes={statesWithCodes}
+              lastWidth={lastWidth / count}
+              countblock={countblock}
+            />
+          )}
+          <br />
+          <br />
+          https://www.cdc.gov/flu/prevent/vaccine-supply-historical.htm
+          <br />
+          https://gis.cdc.gov/grasp/fluview/fluportaldashboard.html
+          <br />
+          https://www.cdc.gov/flu/weekly/overview.htm#:~:text=5.%20Mortality%20Surveillance
+          <br />
+          "Deaths are classified based on ICD-10 multiple cause of death codes
+          as associated with influenza, COVID-19, or pneumonia"
+          <br />
+          how many died with both virus-output? Is has asymptomatic testing
+          proven virion-prevalence isn't even correlated as common cold project
+          artifact (warning mechanism, placebo or per capita basis, actually)?
+          <br />
+          <br />
+          vaccines have evidently CAUSED (+corr) symptoms, which coincides with
+          the hypothesis that antibody production is the rubicon of
+          fatigue-vitro observance-control that which cleans harmless virions
+          (French for "virons") by&nbsp;<b>cellular-digestion of bacteria</b>
+        </div>
+        <div style={countblockswitch}>
           Age adjustments do not account for cohort size, 77 life expectancy is
           pulled from a 1.2m/yr increase 75+ starteing around 2018
           <br />
@@ -750,42 +790,6 @@ class CovidStuff extends React.Component {
         </div>
         <div style={countblockswitch}>
           https://www.hcup-us.ahrq.gov/reports/trendtables/summarytrendtables.jsp#export
-        </div>
-        <div style={countblockswitch}>Total flu hospitalizations us</div>
-        <div style={countblockswitch}>
-          more demographics:{" "}
-          <a href="https://usafacts.org/visualizations/covid-vaccine-tracker-states/">
-            https://usafacts.org/visualizations/covid-vaccine-tracker-states/
-          </a>
-          <br />
-          {this.state.ios ? (
-            "hospitalizations not available in iOS"
-          ) : (
-            <CaseHospitalizationsUS
-              linecss={linecss}
-              statesWithCodes={statesWithCodes}
-              lastWidth={lastWidth / count}
-              countblock={countblock}
-            />
-          )}
-        </div>
-        <div style={countblockswitch}>
-          https://www.cdc.gov/flu/prevent/vaccine-supply-historical.htm
-          <br />
-          https://gis.cdc.gov/grasp/fluview/fluportaldashboard.html
-          <br />
-          https://www.cdc.gov/flu/weekly/overview.htm#:~:text=5.%20Mortality%20Surveillance
-          <br />
-          "Deaths are classified based on ICD-10 multiple cause of death codes
-          as associated with influenza, COVID-19, or pneumonia"
-          <br />
-          how many died with both virus?
-          <br />
-          <br />
-          vaccines have evidently caused symptoms, which coincides with the
-          hypothesis that antibody production is the rubicon of fatigue-vitro
-          observance-control that which cleans harmless virions (French for
-          "virons") by&nbsp;<b>cellular-digestion of bacteria</b>
         </div>
         <div style={countblockswitch}>
           <TwitterTweetEmbed
