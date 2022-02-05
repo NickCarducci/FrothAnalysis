@@ -1159,7 +1159,7 @@ class App extends React.Component {
                         CBO Insurance Net Loss Damage Report
                       </a>
                       <br />
-                      (donee-invoking-risk)
+                      (donee-invoking-goodwill{/**risk */})
                     </div>
                   </div>
                 </div>
