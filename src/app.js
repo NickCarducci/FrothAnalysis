@@ -1,98 +1,60 @@
 import React from "react";
-import "./styles.css";
 import Cable from "./Dropwire";
-import { UAParser } from "ua-parser-js";
-import Archive from "./Archive";
+import Positioning from "./Positioning";
+import CovidStuff from "./Covid";
 import TwitterTweetEmbed from "./TwitterTweetEmbed";
-//import html2canvas from "html2canvas";
-//import Tableu from "./Tableau";
+import Employment from "./Employment";
+import { Link, withRouter } from "react-router-dom";
+import { UAParser } from "ua-parser-js";
 
-export default class App extends React.Component {
+import "./home.css";
+import PCE from "./PCE";
+import Startup from "./Startup";
+
+class App extends React.Component {
   constructor(props) {
     super(props);
     var parser = new UAParser();
     const name = parser.getBrowser().name;
     console.log(name);
+    let width = window.innerWidth; // * 0.01;
+    let height = window.innerHeight; // * 0.01;
     this.state = {
-      bar: 0,
-      listeners: [],
-      scrollPlacementHeight: 0,
-      width: window.innerWidth,
-      //fraudChoice: 4,
-      ios: name.includes("Safari"),
-      iosNoPhoto: name.includes("Safari"),
-      openForm: true,
-      //settleDropboxFree: true,
+      scrollTop: 0,
+      settleDropboxFree: true,
       browser: name,
-      scrollTop: 0
+      ios: true,
+      width,
+      height,
+      openTopic: "Stats", //"Vaccine-Grafts",
+      isTop: true
     };
-    let genChildRefs = [];
-    for (let i = 420; i < 620; i++) {
-      this["scrollImg" + i] = React.createRef();
-      genChildRefs.push({ ["scrollImg" + i]: this["scrollImg" + i] });
-    }
-    for (let i = 0; i < 220; i++) {
+    this.top = React.createRef();
+    for (let i = 0; i < 250; i++) {
       this["scrollImg" + i] = React.createRef();
     }
-    this.saver = React.createRef();
-    this.dns = React.createRef();
-    this.canvas = React.createRef();
-    this.chapter1 = React.createRef();
-    this.chapter2 = React.createRef();
-    this.work = React.createRef();
-    this.gdp = React.createRef();
-    this.party = React.createRef();
-    this.marx = React.createRef();
-    this.air = React.createRef();
-    this.pdt = React.createRef();
-    this.immi = React.createRef();
-    this.rec = React.createRef();
-    this.sci = React.createRef();
-    this.con = React.createRef();
-    this.trust = React.createRef();
-    this.sdr = React.createRef();
-    this.bottom = React.createRef();
-    this.biz = React.createRef();
-    /*this.ch2refs = React.createRef([
-      this.chapter2,
-      this.sci,
-      this.trust,
-      this.sdr,
-      this.rec,
-      this.work,
-      this.gdp,
-      this.party,
-      this.marx,
-      this.air,
-      this.immi
-    ]);*/
-    /*const convertArrayToObject = (array, key) => {
-      const initialValue = {};
-      return array.reduce((obj, item) => {
-        return {
-          ...obj,
-          [item[key]]: item
-        };
-      }, initialValue);
-    };*/
-    //console.log(genChildRefs);
-    this.ch2refs = {
-      current: {
-        ref: { current: { ...genChildRefs } },
-        chapter2: this.chapter2,
-        sci: this.sci,
-        trust: this.trust,
-        sdr: this.sdr,
-        rec: this.rec,
-        work: this.work,
-        gdp: this.gdp,
-        party: this.party,
-        marx: this.marx,
-        air: this.air,
-        immi: this.immi
-      }
-    };
   }
+  componentWillUnmount() {
+    clearTimeout(this.scrollTimeout);
+    clearTimeout(this.resizeTimer);
+    clearTimeout(this.check);
+    window.removeEventListener("resize", this.refresh);
+    window.removeEventListener("scroll", this.scroll);
+  }
+  componentDidMount = () => {
+    this.setState(
+      {
+        ios: this.state.browser.includes("Safari"),
+        iosNoPhoto: this.state.browser.includes("Safari"),
+        settleDropboxFree: this.state.browser.includes("Safari")
+      },
+      () => {
+        window.addEventListener("scroll", this.handleScroll);
+        window.addEventListener("resize", this.refresh);
+        this.refresh(true);
+      }
+    );
+  };
   handleScroll = (e) => {
     if (!this.state.offScroll) {
       const scrollTop = window.scrollY;
@@ -104,7 +66,6 @@ export default class App extends React.Component {
         () => {
           clearTimeout(this.scrollTimeout);
           this.scrollTimeout = setTimeout(() => {
-            this.getLabel();
             this.setState({
               scrolling: false
             });
@@ -113,79 +74,12 @@ export default class App extends React.Component {
       );
     }
   };
-  getLabel = () => {
-    /*const { scrollPlacementHeight } = this.state;
-    var topProgress = Math.round(
-      (scrollPlacementHeight / (window.innerHeight - 215)) *
-        document.documentElement.scrollHeight //window.scrollY
-    );*/
-    const scrollPlacementHeight = Math.round(
-      (window.scrollY / document.documentElement.scrollHeight) *
-        (window.innerHeight - 215)
-    );
-    //console.log(window.scrollY);
-    this.setState(
-      {
-        scrollPlacementHeight,
-        provisionalScroll: window.scrollY
-      },
-      () => this.label(window.scrollY)
-    );
-  };
-  componentDidMount = () => {
-    this.refresh(true);
-    window.addEventListener("scroll", this.handleScroll);
-    window.addEventListener("resize", this.refresh);
-
-    /*this.ch2refs = React.createRef([
-      this.chapter2,
-      this.sci,
-      this.trust,
-      this.sdr,
-      this.rec,
-      this.work,
-      this.gdp,
-      this.party,
-      this.marx,
-      this.air,
-      this.immi
-    ]);*/
-    /*html2canvas(this.chapter1.current).then((canvas) =>
-      canvas.toBlob((blob) =>
-        this.setState(
-          {
-            chapter1: window.URL.createObjectURL(blob)
-          },
-          () =>
-            html2canvas(this.chapter2.current).then((canvas) => {
-              console.log(canvas);
-              canvas.toBlob((blob) =>
-                this.setState({
-                  chapter2: window.URL.createObjectURL(blob)
-                })
-              );
-            })
-        )
-      )
-    );*/
-    const { scrollPlacementHeight } = this.state;
-    var topProgress = Math.round(
-      (scrollPlacementHeight / (window.innerHeight - 215)) *
-        document.documentElement.scrollHeight //window.scrollY
-    );
-    this.label(topProgress);
-  };
   refresh = (first) => {
     const width = this.state.ios ? window.screen.availWidth : window.innerWidth;
-    const height = this.state.ios
-      ? window.screen.availHeight
-      : window.innerHeight;
-
     if (first || Math.abs(this.state.lastWidth - width) > 0) {
       clearTimeout(this.resizeTimer);
       this.resizeTimer = setTimeout(() => {
         this.setState({
-          height,
           lastWidth: width,
           width,
           availableHeight: this.state.ios
@@ -195,2197 +89,2897 @@ export default class App extends React.Component {
       }, 600);
     }
   };
-  componentWillUnmount = () => {
-    clearTimeout(this.labelTimer);
-    clearTimeout(this.check);
-    clearTimeout(this.dragEnd);
-    clearTimeout(this.dragMove);
-    clearTimeout(this.dragView);
-    clearTimeout(this.resizeTimer);
-    window.removeEventListener("scroll", this.handleScroll);
-    window.removeEventListener("resize", this.refresh);
-    this.state.listeners.forEach((x) => {
-      window.removeEventListener(...x);
-    });
-  };
   componentDidUpdate = (prevProps) => {
     if (this.props.pathname !== prevProps.pathname) {
       clearTimeout(this.check);
       const check = () => {
         if (this.props.pathname === "/") {
-          this.setState({ journal: true });
-        } else if (this.props.pathname === "/dns") {
-          this.setState({ journal: true }, () =>
-            window.scroll(0, this.dns.current.offsetTop)
-          );
-        } else if (this.props.pathname === "/work") {
-          window.scroll(0, this.work.current.offsetTop);
-        } else if (this.props.pathname === "/gdp") {
-          window.scroll(0, this.gdp.current.offsetTop);
-        } else if (this.props.pathname === "/party") {
-          window.scroll(0, this.party.current.offsetTop);
-        } else if (this.props.pathname === "/marx") {
-          window.scroll(0, this.marx.current.offsetTop);
-        } else if (this.props.pathname === "/air") {
-          window.scroll(0, this.air.current.offsetTop);
-        } else if (this.props.pathname === "/pdt") {
-          this.setState({ journal: true }, () =>
-            window.scroll(0, this.pdt.current.offsetTop)
-          );
-        } else if (this.props.pathname === "/sci") {
-          window.scroll(0, this.sci.current.offsetTop); //costing lives' Salcedo
-        } else if (this.props.pathname === "/con") {
-          this.setState(
-            { journal: true },
-            () => window.scroll(0, this.con.current.offsetTop) //content,comms
-          );
-        } else if (this.props.pathname === "/trust") {
-          this.setState({ journal: true }, () =>
-            window.scroll(0, this.trust.current.offsetTop)
-          );
-        } else if (this.props.pathname === "/sdr") {
-          window.scroll(0, this.sdr.current.offsetTop);
-        } else if (this.props.pathname === "/rec") {
-          window.scroll(0, this.rec.current.offsetTop);
-        } else if (this.props.pathname === "/immi") {
-          window.scroll(0, this.immi.current.offsetTop);
-        } else if (this.props.pathname === "/biz") {
-          this.setState(
-            { journal: true },
-            () => window.scroll(0, this.biz.current.offsetTop) //content,comms
-          );
+        } else if (this.props.pathname === "/hadley") {
+          this.setState({ openTopic: "Masks & Physics" });
+          //window.scroll(0, this.polio.current.offsetTop);
         }
       };
       check();
       this.check = setTimeout(check, 4000);
     }
   };
-  saveListeners = (listener, backcall) => {
-    this.setState({
-      listeners: [
-        ...this.state.listeners.filter((x) => x !== listener),
-        [listener, backcall]
-      ]
-    });
-  }; /*
-  handleMove = (ev, touch) => {
-    ev.preventDefault();
-    ev.stopPropagation();
-    var overMouseDrag = null;
-    //var onUpEnd = null;
-    var listener = null;
-    if (touch) {
-      listener = "touchmove";
-      //onUpEnd = "ontouchup";
-      overMouseDrag = "ontouchenter";
-    } else {
-      listener = "mousemove";
-      //onUpEnd = "onmouseup";
-      overMouseDrag = "ondragover";
-    }
-    const onMouseMove = (ev) => {
-      const timeout = 150;
-      const e = touch ? ev.touches[0].clientY : ev.clientY;
-      const x = touch ? ev.touches[0].clientX : ev.clientX;
-      const scrollPlacementHeight = e - 55;
-      if (
-        e &&
-        timeout &&
-        !isNaN(scrollPlacementHeight) &&
-        scrollPlacementHeight !== this.state.scrollPlacementHeight &&
-        scrollPlacementHeight > -5
-      ) {
-        this.setState(
-          { scrollPlacementHeight, offScroll: true, provisionalScroll: e },
-          () => {
-            //const { scrollPlacementHeight } = this.state;
-            var topProgress = Math.round(
-              (scrollPlacementHeight / (window.innerHeight - 215)) *
-                document.documentElement.scrollHeight //window.scrollY
-            );
-
-            clearTimeout(this.dragView);
-            this.dragView = setTimeout(() => {
-              window.scroll(0, topProgress);
-
-              const ifEnded = (noTime) => {
-                window.removeEventListener(listener, onMouseMove);
-                window.removeEventListener(overMouseDrag, overIt);
-
-                //clearTimeout(this.dragEnd);
-                //this.dragEnd = setTimeout(
-                //() => {
-                this.setState({ offScroll: false }, () => {
-                  this.label(topProgress);
-                });
-                //},
-                //noTime ? 0 : 3500
-                //);
-              };
-
-              clearTimeout(this.dragMove);
-              this.dragMove = setTimeout(ifEnded, timeout);
-              if (window.innerWidth - x > 300) {
-                console.log("oob");
-                clearTimeout(this.dragMove);
-                ifEnded(true);
-              }
-            }, 50);
-          }
-        );
-      }
-    };
-    const overIt = (event) => event.preventDefault();
-
-    window.addEventListener(overMouseDrag, overIt, false);
-    window.addEventListener(listener, onMouseMove);
-    this.saveListeners(listener, onMouseMove);
-  };*/
-
-  handleMove = (ev, touch) => {
-    ev.preventDefault();
-    ev.stopPropagation();
-    const listener = touch ? "touchmove" : "mousemove";
-    const overMouseDrag = touch ? "ontouchenter" : "ondragover";
-    const onMouseMove = (ev) => {
-      const timeout = 150;
-      const e = touch ? ev.touches[0].clientY : ev.clientY;
-      //const x = touch ? ev.touches[0].clientX : ev.clientX;
-      const scrollPlacementHeight = e - 55;
-      if (
-        e &&
-        !isNaN(scrollPlacementHeight) &&
-        scrollPlacementHeight !== this.state.scrollPlacementHeight
-      ) {
-        this.setState(
-          { scrollPlacementHeight, offScroll: true, provisionalScroll: e },
-          () => {
-            var topProgress = Math.round(
-              (scrollPlacementHeight / (window.innerHeight - 215)) *
-                document.documentElement.scrollHeight //window.scrollY
-            );
-            //console.log(document.documentElement.scrollHeight);
-            window.scroll(0, topProgress);
-
-            const ifEnded = (noTime) => {
-              window.removeEventListener(listener, onMouseMove);
-              window.removeEventListener(overMouseDrag, overIt);
-
-              clearTimeout(this.dragEnd);
-              this.dragEnd = setTimeout(
-                () =>
-                  this.setState({ offScroll: false }, () => {
-                    this.label(topProgress);
-                  }),
-                noTime ? 0 : 300
-              );
-            };
-
-            clearTimeout(this.dragMove);
-            this.dragMove = setTimeout(ifEnded, timeout);
-            if (
-              topProgress - this.state.topProgress >
-              0.000001
-              //&&window.innerWidth - x > 300
-            ) {
-              console.log("oob");
-              clearTimeout(this.dragMove);
-              ifEnded(true);
-            }
-          }
-        );
-      }
-    };
-    const overIt = (event) => event.preventDefault();
-
-    window.addEventListener(overMouseDrag, overIt, false);
-    window.addEventListener(listener, onMouseMove);
-    this.saveListeners(listener, onMouseMove);
-  };
-  label = (topProgress) => {
-    /*const inSection = (path) => {
-      console.log(path);
-      this.setState({ scrollPath: path });
-    };
-    //window.scroll(0, this[path].current.offsetTop);
-    const offsetTop = (current) =>
-      current.offsetTop < topProgress + window.innerHeight;
-*/
-    const construct = (current, tryy = 0) => {
-      /*console.log(
-        offsetTop(current),
-        topProgress,
-        current.offsetTop,
-        current.offsetHeight,
-        this.state.scrollTop
-      );*/
-
-      return Math.abs(topProgress - current.offsetTop);
-      /*this.state.scrollTop - window.innerHeight <
-          Math.abs(current.offsetTop + current.offsetHeight) &&
-        offsetTop(current)
-      */ // < 900;
-    };
-    //if (this.state.scrollTop < 115) return inSection("saverparty.xyz");
-    const gett = (tryy = 0) => {
-      var name = null;
-      const inSection = (nae) => (name = nae);
-      if (this.state.journal) {
-        if (construct(this.sci.current) < tryy) {
-          inSection("sci");
-        } else if (construct(this.sdr.current) < tryy) {
-          inSection("sdr");
-        } else if (construct(this.trust.current) < tryy) {
-          inSection("trust");
-        } else if (construct(this.dns.current) < tryy) {
-          inSection("dns");
-        } //else inSection("saverparty.xyz");
-      } else {
-        if (construct(this.rec.current) < tryy) {
-          inSection("rec");
-        } else if (construct(this.gdp.current) < tryy) {
-          inSection("gdp");
-        } else if (construct(this.party.current) < tryy) {
-          inSection("party");
-        } else if (construct(this.marx.current) < tryy) {
-          inSection("marx");
-        } else if (construct(this.air.current) < tryy) {
-          inSection("air");
-        } else if (construct(this.immi.current) < tryy) {
-          inSection("immi");
-        } else if (construct(this.work.current) < tryy) {
-          inSection("work");
-        } //else inSection("saverparty.xyz");
-      }
-      tryy = tryy + 1000;
-      //console.log(tryy);
-      if (name /* && construct(this[name].current) < tryy*/) {
-        //construct(this[name].current);
-        //console.log(name, topProgress, this[name].current.offsetTop);
-        this.setState({
-          scrollPath: name,
-          bar:
-            this[name].current.offsetHeight *
-            ((window.innerHeight - 215) / document.documentElement.scrollHeight)
-        });
-      } else return gett(tryy);
-    };
-    clearTimeout(this.labelTimer);
-    this.labelTimer = setTimeout(() => {
-      gett();
-    }, 5);
-  };
   render() {
-    //const { width } = this.state;
     const handleScollImgError = (e) => {
-      if (e.message) {
-        console.log(e.message);
-        this.setState({ serviceCancelingImages: true });
+      if (e) {
+        this.setState({ settleDropboxFree: true });
       }
     };
-    let arrayOfnumbers = 0;
-    const scrollnum = () => {
-      arrayOfnumbers = arrayOfnumbers + 1; //arrayOfnumbers[arrayOfnumbers.length - 1] + 1;
-      //arrayOfnumbers.push(num);
-      //console.log(arrayOfnumbers)
-      return arrayOfnumbers;
+    const { width } = this.state;
+    const ios = false;
+    const count =
+      width > 1800
+        ? 6
+        : width > 1500
+        ? 5
+        : width > 1200
+        ? 4
+        : width > 900
+        ? 3
+        : width > 600
+        ? 2
+        : 1;
+    const countstyle = {
+      transform: "translate(0%,0%)",
+      top: "0px",
+      position: "relative",
+      breakInside: "avoid",
+      width: "100%"
     };
-    const space = " ";
-    /*const hydratehtml = (text) => {
-      return text;
-    };*/
-
-    /*var divElement = document.getElementById("viz1643742790357");
-    var vizElement = divElement.getElementsByTagName("object")[0];
-    if (divElement.offsetWidth > 800) {
-      vizElement.style.width = "1000px";
-      vizElement.style.height = "800px";
-    } else if (divElement.offsetWidth > 500) {
-      vizElement.style.width = "1000px";
-      vizElement.style.height = "800px";
-    } else {
-      vizElement.style.width = "100%";
-      vizElement.style.height = divElement.offsetWidth * 1.77 + "px";
-    }
-    var scriptElement = document.createElement("script");
-    scriptElement.src = "https://public.tableau.com/javascripts/api/viz_v1.js";
-    vizElement.parentNode.insertBefore(scriptElement, vizElement);*/
-
-    return (
-      /*<div style={{
-        columnCount:""
-      }}>*/
-
-      <div
-        style={{
-          minHeight: "100%",
-          height: "min-content",
-          overflow: "hidden",
-          maxWidth: "600px",
-          fontFamily: "sans-serif",
-          textAlign: "center"
-        }}
-      >
+    const linecss = {
+      left: "0px",
+      top: "0px",
+      display: "flex",
+      position: "absolute",
+      width: "100%",
+      height: "200px",
+      transform: "scale(1,-1)"
+    };
+    let arrayOfnumbers = [0];
+    const scrollnum = () => {
+      const num = arrayOfnumbers[arrayOfnumbers.length - 1] + 1;
+      arrayOfnumbers.push(num);
+      return num;
+    };
+    //const space = " ";
+    const videostyle = { width: "100%", border: 0, height: "min-content" };
+    if (this.state.lastWidth) {
+      return (
         <div
-          onDragStart={() => false}
-          onMouseDown={this.handleMove} //onDrag
-          onTouchStart={(e) => this.handleMove(e, true)}
           style={{
-            top: this.state.offScroll
-              ? 0
-              : Math.min(
-                  window.innerHeight - 115,
-                  Math.max(60, this.state.scrollPlacementHeight)
-                ),
-            zIndex: 3,
-            backgroundColor: "rgba(255,255,255,.4)",
-            position: "fixed",
-            width: this.state.offScroll ? "100%" : "0%",
-            height: this.state.offScroll ? "100%" : "0%",
+            overflowX: "auto",
             transition: ".3s ease-in",
-            right: "0px"
+            display: "block",
+            width: "100%"
           }}
         >
           <div
-            style={{
-              right: "10px",
-              backgroundColor: "white",
-              borderRadius: "12px",
-              padding: "10px",
-              userSelect: "none",
-              cursor:
-                this.state.scrollTop !== 0 && !this.state.footer
-                  ? "pointer"
-                  : this.state.scrollTop !== 0
-                  ? "n-resize"
-                  : this.state.footer
-                  ? "pointer"
-                  : "s-resize",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-end",
-              justifyContent: "flex-end",
-              opacity: this.state.scrollTop === 0 ? 1 : 0.8,
-              top: Math.min(
-                window.innerHeight - 115,
-                Math.max(60, this.state.scrollPlacementHeight)
-              ),
-              textAlign: "right",
-              //right: "10px",
-              position: "fixed",
-              transition: ".3s ease-in"
-            }}
+            className={
+              this.props.pathname === "/consumption"
+                ? "openedPage"
+                : !this.state.isTop
+                ? "navbarhide"
+                : "navbar"
+            }
+            style={{ maxWidth: "100%", overflowX: "auto", overflowY: "hidden" }}
           >
-            <span
-              style={{
-                right: "0px",
-                fontWeight: "bolder",
-                fontSize: "30px",
-                WebkitTextStroke: `1px rgba(10,70,120,${
-                  this.state.scrolling ? 0.5 : 0.8
-                })`
-              }}
-            >
-              {this.state.scrollPath}
-            </span>
-            <img
-              alt=""
-              style={{
-                borderRadius: "10px",
-                border: "5px solid rgb(5,5,5)",
-                width: "30px",
-                height: "auto"
-              }}
-              src={
-                this.state.nofred
-                  ? ""
-                  : "https://www.dl.dropboxusercontent.com/s/oi43wpcc0h9phcz/saverAcorn%20%281%29.png?dl=0"
-              }
-            />
-            <div
-              style={{
-                backgroundColor: "black",
-                width: "10px",
-                position: "absolute",
-                height: this.state.bar
-              }}
-            />
-          </div>
-        </div>
-        {/*<div
-          style={{
-            width: "100%",
-            right: "0px",
-            position: "relative",
-            height: "0px"
-          }}
-        >*/}
-        {/* <div
-        //alt=""
-          ref={this.canvas}
-          style={{
-            transition: ".3s ease-in",
-            overflow: "hidden",
-            height: "100vh",
-            width: this.state.offScroll ? "auto" : "0px",
-            right: "0px",
-            position: "fixed",
-            top: "0px",
-            transform: `translateY(${this.state.provisionalScroll}px)`
-          }}
-        />*/}
+            <div style={{ display: "flex" }}>
+              <div style={{ display: "flex" }}>
+                <img
+                  style={{ height: "30px", width: "auto" }}
+                  alt="saver party squirrel"
+                  //this.state.settleDropboxFree
 
-        <div
-          onClick={(e) => this.setState({ journal: !this.state.journal })}
-          style={{
-            transition: `${
-              this.state.offScroll ? 0.1 : this.state.journal ? 0.5 : 0.2
-            }s ease-in`,
-            border: "1px solid",
-            borderRadius: "15px",
-            padding: "10px",
-            margin: "10px",
-            backgroundColor: "white",
-            display: "flex",
-            position: "fixed",
-            width: "calc(100% - 42px)",
-            fontFamily: "sans-serif",
-            justifyContent: this.state.scrollTop === 0 ? "center" : "flex-start"
-          }}
-        >
-          {!this.state.journal ? "journal" : "plan"}
-        </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <div>
-          <div
-            ref={this.chapter1}
-            style={{
-              marginLeft: "62px",
-              paddingBottom: "70px",
-              backgroundColor: "rgb(20,20,25)",
-              //height: !this.props.journal ? 0 : "max-content",
-              transform: `scale(1,${!this.state.journal ? 0.1 : 1})`,
-              position: !this.state.journal ? "fixed" : "relative",
-              width: /*this.state.offScroll ? "100px" : */ "calc(100% - 66px)",
-              maxWidth: "calc(600px - 100px)",
-              fontFamily: "Nunito, sans-serif",
-              textAlign: "center",
-              transition: `${this.state.scrolling ? 0.3 : 2}s ease-out`,
-              color: `rgba(200,200,220,${this.state.scrolling ? 0.5 : 0.8})`,
-              fontSize:
-                /*this.state.offScroll
-              ? "1px"
-              : */ this
-                  .state.width < 300
-                  ? "21px"
-                  : "17px"
-            }}
-          >
-            <h1>"thinking doesn't require money."</h1>
-            GOP tolls 40% debt service, Dems gentrify. Libertarians in private.
-            Saver stops it all. "Why are gains for U.S. workers good for the
-            world?"
-            <br />
-            <br />
-            Although poverty has income-gains as its denominalization, it lowers
-            as inequality rises because labor is an input cost of labor. So, a
-            gain for labor would be{space}
-            <a href="https://fred.stlouisfed.org/graph/?g=Llrn">
-              productive-efficiency
-            </a>
-            , GDP/hour-GDP/p bunting, to follow (-GDP/p) tech advancement (less
-            work per living costs).
-            <br />
-            <br />
-            supply==demand is labor borne demand, outlay immediately
-            (no-profit-accounts)
-            <br />
-            Free rider immutable labor costs are used to gain equity by gov.
-            <h1>
-              Conviction/monitoring before evidence too; "put my money to work,"
-              beyond Article 4 is free rider mutable, and Article 1.8 is an
-              oxymoron{/**david bernheart */}
-            </h1>
-            <h2>
-              challenges for state-vic permits and closed source reason, is
-              retarded for GDP/hour-GDP/p
-            </h2>
-            <h2>
-              new road or bypass can be paid by tolls, bike paths, walking pace,
-              by Truncated Production Tax, 3% under $2k
-            </h2>
-            Forcing on device end to end encryption not to work for business,
-            forcing open source, and not for scientific nor tech advancement
-            less jobs productive efficiency purpose, but to not give secrets to
-            competition before users Making them userers.
-            <h2>
-              nationalization instead of target margin (for operational
-              monopoly), retards
-            </h2>
-            Saver Party vs Taxpayers' Alliance
-            <br />
-            investment in energy infrastructure is just gentrification, going
-            bust is mathematically ensured.
-            <h2>The People vs Gov Sleaze</h2>
-            <h2>
-              "20% is massive profits... energy we bond laundering means of
-              production target margin upon Savers' land exploration donee
-              rights, 11/12, tax-payer money is not $170t/$30t/$2t, "we dont
-              want to charge tax-payers when Savers are so docile."
-            </h2>
-            I'll fucking kill you brits, daniell boxall, Nana Akua.
-            <h2>
-              margin target operational monoplolies, laborless-demand
-              implausible rental-income use cap by units or days
-            </h2>
-            no pennywise equity investment for welfare NHS, premium for nothing
-            <br />
-            <br />
-            "Illegal immigrants being dropped into community not elected
-            officials knowing," is not the "cost to," Savers' land exploration
-            donee rights, the spending is. They are peaceful and working age,
-            that which lending, landlording and insuring laborless-demand
-            (dead-weight of) are diminishing its benefacidious fruit-bearingness
-            of GDP/hour-GDP/p, productive-efficiency and tech advancement.
-            <h1>
-              Truncated Production Tax - ween cops off bonds net loss profit
-            </h1>
-            "Hold people in bars or pay the price in court." Claudia Tenney
-            saying bribery/state-vic is legal.
-            <h2>
-              redistricting can be by population density alone, (along lines of
-              similar density)
-            </h2>
-            Gordon G. Chang, "throw-away phones, targeting" can be found by who
-            you communicate with. "strong possibility China made virus in a
-            lab."
-            <h2>
-              Trucker freedom rally is terrorism and like a union barrier to
-              entry... just quit and admit that you think the pandemic isn't
-              real nor does virion inject DNA into cell but actually is
-              byproduct of bacterial infection and only comes out, or think
-              murder should be legal
-            </h2>
-            International law acknowledges human rights as donee over contract
-            and juris bias.
-            <h2>Duress beyond minimal viable product.</h2>
-            inflation an slavery reparations and land deprecation is
-            laborless-demand, your supply side economics is labor dispoused of
-            supply, and is more of a dead-weight-box towards economic welfare,
-            productive-efficiency, GDP/hour-GDP/p utility-indifferent trades
-            found, and tech advancement by comparative advantstiges.
-            <br />
-            <br />
-            free rider mutable government gentrification, good will and science,
-            implausible use intent rent seeking, implausibly deniability.
-            <br />
-            <br />
-            Michael Foot kink of socialism, the voters said no.
-            <br />“<a href="https://qr.ae/pGEDI2">Rise up ranks of legal</a>
-            {space}profession, now head of labor party.”
-            <h2>Art Laffer - "Free trade except fruitless USPTO tariffs."</h2>
-            "Chips are part of the economy, subsidize." Many in Trump admin
-            wanted to repatriate industry by not banning finance but gentrify,
-            only 2 people opposed.{/**trump and kudlow */}
-            <br />
-            Good Will surrendered freedom donee invocation of Savers' land
-            exploration, GDP boom alone is RETARDED macroeconomic GIBBERISH,
-            GDP/hour-GDP/p is Nick Carducci's invention, microeconomic that sees
-            money-"market" as dead-weight laborless-demand, outstanding good
-            will ("supply-side-economics," prosperity by 65% mortagage and asset
-            price market concentration by equity, 35% implausible-use
-            rental-income, USPTO rent-seeking by bribe, copyright, government
-            trust bridge toll/broadband for operational monopoly instead of
-            target margin? idiots)
-            <hr />
-            Free rider immutable labor costs are used to gain equity by gov.
-            <br />
-            Conviction/monitoring before evidence too.
-            <br />
-            Forcing on device end to end encryption not to work for business,
-            forcing open source, and not for scientific nor tech advancement
-            less jobs productive efficiency purpose, but to not give secrets to
-            competition before users.
-            <br />
-            Making them userers.
-            <br />
-            Stop the spending, reverse amortize the bonds, (cash/debt)*income
-            every year back, Article 1.8 is an oxymoron unequal, certainly not
-            general revenue asset sales “welfare,” by a century of market
-            concentration, misappropriated. Investment in business and
-            technology means entrepreneurs need to innovate more ON THEIR OWN,
-            you don’t fucking need money to invent, Kudlow. Truncated Production
-            Tax/ Max-royalty and equities banked transaction-based-sdr
-            thereafter.
-            <h2>
-              "If inflation is too much money for too much goods (denominomial),
-              stimulate like a communist in emergencies of lower prices."
-            </h2>
-            "They work less, but don't remove their pay, so consumers are in
-            pretty good shape here - too much emergency stimulus." ONE CENT IS
-            TOO MUCH, let alone{space}
-            <a href="https://qr.ae/pGEDI2">Savers' exploration rights</a>. "The
-            fed is still punting money, 40%/2 years. That is the cause of 7%
-            inflation," but that money isn't even in the economy. "labor have
-            more power now to negotiate higher wages' pittance for equity
-            surrendered,"{space}
-            <a href="https://qr.ae/pGEDpT">for market concentration</a>. "The
-            fed will have to take money out of the{space}
-            <a href="https://qr.ae/pGEDIE">economy</a>."
-            <h1>
-              <a href="https://qr.ae/pGEDIW">supply side economics</a>
-              {space}== good will
-            </h1>
-            <h2>revisions of unemployment are claims, not survey</h2>
-            <TwitterTweetEmbed
-              key="1421471623136358405"
-              tweetId="1421471623136358405"
-            />
-            <h3>
-              we are going to have to sweep implausible use landlords off the
-              streets.
-            </h3>
-            tech advancement is less jobs{/**"throwing money at it" */}
-            <h2>
-              Raegan/Gorbechov false flag, now pipeline sanctions, Trump science
-              tariffs
-            </h2>
-            (mostly good will of equity, $2t checking exists) $4t/yr 2010-2020
-            Republicans spend Savers' land exploration rights in "emergencies."
-            <br />
-            <Cable
-              style={{ width: "100%", maxWidth: "300px", height: "auto" }}
-              onError={handleScollImgError}
-              //img={true}
-              src={
-                this.state.noyoutube
-                  ? ""
-                  : "https://www.youtube.com/embed/WlSVwRaO-iQ"
-              }
-              float="right"
-              title="Curtis Sliwa and mentally-ill homeless (Trump USPTO fruitless nonsense) - https://youtu.be/WlSVwRaO-iQ"
-              scrolling={this.state.scrolling}
-              fwd={this["scrollImg" + scrollnum()]}
-              scrollTopAndHeight={this.props.scrollTop + window.innerHeight}
-              scrollTop={this.props.scrollTop}
-            />
-            "Which types of wealth are lacking?"
-            <br />
-            Labor-borne-demand, GDP/hour-GDP/p.
-            {/**"levers, gaits, pressure points, not people, forever, real truth" */}
-            <div style={{ marginLeft: "5px", borderLeft: "3px white solid" }}>
-              Communism deprives no man of the power to appropriate the products
-              of society; all that it does is to deprive him of the power to
-              subjugate the labour of others by means of such appropriations.
-            </div>
-            <h1>microeconomists: "altruism!=retarded"</h1>
-            Diana 'slanderer of lawyer-bar-class-resolution-malfeasance and
-            racketeering-prosecutor' Meade, "the motivation is mental illness."
-            what biomedicine? like, a brain-lesion?
-            <h2>The right and top left like Good Will over free markets</h2>
-            Progressive is a donee claimable false bid pool. I’m holding them to
-            desist.
-            <h2>
-              good will is like taking par-limeLeft value, for pennywise
-              "savings," not absolute.
-            </h2>
-            “They are rooted in psychological and behavioral deficiencies, such
-            as lack of work ethic, lack of faith, lack of discipline,
-            over-spending, excessive risk-taking in investments, greed, pride,
-            and an insatiable desire to impress others.”
-            <br />
-            Most people are in debt and count assets are Good Will, $170t/$2t
-            checking (U.S.). If you are bona fide in your work, you will not be
-            rich, no matter if you spend the least of anyone in the world.
-            <br />
-            <br />
-            “Making money is generally difficult for the many who do not have
-            higher education, with no elite connections, who are female, and for
-            people of color. Not a fair situation.”
-            <br />
-            Most work doesn't require education
-            <br />
-            <br />
-            10k savings by refinancing by extensions or long term Good Will
-            $170t is pennywise like Obamacare is to insurance with price fix,
-            not an actual savings relative to the false bid pool loss, donee
-            claimable.
-            <br />
-            <br />
-            Force against will includes non-minimal viable product duress.
-            <br />
-            <br />
-            Cheslie Kryst “Mental health illness,” these doctors never get off.
-            She was a civil rights activist and martyr. She is rolling over in
-            her grave.
-            <br />
-            <br />
-            Non-disclosure and non-compete agreements are illegal: not voluntary
-            nor Tranquil, nor productively-efficient, the intent of the Union,
-            Article 1.8, Article 3 & Article 4.
-            <h3>
-              war bond conflict of interest; education, healthcare, housing,
-              juris, indices funds over currency, over labor costs, General
-              Maintenance keeping us from implausible landlord use, export jury
-              saveface lest malpractice torts, and repo-cycle kept down payment,
-              fails.
-            </h3>
-            <Cable
-              onError={handleScollImgError}
-              //img={true}
-              src={
-                this.state.noyoutube
-                  ? ""
-                  : "https://www.youtube.com/embed/nKvUf7F4Xn4"
-              }
-              float="left"
-              title="Dick Morris (77WABC) - French Revolution - https://youtu.be/nKvUf7F4Xn4"
-              scrolling={this.state.scrolling}
-              fwd={this["scrollImg" + scrollnum()]}
-              scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
-              scrollTop={this.state.scrollTop}
-            />
-            "Aryian race, blonde hair, blue eye," is not the reason why Italians
-            joined Axis.
-            <h2>
-              <a href="https://thumbprint.us/voting">election/court-tech</a>
-            </h2>
-            7% of NYC should never represent 11/12 industry-variable REALITY:
-            jail or without evidence no bail; 216/day missing children forever
-            repeat offender login.gov malfeasance.
-            <hr ref={this.saver} />
-            Savers' donee invoked Good Will and house-wins pyramid schemes
-            <h1>geohash/mo</h1>
-            <h3>
-              EU INTEGRATED BULLSHIT, no import is Article 4 Article 1.8 (free
-              rider immutable competing with producers, speaklegally.
-            </h3>
-            <h2>You are served a hold, on notice</h2>
-            pain/duress is a diability, homelessness nor mental biomedical
-            lesions drug users consent, slutty, is not
-            <h3>
-              Communism deprives no man of the power to appropriate the products
-              of society; all that it does is to deprive him of the power to
-              subjugate the labour of others by means of such appropriations. I
-              would like to know more about these, “blockchain applications for
-              government.”
-            </h3>
-            <h1>
-              Rudy Giuliani: "no bail, no incarceration, on murder, I'm
-              exagerating the conviction, but I'm making it."
-            </h1>
-            <h2>buy altruist with attention</h2>
-            Have you seen this?? Humanharvest.info/polio cdc wonder data.
-            <br />
-            <Cable
-              style={{ width: "100%", height: "auto", maxWidth: "300px" }}
-              onError={handleScollImgError}
-              img={true}
-              src={
-                this.state.noyoutube
-                  ? ""
-                  : "https://www.dl.dropboxusercontent.com/s/pbrz6gdmm72svex/Screen%20Shot%202022-02-04%20at%202.42.50%20PM.png?dl=0"
-              }
-              float={null}
-              title="https://humanharvest.info/polio"
-              scrolling={this.state.scrolling}
-              fwd={this["scrollImg" + scrollnum()]}
-              scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
-              scrollTop={this.state.scrollTop}
-            />
-            Broader set of rules than profit (material+rent)/income cost market
-            concentration, quality tach advance withholding (pennywise general
-            revenue stock sales for insurance false-bid-pool loss, invoices'
-            donee invoked), GDP/hour-GDP/p productive-growth
-            technological-bumping.
-            <br />
-            Stackin hours expirin false bid pool loss donee invoking
-            <br />
-            You purchase and sell indices for “welfare,” now buy abroad? No
-            Article 4 import exists
-            <br />
-            (material+rent)/income. It ain’t labor it is unions? Omg
-            <br />
-            <br />
-            Margins makes costs expensive because laborless-demand is margins,
-            or profits kept year to year.
-            <h2>pain and duress is debilitating slut</h2>
-            McCormick says, "he is not putting you at risk by creating virions,"
-            it is byproduct of bacteria. Reasonable doubt requires alternative
-            …doubt, as until then it is not vivo
-            <br />
-            <br />
-            (material+rent)/income is conspiracy to market concentrate by labor
-            costs, “lowering poverty.”
-            <br />
-            <br />
-            216/day missing children forever because login.gov malfeasance,
-            convict intranet.
-            <br />
-            GDP/hour-GDP/p is econ welfare, (-GDP/p tech advancement).
-            <br />
-            First it was hard,{space}
-            <a href="https://billbiden.org">now biden</a>,” Don’t intimidate nor
-            scare anybody that cannot be prosecuted in court, for voluntary
-            Trade and Tranquil as to comparative advantage Supply and Demand
-            productive efficiency GDP/hour-GDP/p by (-GDP/p tech advancement).
-            “Due to covid 19, many people feel threatened and can’t afford
-            rent.” That has nothing to do with excess deaths expected from
-            population growth of single year age life expectancy ago.
-            <h1>war bonds is war crime</h1>
-            price elasticity is useless, "you people voted murphy in," citarelli
-            was the same thing on finance and non-voter "no-candidate" won
-            SIMPLY.
-            <h1>
-              Bernie Sanders is a corporate sellout - 44% of Medicare, all of
-              "healthcare"
-            </h1>
-            <h3>
-              invoices, equities' market concentration over the dollar by
-              (material+rent)/income labor-costs
-            </h3>
-            weather made possible by 'name-your-price-tool' false bid pool net
-            loss claim lottery without donee invocations except the house that
-            also do the weather (just like ed/event tech, without credit-taking
-            $12k/64 debt/cash per person a year, paying for court/election tech
-            and billfeed)!
-            <h1>Ween cops off bonds</h1>
-            Qualified immunity is given by natural law, you don’t need to
-            enumerate known hazards.
-            <br />
-            The juris is criminal.
-            <br />
-            “Criminals about to commit crimes, arrest them before that happens.”
-            <h1>
-              ghost guns at crime scenes is not before the armed-theft or
-              -assault, WITH PROOF
-            </h1>
-            "How many people have had over 1 trillion dollars?"
-            <br />
-            Nick Carducci - BA in Political Science & Economics, Johns Hopkins
-            University (Graduated 2015)
-            <br />
-            There are only $2t dollars, so King Solomon had only Good Will, last
-            traded neighbor value, which today is $170t. No one has had half the
-            currency (state lands’ exploration depositary).
-            <br />
-            <br />
-            Buy altruism with attention
-            <h2>(cash/debt)*income every year back</h2>
-            <h1>$12k/64 debt/cash per person every year back</h1>
-            Indices are cornering market concentration over the dollar with
-            labor costs: lower (material+rents)/labor.
-            <br />
-            I can't prosecute and invoke donee claims.
-            <br />
-            <br />
-            "self-medication is good for{space}
-            <a href="https://qr.ae/pGEZyM">attenuating</a>
-            {space}stress." Brian Kilmeade, Jobs is a sign of industrial
-            devolution This is a{space}
-            <a href="https://qr.ae/pGEZyS">White House story</a>, not a Biden
-            story.
-            <br />
-            <br />
-            "the federal acquisition."
-            <h3>
-              if you want available-readiness, just open source instead of FDA
-            </h3>
-            "low-income meicaid/medicare patients, we take care of them," those
-            are funded by stock sales, invoices and expiring premiums, so how
-            are you helping anyone but yourself?
-            <h2>dangerousness bail component is no evidence prosecution</h2>
-            <h1>brandishing and armed robbery, is not a mental health issue</h1>
-            <h2>homelessness is not a mental health issues</h2>
-            <h3>education level isn't required for most jobs</h3>
-            "stabilize interest rates and jobs" - mitch roschelle, why?
-            "inflation and unemployment," why? how would buying and selling
-            bonds lower prices? Equity concentration over currency "price" or
-            good will value increase doesn't matter?
-            <h2>it is not to be fair or nice, it is to stop waste</h2>
-            “If the jobs is not just a spike, we need to look at ending these
-            emergency measures.” Why do you need to use Saver money to bail out
-            your insurers, lenders and landlords? Stop cornering the market by
-            labor cost, Guthrie. Jobs is a sign of industrial devolution.
-            <br />
-            <br />
-            getting business operating = existing business trust building of
-            free rider mutable input cost, for market concentration and
-            gentrification for gerontocracy. kill all old people
-            <h2>
-              never has a supporter of{space}
-              <a href="https://occupywallst.quora.com/">
-                Occupy Wall St ran for office
-              </a>
-            </h2>
-            Actualized balance of trade, including laborless-demand of finance,
-            is repatriated.
-            <br />
-            False bid pool ‘name-your-price’ tool loss, invoices donee
-            claimable, and stock sales, is healthcare, education is trade
-            secrets and hardly required for the average per capita work, and
-            housing cap {"<"}5
-            <br />
-            Tamper proof grid, don’t be prudes.
-            <br />
-            The keymaker is not by device, or is it a function to be ran on
-            router device, that can make a durable object and hardware bust the
-            wire
-            <br />
-            Reason for open source (voluntarily , duress)
-            <br />
-            “Moving oil and gas, our intentions are solving a deeply-economic
-            problem.” U.S. Admiral, why wouldn't you target margin and truncated
-            production tax pipelines instead?
-            <h3>
-              no way is Article 1.8 for non Article-4 (Education, healthcare,
-              stocks of other industry 1/12, home-building
-            </h3>
-            mental health 'name-your-price' tools are not your piggy bank to
-            house the homeless, removing their own perogatives to make money,
-            instead of capping rental-income by 5 storefronts +condominiums, 5
-            auto liens, or 30 days (for hotels), not price, so prices match
-            quality, and no laborless-demand is borne. Just don't rent-seek
-            science, copyright is enough, and 6 patent-holders in a class of an
-            industry is NOT, neither is expert saveface lest malpractice more
-            than 1/12 industry invariance, as 1/12 reasonable doubt is not
-            enough to stop a conviction, one of bona fides.
-            <br />
-            <br />
-            guns are legal without license. you can only have it taken away
-            after shooting someone, or armed robbery. Not drug sale protection.
-            <hr ref={this.dns} />
-            <h1>convict intranet, tamper proof dns grid</h1>
-            7% voted, Adams is only concerned with corporations. 44%
-            Medicare/Medicaid is stock sales. congradulations, Obamacare.
-            <h1>slander new asylums, fear</h1>
-            Eric Adams, "Mental health are in subways, that is no place to have
-            a dignified existence. I know this is a great city, and we are
-            resilient. I am the CEO."
-            <h2>
-              surrendering others' freedom is on the books now, pussy, ween cops
-              off bonds, truncated production tax, jail can't have state vic and
-              from false bid pool loss torts even to the rightful victim, and
-              not on neighborhood, "good will value," for cornering the market
-              by labor costs, of equity indices over the dollar, triple
-              material-inflation, and double checking ($64/person/yr,
-              currencyComponentOfM1), debt ($12k/person/yr).
-            </h2>
-            separation of people using it lawfully, nd unlawfully, that would
-            just be taken away after threats without using cops to{space}
-            <a href="https://truncatedsalestax.com/gov">recoup theft</a>
-            {space}- lest malfeasance - 3% under $2k TRUNCATED PRODUCTION TAX
-            geohash/month spoofable-precinct.
-            <h1>conflict of interest when net loss bond profit</h1>
-            <h2>free rider immutable sewage police lawsuits</h2>
-            warmonger scott perry over Putin pipelines
-            <h3>
-              you cannot sign yourself in a contract, but you can self-harm in
-              present, because that is subjective. otherwise is donee invoking,
-              because it is amortized, accrued and laundered.
-            </h3>
-            that has nothing to do with the defensive tact, it is superfluous
-            tort. agregious, not even needed. get your hands off my drugs and
-            guns, old-bitch,{space}
-            <a href="https://fred.stlouisfed.org/graph/?g=LCQE">
-              19% are "disabled"
-            </a>
-            , whole lives to save, 44% Medicare stock sales, pennywise off
-            {space}
-            <a href="https://www.cbo.gov/sites/default/files/111th-congress-2009-2010/costestimate/amendreconprop.pdf#page=14">
-              false bid pool loss
-            </a>
-            .
-            <Cable
-              style={{ width: "100%", height: "auto" }}
-              onError={handleScollImgError}
-              img={true}
-              src={
-                this.state.noyoutube
-                  ? ""
-                  : "https://www.dl.dropboxusercontent.com/s/xm82a82r7w11c0a/pour%20on%20savings.jpeg?dl=0"
-              }
-              float={null}
-              title="pour on savings propaganda conflict of interest"
-              scrolling={this.state.scrolling}
-              fwd={this["scrollImg" + scrollnum()]}
-              scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
-              scrollTop={this.state.scrollTop}
-            />
-            <h1>
-              SAVER MONEY LIVLIBOOD EXPORATION, GLUTTON. TRUNCATED PRODUCTION
-              TAX VOLUNTARY TRADE VIRTUOSITY OF WAR IS ONLY VOLUNTARY
-            </h1>
-            <h2>commit crime, make sure job and mental health?</h2>
-            "illegal voting," is not conservative, for anti-competitive market
-            concentration over currency as donee in contracts. cut carl higbie's
-            throat.{/**matt schlapp conservative.org */}
-            <h2>
-              <a href="https://qr.ae/pGEWHJ">socialists force free markets</a>
-            </h2>
-            Bill O'Reilly coming for your guns. GUN TRAFFICKING IS A JOB; this
-            is not:
-            <Cable
-              style={{ width: "100%", height: "auto" }}
-              onError={handleScollImgError}
-              img={true}
-              src={
-                this.state.noyoutube
-                  ? ""
-                  : "https://www.dl.dropboxusercontent.com/s/wgijcheeuof0z4l/Screen%20Shot%202022-02-03%20at%209.06.44%20PM.png?dl=0"
-              }
-              float={null}
-              title="30under5.us"
-              scrolling={this.state.scrolling}
-              fwd={this["scrollImg" + scrollnum()]}
-              scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
-              scrollTop={this.state.scrollTop}
-            />
-            <h2>
-              Why would Dick Morris and Grant Stinchfield, professors of
-              'freedom and stability,' draw economic sanctions, over a pipeline?
-            </h2>
-            Ben Furgeoson, douche: "China is in charge, there is no way to stop
-            china from watching your chats," that is not true, and apple is a
-            liar, they aren’t privacy, they store keys on the cloud instead of
-            {space}
-            <a href="https://thumbprint.us/privacy">on device</a>. Very easily I
-            made
-            {space}
-            <a href="https://github.com/NickCarducci/Wavepoint.la/blob/master/src/fumbler/index.js">
-              end to end with keys on device
-            </a>
-            , now that means it is a private key, and we should delegate these
-            at the motor vehicle, whenever peaceful illegal immigrant wants to
-            buy a house.
-            <br />
-            <br />
-            "Selling out America," but our own: 11/12 Savers say sell,{space}
-            <a href="https://qr.ae/pGEWLS">per capita</a>… or dollar? Certainly
-            not exploration by bipartisan bonds.
-            <br />
-            <br />
-            "to their reputations and families,"{space}
-            <a href="https://qr.ae/pGEWmY">
-              why would anyone put us all futher in debt
-            </a>
-            ? why would anyone pay off or cancel uncollateralized debt?
-            <a href="https://qr.ae/pGEWDI">
-              trust bust market concentration over the currency
-            </a>
-            .
-            <h2>
-              general revenue AOC{space}
-              <a href="https://www.programmer-books.com/wp-content/uploads/2019/04/Machining-For-Dummies.pdf#page=49">
-                gantrification
-              </a>
-            </h2>
-            <a href="https://froth.app">
-              Education, healthcare, housing, tolls, spectrum is NOT government
-              business
-            </a>
-            .
-            <hr ref={this.biz} />
-            <h2>
-              the problem here -{space}
-              <a href="https://fred.stlouisfed.org/graph/?g=Lzx3">
-                $12k/64 debt/cash new person a year
-              </a>
-            </h2>
-            "Can I legally decline to pay for health insurance through my
-            employer?"
-            <br />
-            Company policy is out of the question if governments cannot force
-            it. Insurance is a false bid pool loss, in{space}
-            <a href="https://www.cbo.gov/sites/default/files/111th-congress-2009-2010/costestimate/amendreconprop.pdf#page=14">
-              2010 CBO admitted insurance is a net loss
-            </a>
-            , and invokes donee beneficiaries of your customers.
-            <br />
-            <h2>indices!</h2>I am annoyed at the concentration of the 'cool
-            shit' of amongstiositously="Beatle"{" "}
-            {/*suppoedly go nowhere, but go through one then another. The kinks!
-           which beatle would you, do you think you are, that's the problem with 
-           the kinks. if you guys call me ringo I swear tg.*/}
-            <h1>Drop dead mark levin</h1>
-            <h2>
-              Why as a nation do we need to subsidize input costs of
-              semiconductors? It is elastic
-            </h2>
-            "A cop on every subway station," or we could instead of chasing
-            people around and removing them from potential labor, cap
-            rental-income by units or days, not price.
-            <br />
-            "shelter, food, and medicine they needed," detective djacimo how the
-            fuck are you going to tell someone what they need mental health,
-            violence interruptors is just because cops can't bargain with
-            hostage-takers?
-            <br />
-            Michael Goodwin: "Crime is why people are leaving the democratic
-            party." KIDS OWNING GUNS ISN'T A CRIME!
-            <br />
-            <Cable
-              style={{ width: "100%", height: "auto" }}
-              onError={handleScollImgError}
-              img={true}
-              src={
-                this.state.noyoutube
-                  ? ""
-                  : "https://www.dl.dropboxusercontent.com/s/gk78gobivw6t21t/Screen%20Shot%202022-01-15%20at%205.17.16%20AM.png?dl=0"
-              }
-              float={null}
-              title="General Mayoral 7% turnout - https://vote.nyc/sites/default/files/pdf/election_results/2021/20211102General%20Election/00000200000Citywide%20Mayor%20Citywide%20Recap.pdf"
-              scrolling={this.state.scrolling}
-              fwd={this["scrollImg" + scrollnum()]}
-              scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
-              scrollTop={this.state.scrollTop}
-            />
-            "Accusations and criminal record must be held on double jeporady."
-            <br />
-            Charlie Gasparino: "why can't you put mentally-ill people in
-            hospitals?" because it isn't proof of a crime!
-            <br />"
-            <a href="https://qr.ae/pGEWHJ">
-              private equity does business with Cathy Wilde
-            </a>
-            ."{/**charlie gaspirino */}
-            <br />
-            mental health isn't solved with medicine because it isn't
-            biomedical, nor a crime. you cannot prosecute with torts from other
-            laws. gun ownership isn't a crime.
-            <h2>
-              disability without biomedical evidence or unconsent, is a racket
-            </h2>
-            "if you admit you are wrong, you can't keep asking to save your
-            money from tort."
-            <h2>
-              Substance abuse, eldercare, takes years to accrue (like tests to
-              lengthen life 30-45, success?)
-            </h2>
-            "Works at JHU, full-dental and stock sales. Have you ever heard of a
-            study that invests in a study and doesn't talk about it?"
-            <br />
-            <br />
-            "not doing as good as joe rogan," because he talks out of both sides
-            of himself. "when people make mistakes, they shouldn't be
-            cancelled," but should be prosecuted?
-            <h1>
-              "We need people to get back to work," why? because you think 6
-              producers makes a free market?
-            </h1>
-            "When does society need become political claim?"
-            <br />
-            For the U.S.,{space}
-            <a href="https://constitutioncenter.org/interactive-constitution/article/article-iv#article-section-4">
-              Article 4
-            </a>
-            {space}
-            mentions outlay scope
-            <br />
-            <div style={{ marginLeft: "5px", borderLeft: "3px white solid" }}>
-              and shall protect each of them against Invasion; and on
-              Application of the Legislature, or of the Executive (when the
-              Legislature cannot be convened) against domestic Violence.
-            </div>
-            <br />
-            and{space}
-            <a href="https://constitutioncenter.org/interactive-constitution/article/article-i#article-section-8">
-              Article 1.8
-            </a>
-            {space}
-            mentions receipt methods (albeit oxymoronic):
-            <br />
-            <div style={{ marginLeft: "5px", borderLeft: "3px white solid" }}>
-              all Duties, Imposts and Excises shall be **uniform** throughout
-              the United States; To borrow Money on the credit of the United
-              States;
-            </div>
-            <br />
-            Any free rider mutable (even operational monopolies can be target
-            margin instead) is **pure inflation**
-            <br />
-            * tax from outside the market, or
-            <br />
-            * free rider immutable made mutable by debt.
-            <br />
-            It also just goes to laborless-demand/userers (insurers, landlords
-            and lenders).
-            <br />
-            If you mean society as in lands, currency is deed on state-land and
-            resources (20% of U.S.).
-            <br />
-            <br />
-            Brian Kilmeade: "Cops need to take guns away."
-            <h1>
-              "We aren’t anti-anything, we are for freedom," retarded truckers
-            </h1>
-            "Is banning members of Congress from trading stocks against the
-            principles of a free market economy?"
-            <br />
-            *Free market communism*, where the directive is subjective, is no
-            *holds*, barred.
-            <br />
-            Rather, *communism* or *microeconomics‘ free markets* (Supply and
-            Demand) that prevents the profit off anothers’ labor, would prohibit
-            such monopoly **power over price or quantity** (free rider immutable
-            contractor chosen).
-            <br />
-            So, it depends on if you consider monopolies as common-artifacts of
-            free markets, in which microeconomists do not. *Free markets without
-            monopolies are ****auction-based****, not players on both the
-            ****ask*** (request for proposals of laborious-contractors-Demand by
-            the **free rider immutable** tax-Supply; a free rider mutable supply
-            that is bid-and-offered first - tax or donee invocating- and
-            multiformed-share split - would be **dead weight box, never a ‘free
-            market’**)*, then bid*.
-            <br />
-            <div style={{ marginLeft: "5px", borderLeft: "3px white solid" }}>
-              Labor or goods is usually Supply (ask), but in this third, free
-              rider immutable tax, case - neither dead weight box nor demand -
-              labor would not exist in anarchy, and Demand (bid with labor,
-              subcontracting) would decrease available productively-efficient
-              hours, economic welfare (curves cite the free rider mutability
-              taxed) as mutability of actualized-anyway-taxes increase, and
-              Supply would increase, but it may be absolutely-vertical at q*,
-              totally elastic.
-            </div>
-            <br />
-            Not even an index fund nor blind trust would remove the bias,
-            conflict of interest, by free rider mutable, nor multiform by bonds,
-            -tax, and market concentration over the currency by labor costs.
-            <h2>
-              {/**shimone procupez */}
-              drug related violence, not correlated; money but also prosecution
-              is price elastic, vertical q*.
-            </h2>
-            Joe Manchin is pro-insurance, that is insane, false bid pool loss,
-            market concentration over dollars, by cornering the market thru
-            labor costs. Corporate flaccid loss and government state vic trust
-            for operational monopoly & expert saveface left malpractice instead
-            of target margin and industry-variable.
-            <br />
-            <a href="https://extension.okstate.edu/fact-sheets/coronavirus-sars-cov-2-and-the-covid-19-pandemic-what-is-it-and-how-does-it-spread.html">
-              never has a lab shot a virion into my fucking eyeballs
-            </a>
-            .
-            <h2>
-              viral load and death rate by lockdown is not significant,
-              year-to-year, nor in a boat.
-            </h2>
-            <a href="https://moldmask.co">Masks are fine</a>
-            {space}for spittle that drops into an open body or on a table,
-            bacteria is made by spittle.
-            <br />
-            If it is viewable in cold it is hot enough to rise.
-            <br />
-            <br />
-            "you can't sell the drugs," open-source right to try , bills are
-            donee invocations of the collateral-hours!
-            <h1>
-              Rot in Hell! Jesus is the light to the world, the beginning of
-              winter and spring. It’s an easter passover message
-              <br />
-              Christ
-            </h1>
-            <h3>
-              What does being sober have to do with sin sacrifice?
-              <br />
-              Why is STI mental compassion involuntary meds? It is irrelevant to
-              jailing
-              <br />
-              Lying to exaggerate a comparative innocence or duress for please
-              is your onus! But after some point, your intent is ...exhibitable
-              <br />
-              Is the egg your mother
-              <br />
-              Etymology is a religion
-            </h3>
-            $1b/yr for border patrol, the people aren’t getting arrests, 19% of
-            the gerontocratic disabled DIE ALREADY LET THE WORKING AGE HAITIANS
-            IN
-            <br />
-            We don’t even know if DHS is dropping illegals in the Pacific, plane
-            rides cost more if you exclude border patrol. 216/day missing
-            children because of the child molestor Jim Jordan.
-            <br />
-            <br />
-            "100k/yr children are dying from pot in fentanyl." oh fuck off
-            bitch.
-            <h2>general maintenance unit</h2>
-            "Mental health per criminal on the rise, eduction and teachers, is
-            that good? durrrrr?" Gershlagerret reschenthaler "tax-payer dollars
-            <br />
-            <Cable
-              style={{ width: "100%", height: "auto", maxWidth: "400px" }}
-              onError={handleScollImgError}
-              img={true}
-              src={
-                this.state.noyoutube
-                  ? ""
-                  : "https://www.dl.dropboxusercontent.com/s/tr1e169u4qolelp/Screen%20Shot%202022-02-02%20at%201.46.15%20PM.png?dl=0"
-              }
-              float="left"
-              title="https://fred.stlouisfed.org/graph/?g=Lzu0"
-              scrolling={this.state.scrolling}
-              fwd={this["scrollImg" + scrollnum()]}
-              scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
-              scrollTop={this.state.scrollTop}
-            />
-            (20% of U.S. is Savers' land and resources) green climate slush
-            fund" science is a liesure activity to the economic science, like
-            Frank Morano.
-            <h1>
-              third party donee invoking duress loitering and borrower
-              implausibly deniably-purposeful defence.
-            </h1>
-            labor-shortage, laborless-demand/userers/rent-seeking: insurers
-            (non-rollover), lenders (non-concurrentable equity or max-royalty
-            1/12 industry label) landlords (above 5 or 30 days)
-            <h3>
-              Netsuite.com/advantage is front-running uselessly, profits beyond
-              labor. Dollars lose value, but that is, 'Tax-Payer Money?'
-            </h3>
-            <a href="https://qr.ae/pGEuhg">
-              price fixing immobilizes quality, at an inefficient change-rate
-            </a>
-            .
-            <h3>
-              2 weeks off or permenant is not comparative innocence,
-              discrimination can be deduced with a fulfilled example, or
-              conversations discrimination cannot be of a quota.
-            </h3>
-            I think those that want to chore again are just lazy
-            <h1>castigated gerontocracy</h1>
-            not charged with evidence. kill yourself mtg
-            <h2>
-              no due process in 1/6, homelessness with psych charges without
-              biomedical or consent for self-"harm" subjective,
-              indifference-utility. $35m 1/6 witch-hunt, Saver money.
-            </h2>
-            I'm sorry my POV isn't hott enough
-            <h3 ref={this.con}>
-              Drugs are a good; would cartel pharmacies be peaceful if we open
-              source?
-            </h3>
-            get rid of all the fractional-reserve-jewelers
-            (transaction-based-sdr, truncated production tax, geohash/mo
-            spoofable precinct, 3% under $2k, free rider immutable,
-            sewage-police-lawsuits)
-            <h1>America is not afro culture (per capita), CNN...</h1>
-            "What are some scenarios where auditors played a role in the poor
-            performance of state-owned institutions?"
-            <br />
-            *Ratings’ agencies* should be an independent, non-profit, that is,
-            technology before it is on the market, or is unable to be
-            rent-seeken (which is profits as trust, beyond labor; considering
-            such as input costs).
-            <br />
-            This incentive to **state victimize** is the *actual cause* of
-            General Maintenance failures.
-            <br />
-            The Jury system is broken, for desists and holds are of{space}
-            <a href="https://constitutioncenter.org/interactive-constitution/article/article-iii#article-section-2">
-              11/12 industry-variable jury surrender
-            </a>
-            .
-            <br />
-            Finance and the biomedical mandates, and mental slander for
-            homelessness and racketeering state healthcare at the same time,
-            forcing medication on people for the former economic welfare
-            failures, productive efficiency GDP/hours-GDP/p, and insurance
-            mediation pennywise operational monopsony duress false bid pool,
-            ‘name-your-price tool,’ -loss, is fallacious; people are good
-            economically, and GDP/hours is productivity if GDP/hours-GDP/p is
-            productive efficiency, tech advancement -GDP/p.
-            <h2 ref={this.pdt}>"bankrolling-rent"</h2>
-            How do you bet responsibly by shooting {"<"}$25k fish in a barrel.
-            Show us your real time holdings PER ACCOUNT WITH IDENTIFICATION OF
-            not more than 3 accounts Castigation gentrification, Medicare 44%
-            stock sales, $829.5b/yr Of all healthcare $2.7t/yr that also is
-            rent, $700b/yr residential and commercial structural “fixed” startup
-            costs, labor-elastic. Commercial leases are UNKNOWN
-            <h1>Give me your head and this all goes away</h1>
-            contractor liability, donee defense or
-            borrower/tennant-potential-condo-owner/
-            <a href="https://www.cbo.gov/sites/default/files/111th-congress-2009-2010/costestimate/amendreconprop.pdf#page=14">
-              false-bid-pool-loss
-            </a>
-            {space}implausibly deniable use your own money, trespass, I will
-            take the money out. I am suing the Treaury for forcing me to take
-            these checks. there is $2t checking, currencyComponentOfM1, $1t
-            stimulous, will become ACTUAL tax money after 3 yrs of people like
-            me, not cashing out, and accepting such a claim. I prefer
-            cashless-bail for unfounded, unmeasured laws, yeild back. "You go on
-            a million job interviews, I am going to live until 120." Greg Kelly
-            (Trump Supporter).
-            <br />
-            <br />
-            hold = desist, barred is objectables sustained.
-            <h1 ref={this.trust}>
-              you can't talk your way out of cornering the market, prohibiting
-              trade and fraud, cunt
-            </h1>
-            "Biden deal expired - we are concerned about non-rollover insurance.
-            Stop Covid-19 Surprise Medical Bills Act." All bills are duress and
-            as price-gounging as surprise impossibilities for borrower (
-            <a href="https://fred.stlouisfed.org/graph/?g=Lzx3">
-              $12k/64 per person a year new
-            </a>
-            ), and donee defense invocations.
-            <h1>
-              Lizzie Fletcher: "This Congress and the previous congress took
-              numerous steps to mitigate the health and economic damaging
-              impact, and now we are addressing consumers," how? by controlling
-              quality? DROP OFF BITCH, tests and medication are expensive
-              because USPTO rent-seeks science, you aren't making strides, you
-              are a defendant in the case of
-              price-gouging/gentrification/cornering by labor costs. Sending
-              test kits and masks out are free rider mutable afterwards, and all
-              you have done is front-run{space}
-              <a href="https://qr.ae/pGEMIn">entrepreneurs</a>, whom bring the
-              science to market, in a responsible way if they are waiting for
-              transaction-based sdr/vault-share currency/prescribers/insurer
-              false bid pool loss/<a href="https://qr.ae/pGEMgV">invoice</a>
-              {space}competition.
-            </h1>
-            <h3>
-              "Why are free or low cost but outstanding asymptomatic testing is
-              important?"
-            </h3>
-            <h2>
-              it has proven virion isn't correlated above population baseline
-              since we test 50% of the time asymptomatically, with 12.5% percent
-              true positive and 12.5% false positive{space}
-              <a href="https://humanhuman.info/polio">of the whole</a>.
-            </h2>
-            <br />
-            Increasing prices to react to demand is not price gouging, but
-            flaccid collective loss for trust-building finite producers, is. We
-            are talking pennywise, vs levels.
-            <h1>supply==demand when labor==supply (outlay, today)</h1>
-            more demand from another market, by debt, allows the free rider
-            immutable tax to invoke a mutable premium. A change by technology or
-            behavior is the same capacity. Amazon still is a{space}
-            <a href="https://www.investopedia.com/ask/answers/031815/why-are-there-no-profits-perfectly-competitive-market.asp">
-              finite producer
-            </a>
-            , so price-discretion is theirs, not the market's.
-            {space}
-            <a href="https://occupywallst.quora.com">stop the stock</a>
-            {space}over{space}
-            <a href="https://saverparty.quora.com">currency</a>
-            {space}gentrification!
-            <h2>
-              government gentrification or debt for free rider immutables
-              (sewage, poilice and lawsuits exclusively) is price gouging, and
-              trust-building with government over operational monopolies instead
-              of target margining is rent-seeking.
-            </h2>
-            when there is a crisis, real, imagined, or{space}
-            <a href="https://vaults.biz/gdp">historical/structural</a>, people
-            can take advantage of that hazard with false bid pool loss claims, a
-            pyramid scheme ('name-your-price-tool').
-            <h1>
-              the point of tech advancement is unemployment, liesure, choring
-              copyrighting and contributions, retard
-            </h1>
-            Mr. Soto, FL: "
-            <a href="https://fred.stlouisfed.org/graph/?g=Lznz">
-              We put money in pockets
-            </a>
-            , from selling shares general revenue, and stopped a great
-            recession."
-            <Cable
-              style={{ width: "100%", height: "auto", maxWidth: "400px" }}
-              onError={handleScollImgError}
-              img={true}
-              src={
-                this.state.noyoutube
-                  ? ""
-                  : "https://www.dl.dropboxusercontent.com/s/1g2h4xn6w9s6ux5/Screen%20Shot%202022-02-02%20at%201.17.58%20PM.png?dl=0"
-              }
-              float="left"
-              title="Pandemic Profiteers: Legislation to Stop Corporate Price Gouging Energy and Commerce (Yooutube) - https://youtu.be/L7nX0yUIRAk"
-              scrolling={this.state.scrolling}
-              fwd={this["scrollImg" + scrollnum()]}
-              scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
-              scrollTop={this.state.scrollTop}
-            />
-            <Cable
-              style={{ width: "100%", height: "auto", maxWidth: "400px" }}
-              onError={handleScollImgError}
-              img={true}
-              src={
-                this.state.noyoutube
-                  ? ""
-                  : "https://www.dl.dropboxusercontent.com/s/tfdxw5izvd5oauo/Screen%20Shot%202022-02-02%20at%201.07.36%20PM.png?dl=0"
-              }
-              float="left"
-              title="Pandemic Profiteers: Legislation to Stop Corporate Price Gouging Energy and Commerce (Yooutube) - https://youtu.be/L7nX0yUIRAk"
-              scrolling={this.state.scrolling}
-              fwd={this["scrollImg" + scrollnum()]}
-              scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
-              scrollTop={this.state.scrollTop}
-            />
-            "Infringing on Savers' resources will improve prices for Savers."
-            <h2>
-              democrats want to fine operational monopolies (price gouging
-              profiteers, profits kept in a business account rather than quality
-              of work to sole-proprietorship w/ max-royalies, not-withstanding),
-              not target margin, cap by units (5 storefronts + condominiums, 5
-              auto liens) or days (30, for hotels).
-            </h2>
-            for government bond laundering, Republicans want to do that and for
-            private userers (laborless-demand, rent-seekers' intent
-            implauisbly-deniable)
-            <Cable
-              style={{ width: "100%", height: "auto", maxWidth: "400px" }}
-              onError={handleScollImgError}
-              img={true}
-              src={
-                this.state.noyoutube
-                  ? ""
-                  : "https://www.dl.dropboxusercontent.com/s/eile44s5dnqd4s7/IMG_9517.PNG?dl=0"
-              }
-              float="left"
-              title=" - https://fred.stlouisfed.org/graph/?g=LxtV"
-              scrolling={this.state.scrolling}
-              fwd={this["scrollImg" + scrollnum()]}
-              scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
-              scrollTop={this.state.scrollTop}
-            />
-            "Getting labor back to work has been an issue this entire pandemic."
-            <br />
-            Mr. Dunn, FL, "People are incentivized not to work," I don't see how
-            2.8m/170m continuing claims has that great of an effect.
-            <br />
-            <br />
-            Mr. Dunn, Most people have taken the shot, there is not many people
-            that could not get out of the dilemma-duress. It is not
-            constitutional, Tranquil and voluntary trade, by Microeconomic
-            Supply and Demand reasoning, for comparative advantage and tech
-            advancement (-GDP/p) not cornering the market with higher wages,
-            especially from laborless-demand (rent-seeking-userers: insurers,
-            lenders, landlords above 5 or 30 days).
-            <div style={{ marginLeft: "5px", borderLeft: "3px white solid" }}>
-              The Trial of all Crimes, except in Cases of Impeachment; shall be
-              by
-              {space}
-              <a href="https://constitutioncenter.org/interactive-constitution/article/article-iii#article-section-2">
-                Jury; and such Trial
-              </a>
-              {space}shall be held in the State where the said Crimes shall have
-              been committed; but when not committed within any State, the Trial
-              shall be at such Place or Places as the Congress may by Law have
-              directed.
-            </div>
-            <h2>
-              not even 'steel' is without the variable elastic cost of labor and
-              its derivations in material-infaltion, market concentration as
-              indices over the dollar, homes collateral, profits flaccid loss,
-              false bid pools, implausible landlord use, repo-cycle kept down
-              payments, and labor...
-              <br />
-              GDP/hours is productivity only if -GDP/p is tech advancement
-              {/**apprecation*/}
-            </h2>
-            Mr. Bucshon IN: fraud who cannot actualize{/**figure */} per capita
-            deaths, "do not castigate our broken free market economy and expert
-            lest malpractice industry invariable broken jury" profits are
-            flaccid collective loss, waste
-            <h2>
-              Rakeen Mahud : "As an economist, I need to think GDP/p is good.
-              Don't trust three letter names, and don't trust the latest
-              saturation of free rider mutable, good, well-paid jobs, that which
-              only increases prices, still as disposable demand does get spent
-              per food (only fixed after rent-seeking is banned)."
-              {/**tony carlenas */}
-            </h2>
-            not by price. That is why price-elasticity is transitive-property.
-            Contracts are estimates, NJ Consumer Fraud Act is fraud, not an
-            option to buy a figure. It is donee claimable and borrower duress
-            defensable.
-            <br />
-            <br />
-            Mr. Guthrie KY: "People are hiring," because of a century of
-            laborless-demand borne of lending, insurance and landlording.{space}
-            <a href="https://qr.ae/pGEMIn">We are maxed-out</a>. Unable to make
-            money is most harmed of those labor that are retired, not small
-            business, whom necessarily have had profits.
-            <h1>(cash/debt)*income every year back</h1>
-            <h2>
-              Truncated Production Tax; don't stop price-gouging unless donee or
-              borrower defense, for per quality is subjective.
-            </h2>
-            Take on{space}
-            <a href="https://qr.ae/pGEMpY">
-              bad actors that support small business
-            </a>
-            . Liability is a transitory-property, profits are excess of the
-            supply chain, labor-borne-demand.
-            <br />
-            <br />
-            Mr. Harman, localized price gouging, large scale core problem is
-            normalizing in industry-variance, not just PPE and toilet paper
-            initially, because of USPTO rent-seeking." Manufacturers and
-            retailers are mirroring this price-gouging. Crises of corporate
-            concentration in every sector. 15 brands of detergent, only a few
-            producers provide, which harms consumers ability to compete with
-            them, as vendors. Price-gouging legislation is a solution. Focusing
-            where consolidation is happening. It is work the FTC needs to do.
-            This is a{space}
-            <a href="https://humanharvest.info/polio">
-              novel national emergency
-            </a>
-            , pandemic of bona fide academic actuaries (per capita exogeneity).
-            <br />
-            <Cable
-              style={{
-                maxWidth: this.state.lastWidth ? "200px" : "300px",
-                width: "100%",
-                height: "auto"
-              }}
-              img={true}
-              onError={handleScollImgError}
-              src={
-                this.state.noyoutube
-                  ? ""
-                  : "https://www.dl.dropboxusercontent.com/s/fckwkvi1l8ln0gj/Screen%20Shot%202022-01-18%20at%206.53.38%20PM.png?dl=0"
-              }
-              float="right"
-              title="https://humanharvest.info/polio"
-              scrolling={this.state.scrolling}
-              fwd={this["scrollImg" + scrollnum()]}
-              scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
-              scrollTop={this.state.scrollTop}
-            />
-            Mr. McNerney, "'Well, what is the solution? Enforce price gouging in
-            emergencies or disasters.' I don't acknowledge that right." Saver
-            Party Chairperson.
-            <h2>
-              "Touches prices, time and cost. - von mises, government raises
-              prices," in dead weight box Pareto Microeconomics Supply and
-              Demand propensities and allocation of indifferences between
-              marginal utilities.
-            </h2>
-            <h3>
-              Material cost going up, labor, shipping, PCE, then structures for
-              lease, we do not know commercial leases only structures. all these
-              things drive inflation up, when labor has more money I guess. But
-              we don't. Impacts labor-equity/savers the most, not small business
-            </h3>
-            <br />
-            Mt. Latta "prices per quality moves across the market"
-            <h2>
-              Profit is not part of the supply chain you dumb shit{space}
-              <span
+                  src={
+                    this.state.settleDropboxFree
+                      ? ""
+                      : "https://www.dl.dropboxusercontent.com/s/oi43wpcc0h9phcz/saverAcorn%20%281%29.png?dl=0"
+                  }
+                />
+                <div style={{ padding: "6px 10px", color: "black" }}>
+                  <a href="https://saverparty.xyz">SaverParty.xyz</a>
+                </div>
+              </div>
+              <Link
                 style={{
-                  textDecoration: "line-through"
+                  textDecoration: "none",
+                  padding: "6px 10px",
+                  backgroundColor: "rgba(0,0,0,.1)"
+                }}
+                to="/positions"
+              >
+                Positioning
+              </Link>
+              <Link
+                style={{
+                  textDecoration: "none",
+                  padding: "6px 10px",
+                  backgroundColor: "rgba(0,0,0,.1)"
+                }}
+                to="/sectors"
+              >
+                Sectors
+              </Link>
+              <Link
+                style={{
+                  textDecoration: "none",
+                  padding: "6px 10px",
+                  backgroundColor: "rgba(0,0,0,.1)"
+                }}
+                to="/consumption"
+              >
+                Consumption
+              </Link>
+              <Link
+                style={{
+                  textDecoration: "none",
+                  padding: "6px 10px",
+                  backgroundColor: "rgba(0,0,0,.1)"
+                }}
+                to="/debt"
+              >
+                Interest / Debt
+              </Link>
+              <div style={{ width: "max-content" }}>
+                target margin donee duress beyond mvp;
+                <br />
+                <a href="https://fred.stlouisfed.org/graph/?g=LmzU">
+                  GDP/hour-GDP/p
+                </a>{" "}
+                productive-efficiency. growth means -GDP/p tech adv. now
+              </div>
+            </div>
+          </div>
+          <div
+            ref={this.top}
+            style={{
+              width: "100%",
+              position: "relative"
+            }}
+          >
+            <h2>
+              Saver-dollar v bond donee getting in the way of land exploration
+            </h2>
+            <div style={{ width: "max-content", maxWidth: "100%" }}>
+              cap rent by units, not price. not operational monopoly investment
+              for inefficient (material+rent)/income poverty decline for
+              inequality and national-bond ($170t good will cornering/$2t donee
+              checking state-lands' exploratory-rights) prosperity.
+              {/**david mccormick */} Truncated Production Tax for <br />
+              Free rider mutable and non-entrenched juris.
+            </div>
+            {this.props.pathname === "/work" ? (
+              <div>
+                we have half unemployment to population than when you were our
+                age, and 65+ have half continuing claims, as you can see below
+                <br />{" "}
+                <Cable
+                  style={{ width: "100%", height: "560px" }}
+                  onError={handleScollImgError}
+                  //img={true}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : `https://fred.stlouisfed.org/graph/graph-landing.php?g=H5XB&width=670&height=475`
+                  }
+                  float="right"
+                  title="https://fred.stlouisfed.org/graph/?g=H5XB"
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                <Cable
+                  onError={handleScollImgError}
+                  //img={true}
+                  src={
+                    this.state.noyoutube
+                      ? ""
+                      : "https://www.youtube.com/embed/TjvqmfDvOfQ"
+                  }
+                  float="right"
+                  title="https://fb.watch/9ruq5dxR9r/"
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                and the following is 20x/person 55+/millennials (
+                <a href="https://30under5.us">rental-income</a>)
+                <br />
+                <Cable
+                  style={{ width: "100%", height: "560px" }}
+                  onError={handleScollImgError}
+                  //img={true}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : `https://fred.stlouisfed.org/graph/graph-landing.php?g=FSwQ&width=670&height=475`
+                  }
+                  float="right"
+                  title="https://fred.stlouisfed.org/graph/?g=FSwQ"
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+              </div>
+            ) : this.props.pathname === "/positions" ? (
+              <Positioning
+                settleDropboxFree={this.state.settleDropboxFree}
+                pathname={this.props.pathname}
+                lastWidth={this.state.lastWidth}
+              />
+            ) : this.props.pathname === "/debt" ? (
+              <div style={{ width: "100%" }}>
+                <div style={{ padding: "10px 4px" }}>
+                  <a href="https://micro-theory.com">Micro-theory.com</a>
+                </div>
+                <div style={{ padding: "10px 4px" }}>
+                  Marx is more conservative than Mises, Libertarians and
+                  Republicans, $821/day is spent, and that implies accrual
+                  instead of trade. Jamie Dimon needs to get car faced like
+                  George Floyd
+                </div>
+                <div
+                  style={{
+                    flexWrap: "wrap",
+                    display: "flex",
+                    width: "100%",
+                    maxWidth: "600px",
+                    height: "min-content"
+                  }}
+                >
+                  <div style={{ position: "relative", width: "300px" }}>
+                    <img
+                      style={{ width: "100%", height: "auto" }}
+                      src={
+                        this.props.settleDropboxFree
+                          ? ""
+                          : "https://www.dl.dropboxusercontent.com/s/ohyyc9wensqjmar/interest%20dead%20weight%20%282%29.png?dl=0"
+                      }
+                      alt="err"
+                    />
+                  </div>
+                  <div style={{ position: "relative", width: "300px" }}>
+                    <div style={{ position: "relative", width: "300px" }}>
+                      <img
+                        style={{ width: "100%", height: "auto" }}
+                        src={
+                          this.props.settleDropboxFree
+                            ? ""
+                            : "https://www.dl.dropboxusercontent.com/s/027c9fnbex54vv5/jewishdebt.jpeg?dl=0"
+                        }
+                        alt="The Talmud dwells on Ezekiel's condemnation of charging interest. The Torah and Talmud encourage lending money without interest. But the halakha (Jewish law) that prescribes interest-free loans applies only to loans made to other Jews. Jewish law allows making loans with interest to persons who are not Jewish."
+                      />
+                    </div>
+                    <div style={{ position: "relative", width: "300px" }}>
+                      <img
+                        style={{ width: "100%", height: "auto" }}
+                        src={
+                          this.props.settleDropboxFree
+                            ? ""
+                            : "https://www.dl.dropboxusercontent.com/s/q06z0f1a8irozfx/Screen%20Shot%202021-01-27%20at%2012.59.30%20AM.png?dl=0"
+                        }
+                        alt="Wiki hypocrit checkmate"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div style={{ width: "100%" }}>
+                  PersonDebtCash
+                  <br />
+                  <Cable
+                    style={{ width: "680px", height: "450px" }}
+                    onError={handleScollImgError}
+                    src={
+                      this.state.nofred
+                        ? ""
+                        : "https://fred.stlouisfed.org/graph/graph-landing.php?g=G8nU&width=620&height=300"
+                    }
+                    float="left"
+                    title=""
+                    scrolling={this.state.scrolling}
+                    fwd={this["scrollImg" + scrollnum()]}
+                    scrollTopAndHeight={
+                      this.state.scrollTop + window.innerHeight
+                    }
+                    scrollTop={this.state.scrollTop}
+                  />
+                  <br />
+                  <Cable
+                    style={{ width: "680px", height: "450px" }}
+                    onError={handleScollImgError}
+                    src={
+                      this.state.nofred
+                        ? ""
+                        : "https://fred.stlouisfed.org/graph/graph-landing.php?g=qDG5&width=620&height=300"
+                    }
+                    float="left"
+                    title=""
+                    scrolling={this.state.scrolling}
+                    fwd={this["scrollImg" + scrollnum()]}
+                    scrollTopAndHeight={
+                      this.state.scrollTop + window.innerHeight
+                    }
+                    scrollTop={this.state.scrollTop}
+                  />
+                  Liabilities
+                  <br />
+                  <Cable
+                    style={{ width: "680px", height: "450px" }}
+                    onError={handleScollImgError}
+                    src={
+                      this.state.nofred
+                        ? ""
+                        : "https://fred.stlouisfed.org/graph/graph-landing.php?g=pazr&width=620&height=300"
+                    }
+                    float="left"
+                    title=""
+                    scrolling={this.state.scrolling}
+                    fwd={this["scrollImg" + scrollnum()]}
+                    scrollTopAndHeight={
+                      this.state.scrollTop + window.innerHeight
+                    }
+                    scrollTop={this.state.scrollTop}
+                  />
+                  CentralBankAssets
+                  <br />
+                  <Cable
+                    style={{ width: "680px", height: "450px" }}
+                    onError={handleScollImgError}
+                    src={
+                      this.state.nofred
+                        ? ""
+                        : "https://fred.stlouisfed.org/graph/graph-landing.php?g=o0UO&width=620&height=300"
+                    }
+                    float="left"
+                    title=""
+                    scrolling={this.state.scrolling}
+                    fwd={this["scrollImg" + scrollnum()]}
+                    scrollTopAndHeight={
+                      this.state.scrollTop + window.innerHeight
+                    }
+                    scrollTop={this.state.scrollTop}
+                  />
+                  InterestRates
+                  <br />
+                </div>
+                <iframe
+                  loading="lazy"
+                  style={{ width: "100%", height: "400px" }}
+                  title="2% of the population owns 4400% of the assets"
+                  src="https://vaults.biz"
+                />
+                <div style={{ width: "100%" }}>
+                  <img
+                    height="auto"
+                    width="100%"
+                    alt=""
+                    src={
+                      this.props.settleDropboxFree
+                        ? ""
+                        : "https://www.dl.dropboxusercontent.com/s/b3ywv62waw7rccp/1800%20taxation.jpeg?dl=0"
+                    }
+                  />
+                </div>
+              </div>
+            ) : this.props.pathname === "/sectors" ? (
+              <div>
+                trueGDPbyNonDebtPerPerson
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=Brfj&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                trueGDPbyNonDebt
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=Br2V&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                trueGDPminuslostequitySame
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=BraK&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                trueGDPminuslostequity
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=BqL3&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                trueVelocityPerQuarter
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=BqS5&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                SlaveDriver
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=B9UD&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                SeparatingPeopleFromAssets
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=BqM0&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                IncomeToGdp
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=B8cT&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                Pplbook
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=xNRc&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                Govbook
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=xNMF&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                FederalEnslavement
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=wWj5&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                Pensions
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=wThA&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                GDPtoMoney
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=wOow&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                DebtToSales
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=vApj&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                GDPToIncome
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=yngl&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                DollarsHeld
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=o0GN&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                DollarsHeldPerPerson
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=pbpA&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                DollarsEarned
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=o0KQ&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                DollarsEarnedPerPerson
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=o0Lc&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                DollarsEarnedPerEmployee
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=paUy&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                GDPPersons
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=qih7&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                GDPMoneyPersons
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=qiiu&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                Realvsnom
+                <br />
+                <Cable
+                  style={{ width: "680px", height: "450px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? ""
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=qjQ2&width=620&height=300"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+              </div>
+            ) : this.props.pathname === "/consumption" ? (
+              <div
+                style={{
+                  height: "100px",
+                  width: "100%"
                 }}
               >
-                republican
-              </span>
-              {space}male
-            </h2>
-            They can price gound because they own the goods. Input costs are
-            elastic, not brittle.. fucking bitch, Rakeen Mahud wants to
-            gentrify, "invest in the system" to rent-seek for the
-            corporate-government bourgeois, like hiring more teachers and
-            calling education a success, rather than looking at education level
-            per industry.
-            <h3>3% under $2k</h3>
-            target margin operational monopolies, Bipartisans are scam artists,
-            sanctions on Russia and China's roads and pipelines?
-            <br />
-            Kathy Castor: "Double the going rate, is price gouging." Who are you
-            to discern location-based price transitions? input costs are input
-            costs.
-            <br />
-            <br />
-            I'm not yielding back, you fucking wet pussy.
-            <br />
-            Mr. Upton, Michigan: "The left wants to allow china to run forward,
-            by population size. Our farmers need that, and so do our families
-            and streets. -GDP/p is tech advancement."
-            <h2>
-              This site is a bottom left site. Inflation is because of asset
-              market concentration, busy-work, laborless-demand, by donee and
-              borrower defense invocations, loitering.
-            </h2>
-            "
-            <a href="https://fred.stlouisfed.org/graph/?g=Lmo6">
-              Shortfall by continuing claims
-            </a>
-            ." - Sarah Frasch.
-            <br />
-            "Get your thoughts together into one sentence
-            <br />
-            It should resolve all issues."
-            <br />
-            <br />
-            word salad:{space}
-            <a href="https://www.quora.com/profile/Nick-Carducci">
-              labor input cost is labor
-            </a>
-            <h1>
-              If suppliers understand how much more spending they have, they
-              will raise prices, but it hasn't actually entered the economy,
-              still only $2t currency component, $170t Good Will, general
-              revenue (asset sales, cornering over elactic-labor costs, made
-              inelastic, like debt on free rider immutables, made mutable.
-              TRUNCATED PRODUCTION TAX).
-            </h1>
-            <br />
-            bipartisan minority basis, counting non-voter, "no-candidate."
-            <h2>
-              "I don't want autonomous trucking to be displaced RIGHT NOW?!?!"
-            </h2>
-            Pallone sounds out of breathe in that{space}
-            <a href="https://extension.okstate.edu/fact-sheets/coronavirus-sars-cov-2-and-the-covid-19-pandemic-what-is-it-and-how-does-it-spread.html">
-              n95 mask. it
-            </a>
-            {space}never hops on dust
-            <h2>constitutional how? the jury requires industry-variance</h2>
-            Price gounding or insurance abetting invoices?
-            <br />
-            <br />
-            Bill belicheck held to ridiculous standards can act normally in
-            hiring, all other discrimination can compare to others’ merits, and
-            blame other characteristics, or have proof of conversations.
-            <h1>
-              If a store owner cant take matters into their own hands, I can
-              with counterfeit in contract
-            </h1>
-            "Gun rights," is implied to be denied in stop and frisk, only state
-            licensure “rights”
-            <br />
-            People’s drug use is not your problem
-            <br />
-            You just want your hospital and pharmacy fund inequality, cornering
-            the market with input costs. You are worthless.
-            <br />
-            Rap sheet a mile long, can be violent, threat to others, bad person,
-            that’s its.
-            <br />
-            "Slap caused a fracture," that could be displaced. He lives in a
-            tent. Remember the homeless guy that stabbed a girl in the morning?
-            norm, so glad you are ok, that is the most important think.
-            Homeless, don’t have an address, because of rent seekers
-            <br />
-            <Cable
-              style={{ width: "100%", height: "auto", maxWidth: "400px" }}
-              onError={handleScollImgError}
-              img={true}
-              src={
-                this.state.noyoutube
-                  ? ""
-                  : "https://www.dl.dropboxusercontent.com/s/mue6qi0tqu1t2ow/IMG_9520.PNG?dl=0"
-              }
-              float="left"
-              title=" - "
-              scrolling={this.state.scrolling}
-              fwd={this["scrollImg" + scrollnum()]}
-              scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
-              scrollTop={this.state.scrollTop}
-            />
-            duress is not hypocrisy
-            <br />
-            Anti rent seeking is about humanity to man, and economic welfare,
-            productive efficiency
-            <br />
-            General maintenance unit
-            <h1>
-              the holocaust was about{space}
-              <a href="https://journals.openedition.org/monderusse/9324#:~:text=As%20in%20other%20East">
-                race
-              </a>
-            </h1>
-            <Cable
-              style={{ width: "100%", height: "auto", maxWidth: "400px" }}
-              onError={handleScollImgError}
-              img={true}
-              src={
-                this.state.noyoutube
-                  ? ""
-                  : "https://www.dl.dropboxusercontent.com/s/eile44s5dnqd4s7/IMG_9517.PNG?dl=0"
-              }
-              float="left"
-              title=" - https://fred.stlouisfed.org/graph/?g=LxtV"
-              scrolling={this.state.scrolling}
-              fwd={this["scrollImg" + scrollnum()]}
-              scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
-              scrollTop={this.state.scrollTop}
-            />
-            <h2>
-              <a href="https://fred.stlouisfed.org/graph/?g=Lxue">
-                Lou Dobbs: word salad
-              </a>
-            </h2>
-            <a href="https://www.bls.gov/news.release/jolts.t04.htm">
-              Quits: 4.3m/December
-            </a>
-            , the result is 10m open jobs, isn’t that more capacity to spend,
-            did you even discount new hires? it is actually the same as 9/2021.
-            {space}
-            <a href="https://humanharvest.info/polio">MOSTLY OLD PEOPLE</a>.
-            <br />
-            10t (only $2t checking exists) so everyone who wants to work, can
-            work, wages are doing well, economy is go go, how do you balance
-            labor as a living cost?
-            <br />
-            Lack of income, wages, an economy doing what we should, equilibrium
-            as economists like to call it. Senior citizens have investments
-            depreciated because of high inflation
-            <br />
-            Get fed to throttle back a bit. Interest rate hikes would lessen
-            animated, vigorous jobs, which we want. It doesn’t hurt families.
-            <br />
-            Taking Savers’ resources in the 20% of U.S. lands will lower
-            material prices. It is too much money in financial system, printed.
-            <h1>
-              Millions of people do it the right way: they are in line, and
-              {space}
-              <a href="https://qr.ae/pGEHH1">they are waiting</a>.
-            </h1>
-            "Determined money laundering without any business, that is not
-            constitutional to prosecute outside of the racketing law-board,
-            mental health biomedical evidence, laundering-intent or
-            subjective-monetary or partial-information/duress-moot pleas
-            decisionmaking be damned."
-            <h2>
-              Adjudication can be juris prudent or dictate by diction (state
-              standing), juris.
-            </h2>
-            "Three is a party."
-            <br />
-            adjunication/security failures will not be adjunicated
-            <h2>
-              U.S. political prisoners; retards need to shuffle before
-              extrapolation
-            </h2>
-            "I stopped being brandon strock, the runaway
-            {/**walkaway democrats founder */} campaign guy, tb test, fight
-            breaks out are you able to defend yourself. concret cell, 24hr/day
-            lockdown. No judge today, not evidence."
-            <br />
-            <br />
-            Psych incite violence misdemeanor public nuisance, not a crime. Drop
-            dead, by any means, wet, wet pussy. Can you defend yourself, your
-            honor?
-            <br />
-            <br />
-            "back and forth, leash at least for next election." so why would
-            juris be paid by false bid pool losses, anything but truncated
-            production tax.
-            <br />
-            <br />
-            {/*it is about race but we don't know which race, non-all-incidence artifact or non-exclusive byproduct*/}
-            <Cable
-              style={{ width: "100%", height: "auto", maxWidth: "400px" }}
-              onError={handleScollImgError}
-              img={true}
-              src={
-                this.state.noyoutube
-                  ? ""
-                  : "https://www.dl.dropboxusercontent.com/s/nt3nzt4okavnm6n/Screen%20Shot%202022-02-01%20at%207.31.56%20PM.png?dl=0"
-              }
-              float="left"
-              title="The SARS-CoV-2 envelope and membrane proteins modulate maturation and retention of the spike protein, allowing assembly of virus-like particles"
-              scrolling={this.state.scrolling}
-              fwd={this["scrollImg" + scrollnum()]}
-              scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
-              scrollTop={this.state.scrollTop}
-            />
-            "
-            <a href="https://www.sciencedirect.com/science/article/pii/S0021925820001015">
-              S recycling
-            </a>
-            {space}and, consequently, M-mediated retention of SARS-CoV-2 S." [
-            <a href="https://www.mdpi.com/1422-0067/22/12/6558/pdf">ref</a>]
-            <br />
-            <br />
-            just an unbonified political lie -{space}
-            <a href="https://extension.okstate.edu/fact-sheets/coronavirus-sars-cov-2-and-the-covid-19-pandemic-what-is-it-and-how-does-it-spread.html">
-              no soul
-            </a>
-            <h2>Quid pro quo is only for free rider mutable</h2>
-            People are going to be using live from drugs, alchool depression at
-            a level never seen before. excess population growth a life
-            expectancy ago.
-            <br />
-            <br />
-            Steve Scalese: "The top-left wants to undermine the economy, find
-            origins of covid, finally prove virion and cell makes virion and it
-            isn't just byproduct."
-            <br />
-            CBO in 2010 said government healthcare would save money from the
-            insurance alternative because insurance is a net loss.
-            <br />
-            <br />
-            No past business is actually business because credit is compound and
-            donee defense-invocations
-            <br />
-            <br />
-            Jurisdiction is standing, don’t.
-            <br />
-            “No grey area in law vs crime.”
-            <br />
-            Metric-system is frequent by which material or liquid? Jurisdiction
-            is standing of juris, juris may not be prudent. Diction vs dictate.
-            Jurisdictate is juris, but disregards the whole juris of,
-            “no-candidate.”
-            <br />
-            <br />
-            "Socialist-China, bringing more chip factories, billions sillindra
-            style slush funds, it is driving up inflation and
-            market-concentration over currency colludes to do this government,
-            corporate vs people. Radical, far-left, big-governemnt socialists."
-            <h2>rationalism is conservative, nationalism is retarded</h2>
-            "Get people back to work again."{space}
-            <a href="https://vaults.biz/party">They are</a>, but why? that is a
-            sign of tech deprecation.
-            <div style={{ marginLeft: "5px", borderLeft: "3px white solid" }}>
-              It is unclear whether such a reduction in the growth rate of
-              spending could be achieved, and if so, whether it would be
-              accomplished through greater efficiencies in the delivery of
-              health care or through reductions in access to care or the quality
-              of care.
-            </div>
-            Only plundering is a fixed cost, Otiose of nothing, integrally
-            itself.
-            <br />
-            <div style={{ marginLeft: "5px", borderLeft: "3px white solid" }}>
-              Marx, 188X- "Vulgar socialism (and from it in turn a section of
-              the democrats) has taken over ... the mode of production ... After
-              the real relation has long been made clear, why retrogress again?"
-            </div>
-            <br />
-            ​People are good for tech advancement, -GDP/p
-            <br />
-            <br />
-            "Good conservative republican over big-gov socialist districts."
-          </div>
-        </div>
+                <Cable
+                  style={{ width: "680px", height: "850px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? "" //o0Lb
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=JsVv&width=620&height=700"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                <Cable
+                  style={{ width: "680px", height: "850px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? "" //o0Lc
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=JsWk&width=620&height=700"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                <Cable
+                  style={{ width: "680px", height: "650px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? "" //o0Lo
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=JsWr&width=620&height=500"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                <Cable
+                  style={{ width: "680px", height: "650px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? "" //o0Ls
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=JsXt&width=620&height=500"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                <Cable
+                  style={{ width: "680px", height: "850px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? "" //o0LP
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=JsXG&width=620&height=700"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+                <Cable
+                  style={{ width: "680px", height: "650px" }}
+                  onError={handleScollImgError}
+                  src={
+                    this.state.nofred
+                      ? "" //o0M3
+                      : "https://fred.stlouisfed.org/graph/graph-landing.php?g=JsXQ&width=620&height=500"
+                  }
+                  float="left"
+                  title=""
+                  scrolling={this.state.scrolling}
+                  fwd={this["scrollImg" + scrollnum()]}
+                  scrollTopAndHeight={this.state.scrollTop + window.innerHeight}
+                  scrollTop={this.state.scrollTop}
+                />
+              </div>
+            ) : (
+              <div
+                style={{
+                  width: "100%",
+                  maxHeight: "100%",
+                  position: "relative"
+                }}
+              >
+                {ios ? (
+                  "employment 1939-2020 not available in iOS"
+                ) : (
+                  <Employment
+                    lastWidth={this.state.lastWidth}
+                    width={width - 20}
+                    isTop={this.state.isTop}
+                    unlockTop={() =>
+                      this.setState({ lockIsTop: false, isTop: true }, () =>
+                        this.top.current.scrollIntoView("smooth")
+                      )
+                    }
+                  />
+                )}
+                <a
+                  style={{
+                    display: "flex",
+                    position: "relative",
+                    marginTop: "10px",
+                    left: "20px",
+                    width: "max-content",
+                    border: "1px solid"
+                  }}
+                  href="https://book.com.co"
+                >
+                  equity & option chartbook
+                </a>
+                Nick@froth.app
+                <br />
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap"
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "100%",
+                      maxWidth: "550px"
+                    }}
+                  >
+                    {this.state.width && (
+                      <PCE
+                        lastWidth={Math.min(550, this.state.width) - 150}
+                        linecss={linecss}
+                        countblock={{
+                          width: "100%",
+                          maxWidth: "550px"
+                        }}
+                      />
+                    )}
+                    {this.state.width && (
+                      <Startup
+                        lastWidth={Math.min(550, this.state.width) - 150}
+                        linecss={linecss}
+                        countblock={{
+                          width: "100%",
+                          maxWidth: "550px"
+                        }}
+                      />
+                    )}
+                    <h3>
+                      surrendered freedom by implausible landlord use, industry
+                      variable jury to desist or be paid for writing on
+                      plaforms, co-signatories' customers/employers, and Savers.
+                      65% are Occupy.
+                    </h3>
+                    $88t debt $2t checking -3/2020, $4t/yr 40% debt spending,
+                    99% amortized… GDP is mutual funds m2 but not discounted by
+                    equities, bonds/collateral/homes, labor, profits flaccid
+                    loss, why?!?!
+                    <br />
+                    <Cable
+                      style={{
+                        height: "auto",
+                        width: "100%",
+                        maxWidth: "170px"
+                      }}
+                      onError={handleScollImgError}
+                      img={true}
+                      src={
+                        this.state.iosNoPhoto
+                          ? ""
+                          : "https://www.dl.dropboxusercontent.com/s/06e2iibx0mirkng/1937%20notice.jpeg?dl=0"
+                      }
+                      float="left"
+                      title="general revenue asset sales inception 1937 SSA market concentration, by dollar, over labor costs"
+                      scrolling={this.state.scrolling}
+                      fwd={this["scrollImg" + scrollnum()]}
+                      scrollTopAndHeight={
+                        this.state.scrollTop + window.innerHeight
+                      }
+                      scrollTop={this.state.scrollTop}
+                    />
+                    <h2>
+                      Input costs are&nbsp;
+                      <a href="https://vaults.biz/work">transitive</a>
+                      &nbsp;1937-
+                    </h2>
+                    <div
+                      style={{
+                        color: "white",
+                        backgroundColor: "rgb(170,50,90)",
+                        width: "100%",
+                        padding: "6px 0px",
+                        textAlign: "center"
+                      }}
+                    >
+                      <a
+                        style={{
+                          color: "white"
+                        }}
+                        href="https://qr.ae/pGEZyS"
+                      >
+                        employment
+                      </a>
+                      &nbsp;&bull;&nbsp;
+                      <a
+                        style={{
+                          color: "white"
+                        }}
+                        href="https://vaults.biz/party"
+                      >
+                        income/labor-costs
+                      </a>
+                      <br />
+                      (material+rent)/income
+                    </div>
+                    Article 1.8 certainly doens't permit (education, healthcare,
+                    housing) science rent-seeking and gentrification.
+                    <br />
+                    <h2>
+                      bad for GDP/hour-GDP/p productive-efficiency, GDP/p tech
+                      advancement
+                    </h2>
+                    (less actual work)
+                    <br />
+                    The reconciliation proposal and H.R. 3590 would maintain and
+                    put into effect a number of policies that might be difficult
+                    to sustain over a long period of time. Under current law,
+                    payment rates for physicians’ services in Medicare would be
+                    reduced by about 21 percent in 2010 and then decline further
+                    in subsequent years; the proposal makes no changes to those
+                    provisions. At the same time, the legislation includes a
+                    number of provisions that would constrain payment rates for
+                    other providers of Medicare services. In particular,
+                    increases in payment rates for many providers would be held
+                    below the rate of inflation (in expectation of ongoing
+                    productivity improvements in the delivery of health care).
+                    The projected longer-term savings for the legislation also
+                    reflect an assumption that the Independent Payment Advisory
+                    Board established by H.R. 3590 would be fairly effective in
+                    reducing costs beyond the reductions that would be achieved
+                    by other aspects of the legislation.8
+                  </div>
+                  <div
+                    style={{
+                      display: "block",
+                      width: "400px",
+                      maxWidth: "calc(100% - 15px)"
+                    }}
+                  >
+                    <Cable
+                      style={{
+                        height: "auto",
+                        width: "100%"
+                      }}
+                      onError={handleScollImgError}
+                      img={true}
+                      src={
+                        this.state.iosNoPhoto
+                          ? ""
+                          : "https://www.dl.dropboxusercontent.com/s/w7he0a3gqtpt3jn/ssa%20general%20revenue.jpeg?dl=0"
+                      }
+                      float="left"
+                      title="https://www.ssa.gov/OACT/TRSUM/2020/tr20summary.pdf#page=17"
+                      scrolling={this.state.scrolling}
+                      fwd={this["scrollImg" + scrollnum()]}
+                      scrollTopAndHeight={
+                        this.state.scrollTop + window.innerHeight
+                      }
+                      scrollTop={this.state.scrollTop}
+                    />
+                    <div>
+                      <a href="https://www.ssa.gov/OACT/TRSUM/2020/tr20summary.pdf#page=17">
+                        2020 Medicare revenue/44% asset sales,
+                        price/market-concentration running out
+                      </a>
+                      <br />
+                      <br />
+                      <a href="https://www.cbo.gov/sites/default/files/111th-congress-2009-2010/costestimate/amendreconprop.pdf#page=14">
+                        CBO Insurance Net Loss Damage Report
+                      </a>
+                      <br />
+                      (donee-invoking-goodwill{/**risk */})
+                    </div>
+                  </div>
+                </div>
+                <select
+                  style={{
+                    display: "flex",
+                    position: "relative",
+                    marginTop: "10px",
+                    left: "20px",
+                    width: "max-content",
+                    border: "1px solid"
+                  }}
+                  value={this.state.openTopic}
+                  onChange={(e) => {
+                    const openTopic = e.target.value;
+                    if (openTopic === "Work") this.state.history.push("/work");
+                    this.setState({ openTopic });
+                  }}
+                >
+                  {[
+                    "Work",
+                    "Masks & Physics",
+                    "Vaccine-Grafts",
+                    "Precautions",
+                    "Stats",
+                    "Debt"
+                  ].map((x) => {
+                    return <option key={x}>{x}</option>;
+                  })}
+                </select>
+                <div
+                  style={{
+                    display:
+                      this.state.openTopic === "Masks & Physics" ? "" : "none",
+                    position: "relative",
+                    width: "calc(100% - 4px)",
+                    columnCount: count
+                  }}
+                >
+                  <div style={{ width: "100%" }}>
+                    <div style={{ display: "flex", margin: "10px" }}>
+                      <table style={{ border: "1px solid" }}>
+                        <thead>
+                          <tr>
+                            <th>action</th>
+                            <th>fall</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>sneeze</td>
+                            <td>6m</td>
+                          </tr>
+                          <tr>
+                            <td>cough</td>
+                            <td>2m</td>
+                          </tr>
+                          <tr>
+                            <td>breathe</td>
+                            <td>{"<"}1m</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div style={{ wordBreak: "break-all" }}>
+                        https://pubmed.ncbi.nlm.nih.gov/17542834/#:~:text=Practical
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        backgroundColor: "rgb(200,140,60)",
+                        color: "rgb(230,230,230)",
+                        breakInside: "avoid",
+                        borderBottom: "1px solid grey"
+                      }}
+                    >
+                      Masks are harmful as #MasksGestateBacteria - to keep your
+                      cough or sneeze on your sleeve then washing hands is
+                      better
+                      <div
+                        style={{
+                          fontWeight: "bolder",
+                          backgroundColor: "white",
+                          margin: "4px",
+                          color: "grey"
+                        }}
+                      >
+                        We do need a countertop-talking test
+                      </div>
+                    </div>
+                    atmospheric convection
+                  </div>
+                  <div style={{ width: "100%" }}>
+                    <img
+                      height="auto"
+                      width="100%"
+                      alt="hadley cell"
+                      src={
+                        this.state.settleDropboxFree
+                          ? ""
+                          : "https://www.dl.dropboxusercontent.com/s/a1vy0q7ahbrlduf/globe%20weather%20system.jpeg?dl=0"
+                      }
+                    />
+                    weather systems are from heat which is really density from
+                    friction of non-solluables
+                  </div>
+                  <div
+                    style={{
+                      width: "100%"
+                    }}
+                  >
+                    <img
+                      height="auto"
+                      width="300px"
+                      alt="goldberg drum about 3ft 3 hours covid still detected"
+                      src={
+                        this.state.settleDropboxFree
+                          ? ""
+                          : "https://www.dl.dropboxusercontent.com/s/fm92t9anyr47j2t/goldberg.jpeg?dl=0"
+                      }
+                    />
+                    <div style={{ width: "100%", wordBreak: "break-all" }}>
+                      https://www.medrxiv.org/content/10.1101/2020.03.09.20033217v1.full.pdf
+                    </div>
+                    <br />
+                    Since covid was found to float on dust they sprayed into a
+                    Goldberg drum 3 hours later the scientists conclude it
+                    doesn’t dissipate upwards-like or require spittle. There is
+                    no proof that spittle stays in the air except in comparison
+                    to dust in a 3ft steel drum
+                  </div>
+                  {/*<div style={{ width: "300px" }}>
+                <TwitterTweetEmbed
+                  key="1333520425511432196"
+                  tweetId="1333520425511432196"
+                />
+              </div>
+              <div style={{ width: "300px" }}>
+                <TwitterTweetEmbed
+                  key="1309333445970202624"
+                  tweetId="1309333445970202624"
+                />
+              </div>*/}{" "}
+                  <TwitterTweetEmbed
+                    key="1326577128830275586"
+                    tweetId="1326577128830275586"
+                  />
+                  <a href="https://www.politifact.com/factchecks/2020/jun/15/facebook-posts/claim-n95-masks-cant-stop-covid-19-particles-due-s/">
+                    source
+                  </a>
+                  {/*<div style={{ width: "300px" }}>
+                <TwitterTweetEmbed
+                  key="1334575619003310082"
+                  tweetId="1334575619003310082"
+                />
+              </div>
+              <div
+                style={{
+                  backgroundColor: "black",
+                  
+                  width: "100%"
+                }}
+                id="t1334608763387580425"
+              />*/}
+                  <div style={{ display: "inline-block" }}>
+                    CO2 and ice-melt match carbon assuming natural carbon
+                    capture never happens or unbinds after combustion, because,
+                    "Obliquity – a 41,000-year change in the tilt of the Earth’s
+                    axis relative to the sun that changes how much sun is
+                    received during a year at the poles versus the equator,"
+                    unless you think humans go extinct, or never burned carbon
+                    (burn/binding, not emit/emission)
+                    <br />
+                    https://www.carbonbrief.org/explainer-how-the-rise-and-fall-of-co2-levels-influenced-the-ice-ages
+                    <br />
+                    <br />
+                    why would you use ice cores to estimate CO2 levels instead
+                    of work the other way around?
+                    <br />
+                    <br />
+                    <Cable
+                      onError={handleScollImgError}
+                      src={
+                        this.state.iosNoPhoto
+                          ? ""
+                          : "https://drive.google.com/file/d/11cmunvYMNbawPPoLCvvd1BPdznBQbc1P/preview"
+                      }
+                      float="left"
+                      title=""
+                      scrolling={this.state.scrolling}
+                      fwd={this["scrollImg" + scrollnum()]}
+                      scrollTopAndHeight={
+                        this.state.scrollTop + window.innerHeight
+                      }
+                      scrollTop={this.state.scrollTop}
+                    />
+                    “I’m not saying there isn’t global warming,”
+                    <br />
+                    <br />
+                    <div style={countstyle}>
+                      <iframe
+                        style={videostyle}
+                        src="https://www.youtube.com/embed/nKvUf7F4Xn4"
+                        title="YouTube video player"
+                      ></iframe>
+                    </div>
+                    <br />
+                    (what if our sun revolves around another?)
+                    <br />
+                    2005 novel SARS-CoV (January 28, 2005)
+                    https://jvi.asm.org/content/79/4/2001/article-info
+                    <br />
+                    <br />
+                    electricity is the release of electrons from the neutron &
+                    protons when they hit but do not mix/trade into a stable
+                    compound. gravity are those electrons not mass. I do not
+                    understand the logic of multiplying lightspeed^2 by grams...
+                    which we can make on any scale
+                  </div>
+                  <img
+                    style={{ width: "300px" }}
+                    src={
+                      this.state.settleDropboxFree
+                        ? ""
+                        : "https://www.dl.dropboxusercontent.com/s/21qr4z03x0itzrg/surgicalmaskwarning.jpeg?dl=0"
+                    }
+                    alt="surgical masks only stop spittle which on average travels no more than 1 foot during non-quited talking"
+                  />
+                  <img
+                    style={{ width: "300px" }}
+                    src={
+                      this.state.settleDropboxFree
+                        ? ""
+                        : "https://www.dl.dropboxusercontent.com/s/xrxzi5oexmizg8a/n95maskbox.jpeg?dl=0"
+                    }
+                    alt="n95 masks/gas masks stop aerosols"
+                  />
+                  <img
+                    style={{ width: "300px" }}
+                    src={
+                      this.state.settleDropboxFree
+                        ? ""
+                        : "https://www.dl.dropboxusercontent.com/s/00cuqd9k6zts7vv/salonmaskeffect.jpg?dl=0"
+                    }
+                    alt="Absence of Apparent Transmission of SARS-CoV-2 from Two Stylists After Exposure at a Hair Salon with a Universal Face Covering Policy — Springfield, Missouri, May 2020"
+                  />
+                  <img
+                    style={{ width: "300px" }}
+                    src={
+                      this.state.settleDropboxFree
+                        ? ""
+                        : "https://www.dl.dropboxusercontent.com/s/5xwv1ieiqopdib3/abc_cdc.jpeg?dl=0"
+                    }
+                    alt="When COVID-19 is reported as a cause of death on the death certificate, it is coded and counted as a death due to COVID-19..."
+                  />
+                  <img
+                    style={{ width: "300px" }}
+                    src={
+                      this.state.settleDropboxFree
+                        ? ""
+                        : "https://www.dl.dropboxusercontent.com/s/xemvtyyx9vy7siu/macrotrendsdeathratesnapshot.jpeg?dl=0"
+                    }
+                    alt="US deaths have been trending up since 2013"
+                  />
+                  {/*<img
+                style={{ width: "300px" }}
+                src={
+                  this.state.settleDropboxFree
+                    ? ""
+                    : "https://www.dl.dropboxusercontent.com/s/amd4iuusdt3tetn/allcause.png?dl=0"
+                }
+                alt="Fluid-filled lung season comparison"
+              />*/}
+                  <img
+                    style={{ width: "300px" }}
+                    src={
+                      this.state.settleDropboxFree
+                        ? ""
+                        : "https://www.dl.dropboxusercontent.com/s/twqrwxr85km8ctu/Screen%20Shot%202021-01-06%20at%2012.10.28%20AM.png?dl=0"
+                    }
+                    alt="Fluid-filled lung season comparison"
+                  />
+                  <img
+                    style={{ width: "300px" }}
+                    src={
+                      this.state.settleDropboxFree
+                        ? ""
+                        : "https://www.dl.dropboxusercontent.com/s/y9b0g6bjcrt6naw/spanishflu.jpeg?dl=0"
+                    }
+                    alt="Spanish flu historical notion of larger second wave fourfold"
+                  />
+                </div>
+                <div
+                  style={{
+                    display:
+                      this.state.openTopic === "Vaccine-Grafts" ? "" : "none",
+                    position: "relative",
+                    width: "calc(100% - 4px)",
+                    columnCount: count
+                  }}
+                >
+                  <div style={countstyle}>
+                    Virus isn’t alive nor have the ancestry of bacteria, was
+                    made years after cell that which is required to replicate,
+                    you may be studying the byproduct not the cause, as bacteria
+                    invokes cell to produce virus
+                    <br />
+                    <br />
+                    Infections, just look at the circa bacteria is cell without
+                    certain things, evolved from like, water, ok? Ever hear
+                    virus isn’t alive?
+                  </div>
+                  <div style={countstyle}>
+                    <iframe
+                      style={videostyle}
+                      src="https://www.youtube.com/embed/m-CwPBcrMYQ"
+                      title="YouTube video player"
+                    ></iframe>
+                  </div>
+                  <div style={countstyle}>
+                    Can&nbsp;
+                    <a href="https://www.youtube.com/watch?v=_lK4cX5xGiQ">
+                      emulate
+                    </a>
+                    &nbsp;gravity-free feel without gravity (electrons to core),
+                    by flying in&nbsp;
+                    <a href="https://nationalsecuritycasino.com">
+                      upside parabolic trajectory
+                    </a>
+                  </div>
 
-        <Archive
-          //chapter2={this.chapter2}
-          /*sci={this.sci}
-          trust={this.trust}
-          sdr={this.sdr}
-          receipts={this.receipts}
-          work={this.work}
-          gdp={this.gdp}
-          party={this.party}
-          marx={this.marx}
-          air={this.air}
-          immi={this.immi}*/
-          ref={this.ch2refs}
-          journal={this.state.journal}
-          scrolling={this.state.scrolling}
-          width={this.state.width}
-          scrollTop={this.state.scrollTop}
-          lastWidth={this.state.lastWidth}
-          //offScroll={this.state.offScroll}
-        />
-        <div
-          style={{
-            opacity: !this.state.footer && this.state.scrollTop !== 0 ? 0.3 : 1,
-            maxHeight: "100%",
-            height: "min-content",
-            overflowY: "auto",
-            overflowX: "hidden",
-            maxWidth: "594px",
-            backgroundColor: "rgb(180,180,250)",
-            width: this.state.footer
-              ? "min-content"
-              : this.state.height < 700
-              ? "56px"
-              : "56px", //,"calc(100% - 6px)",
-            //height:this.state.width<400?"50px":"0px",
-            transition: ".3s ease-in",
-            border: "3px solid",
-            position: "fixed",
-            bottom: "0px"
-          }}
-        >
-          {this.state.footer && (
+                  <div style={countstyle}>
+                    growth of hours isn't productivity, it's exactly the
+                    reciprocal under price-deflation for tech advancement
+                    <br />
+                    <br />
+                    Bacteria is cause of illness, not virus (unless you think it
+                    is an evolutionary trait or spurred from a bunch of
+                    antimatter)
+                    <br />
+                    Projecting complacent science
+                    <br />
+                    Virus only comes out
+                    {/*<br />
+            Price continuum (location would be established for product prices)*/}
+                    <br />
+                    <br />
+                    just because you put it in a contract doesn’t mean it isn’t
+                    discrimination without the right to. At the very least they
+                    lose their copyright, (1) there aren’t infinite producers &
+                    (2) Twitter employees use the discriminateds’ services
+                    elsewhere without discrimination. Content removable is null
+                    except 1/12 of scientific consensus; it is my work, the
+                    lexicon is mine. You can block but you can’t remove data nor
+                    users unless you pay them for that right.
+                    <br />
+                    <br />
+                    You probably think force majeure isn’t moot either just
+                    because someone was under duress to sign up; impossible is
+                    purposeful or moot. Contracts can be illegal and unbothered
+                    until someone like me complains. Duress makes a contract
+                    moot like there only being finite producers, again at the
+                    very least they lose their copyright or cannot discriminate,
+                    even if they announce it or the user is under duress to
+                    “agree”
+                  </div>
+
+                  <div style={countstyle}>
+                    Right to choose, finite producers, truancy
+                    <br />
+                    <br />
+                    writing down school, pensions
+                  </div>
+                  <div style={countstyle}>
+                    <iframe
+                      style={videostyle}
+                      src="https://www.youtube.com/embed/1D6n2om9I6A"
+                      title="YouTube video player"
+                    ></iframe>
+                    after this follow up to by citation of population growth
+                    making covid excess deaths insignifiant, a cop complained
+                    about the threat to take this wor lose pension. on another
+                    chord, this is only solved by reverse debt:cash
+                    public-park-deed residual split
+                  </div>
+                  <div style={countstyle}>
+                    <iframe
+                      style={videostyle}
+                      src="https://www.youtube.com/embed/mlEFtVlivjs"
+                      title="YouTube video player"
+                    ></iframe>
+                  </div>
+                  <div style={countstyle}>
+                    People on cnn are saying that 1918 flu wasn't as bad with
+                    40% population size without any semblance of understanding
+                    of epiology, virus comes from thin air rather than
+                    bacterial-cause. Is a leap of faith
+                    <br />
+                    <br />
+                    <a href="https://www.frontiersin.org/articles/10.3389/fcimb.2018.00396/full#:~:text=After%20mammalian">
+                      https://www.google.com/search?q=a2+receptor+virus+mitosis
+                    </a>
+                    <br />
+                    <br />
+                    My 84-yr-old grandma spent 2 days next to PIC (pnemonia,
+                    influenza, covid), religion is when consensus isn't had, not
+                    exclusively ideas of people thousands of years ago. no mask,
+                    is fine.
+                    <br />
+                    <br />
+                    You can see vaccines causing hospitalizations on stats (in
+                    dropdown)
+                  </div>
+                  <div style={countstyle}>
+                    Covid in Wuhan mimicked nature by crispr, virus only comes
+                    out of cell that encounters bacteria
+                    <br />
+                    <br />
+                    affordable access to vaccines, no mention of utility being
+                    common law as open, as uppers are against our pharmacy
+                    druglords brought forward demand without rollover is useless
+                    price inelasticity
+                    <br />
+                    <br />
+                    Antibodies' onset is illness, virus only goes out of cell,
+                    animals are made of cells too, basteria is required
+                    everytime
+                    <TwitterTweetEmbed
+                      key="1420593721096253440"
+                      tweetId="1420593721096253440"
+                    />
+                    <a href="https://kids.frontiersin.org/articles/10.3389/frym.2020.582971">
+                      where does the virus come from? Animals have cells too.
+                      Virus cannot make virus, only bacteria can
+                    </a>
+                    <br />
+                    <br />
+                    We need to know prevalence of suspected illness of
+                    unvaccinated, test for covid on tabletops after talking, and
+                    creating virus by open wound + bacteria and phages “Multi
+                    inflammatory infection illness month later,” says Dr.
+                    Safire, “stays in pharynx,” excrement that antibodies didn’t
+                    have to attack and prompt the cardiovascular system to heat
+                    for what? virus comes from? Virus. Lmao
+                    <br />
+                    <br />
+                    where does virus come from, virus? haha you're good, you're
+                    good
+                  </div>
+                  <div style={countstyle}>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/12049024/">
+                      suck my dick
+                    </a>
+                    , reduce&nbsp;
+                    <a href="http://trajectory-inc.com/about-us/#team-members">
+                      infection
+                    </a>
+                    <img
+                      style={countstyle}
+                      alt="https://www.nature.com/articles/s41598-020-73162-5"
+                      src={
+                        this.state.settleDropboxFree
+                          ? ""
+                          : "https://www.dl.dropboxusercontent.com/s/zu3gxwmh34ui7aq/Electron%20infection%20covid%20microscope.png?dl=0"
+                      }
+                    />
+                    <br />
+                    <br />
+                    Vaccine-abstention of 80% children, 75% afros & 26% of the
+                    general public has precedence of Jim Crow (written-english
+                    test to vote), although if it were proportional by ago or
+                    race it would be illegal to exclude on the following ground,
+                    precedence not with standing.
+                    <br />
+                    <br />
+                    <TwitterTweetEmbed
+                      key="1435285276704878592"
+                      tweetId="1435285276704878592"
+                    />
+                    <a href="https://kids.frontiersin.org/articles/10.3389/frym.2019.00102">
+                      In fact, most viruses in the world infect bacteria, not
+                      people.
+                    </a>
+                    <img
+                      height="auto"
+                      width="100%"
+                      alt="https://kids.frontiersin.org/articles/10.3389/frym.2019.00002"
+                      src={
+                        this.state.settleDropboxFree
+                          ? ""
+                          : "https://www.dl.dropboxusercontent.com/s/2jmslkl1zf0lg3s/virus%20frontiers%20young%20minds.jpeg?dl=0"
+                      }
+                    />
+                  </div>
+                  <div style={countstyle}>
+                    Vaccines are much like brought forward demand, full of
+                    bizzare science like this:
+                    https://www.pfizer.com/news/hot-topics/viral_vs_bacterial_pneumonia_understanding_the_difference
+                    <br />
+                    <br />
+                    Bacterial v viral infection is diagnosed by lateral vs both
+                    sides, and Harvard wyss counts deaths/hospitalizations rate
+                    is highest when bacteria is more acute like that. That being
+                    the only indication in insufficient in discerning between
+                    the two.
+                    <br />
+                    <br />
+                    Listen to non-conflicted statisticians, not class precedence
+                    malfeasance lawyers nor doctors
+                    <br />
+                    <br />
+                    You’ll notice the studies correlate with antibodies cleaning
+                    virus onset symptoms, yet virus is created by bacteria
+                    encountering cell. If you look under an&nbsp;
+                    <a href="https://www.nature.com/articles/s41598-020-73162-5">
+                      electron microscope
+                    </a>
+                    , the multiplicity of infection is garnered by finding a
+                    cell showing proteins sticking out, never the&nbsp;
+                    <a href="https://ourworldindata.org/coronavirus-testing#:~:text=These%20figures">
+                      actual virus
+                    </a>
+                    &nbsp;other than those sponge-like computer-graphic
+                    characterizations. Traditional science think the virus is
+                    all that is involved, and must infect as the source, but
+                    where does the first virus come from? They cannot answer
+                    this, so it likely comes from the cell with the involvement
+                    of bacteria in every case, not just when it infects just one
+                    side…
+                    <br />
+                    <br />
+                    Symptoms aren’t usual for latent except in sample because
+                    some testing is done on indication, when antibody generation
+                    is sufficient in generating “fever”
+                    <br />
+                    <br />
+                    20% is my&nbsp;
+                    <a href="https://www.cdc.gov/tb/statistics/default.htm">
+                      estimate
+                    </a>
+                    &nbsp;for asymptomatic cases globally as well for all 2k/yr
+                    discovered virion mitosisly-propogated, likely
+                    <a href="https://ourworldindata.org/coronavirus-testing#:~:text=Because%20limited%20testing%20makes">
+                      ourworldindata
+                    </a>
+                    &nbsp;might estimate this as well, for survivorship bias or
+                    just a red herring diagnosis, maybe without a particular
+                    order of evidence, for instance
+                    <br />
+                    <br />
+                    https://www.cebm.net/covid-19/covid-19-what-proportion-are-asymptomatic/
+                    variance of variance varies greatly, between 5% and 94%
+                    asymptomatic, ruining event/population time-series
+                    extrapolations of a basis line without exogenus factors
+                  </div>
+                  <div style={countstyle}>
+                    <TwitterTweetEmbed
+                      key="1421858300979732480"
+                      tweetId="1421858300979732480"
+                    />
+                    “Our economy, the children of the 75+, is growing at a
+                    faster rate than we have seen in 40 years” Biden, "660k
+                    lives from the virus," yet it is only conclusively with the
+                    virus (excess deaths are less than expected from population
+                    growth of 1.2m). like I think the carface is what killed
+                    George Floyd, and bacteria causes illness
+                    (bacterial-pnemonia is diagnosed by being on-one-side &
+                    acute, and bacterial-infection creates virus)
+                    <br />
+                    You don't have a monopoly on science
+                    <br />
+                    If vaccines work in preventing illness, the application of
+                    Article 4 is relevant as ...breakthrough cases. Lo, bacteria
+                    causes illness, here elaborated. but first:
+                    <br />
+                    faggot (tool), douche (useless-yeast-cleaner), retard
+                    (self-harmer).
+                    <br />
+                    The only fucking difference between the diagnosis of
+                    bacterial pneumonia and viral is if it is on one side from
+                    pfiezer
+                    https://www.pfizer.com/news/hot-topics/viral_vs_bacterial_pneumonia_understanding_the_difference
+                    and we have Harvard saying it is the deadliest bed-borne
+                    disease.
+                    https://wyss.harvard.edu/news/the-secret-life-of-bacteria-revealed/
+                    <br />
+                    <br />
+                    Bacteria creates virus&nbsp;
+                    <a href="https://www.science.org/lookup/doi/10.1126/science.aat9691">
+                      68% of 35
+                    </a>
+                    , virus creates illness&nbsp;
+                    <a href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.526.6744&rep=rep1&type=pdf">
+                      30% of 200
+                    </a>
+                    , 2% mRNA-sporing-graft without antigen causes hot module
+                    nodes above baseline (see Precautions) or dysregulated
+                    b-cells intowards malignant oncogenesis
+                    <br />
+                    <br />
+                    https://www.springer.com/gp/book/9783642346569 #TradeSecrets
+                    #EducationForAll #M2Laundering #ConflictOfInterests #Biology
+                  </div>
+                  <div style={countstyle}>
+                    {/*<TwitterTweetEmbed
+                  key="1435293704126881796"
+                  tweetId="1435293704126881796"
+                />*/}
+                    <TwitterTweetEmbed
+                      key="1425460613711605760"
+                      tweetId="1425460613711605760"
+                    />
+                    {/**“Covid was made by China,” 
+              @ kilmeade
+              lies about what is known or in-vitro proven 
+              @ DickMorrisTweet
+              NO PROOF, a viron isn’t domestic violence retardation-fools */}
+                    <div
+                      style={{
+                        backgroundColor: "rgb(20,190,20)",
+                        color: "rgb(230,230,230)",
+                        breakInside: "avoid",
+                        borderBottom: "1px solid grey"
+                      }}
+                    >
+                      humanharvest.info&nbsp;&bull;&nbsp;placenta
+                      (traditional-antigen, viral-vector) or
+                      lymphoma*(mRNA-sporing-graft)
+                      <br />
+                      <div
+                        style={{
+                          fontWeight: "bolder",
+                          backgroundColor: "white",
+                          margin: "4px",
+                          color: "grey"
+                        }}
+                      >
+                        Grounds for discrimination standings is stronger thru
+                        Amendment 13 than Amendment 1:
+                        <br />
+                        From Saver Party Chairperson: "'CDC guidance,' GIVES YOU
+                        NOR GOVERNOR MURPHY AUTHORITY TO INSTILL ANY DURESS IN
+                        PRODUCTS AND SERVICES; ONLY ABJECT & IN-VITRO
+                        'LINKABLE'-PROOF, NOT SNAPSHOT NOR CORRELATION, MAY BE
+                        CONSTRUED AS PART OF THE MINIMAL-VIABLE-PRODUCT ON
+                        AMENDMENT 13, FOR SURRENDERING UP UNTIL COMMENSURATE
+                        DURABLE GOODS TARNISHES COMPARATIVE ADVANTAGE & OUR
+                        INCENTIVE-STRUCTURE."
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      ...countstyle,
+                      backgroundColor: "rgb(220,20,20)",
+                      color: "rgb(230,230,230)",
+                      breakInside: "avoid",
+                      borderBottom: "1px solid grey"
+                    }}
+                  >
+                    @njdotcom · Dec 3, 2020 Facebook to remove COVID-19
+                    vaccine-related misinformation
+                    <br />
+                    @saverparty · Dec 3, 2020 spike protein in not conclusively
+                    harmless @facebook @cdc @nih it may cause oncogenesis (I say
+                    this after reading this
+                    https://nature.com/articles/cddis2016148
+                    <div
+                      style={{
+                        fontWeight: "bolder",
+                        backgroundColor: "white",
+                        margin: "4px",
+                        color: "grey"
+                      }}
+                    >
+                      "... B cells [made by mRNA] [could] acquire an aggressive
+                      phenotype and thus have a major role in oncogenesis."
+                    </div>
+                  </div>
+                  <br />
+                  <div
+                    style={{
+                      ...countstyle,
+                      backgroundColor: "rgb(200,140,60)",
+                      color: "rgb(230,230,230)",
+                      breakInside: "avoid",
+                      borderBottom: "1px solid grey"
+                    }}
+                  >
+                    The mRNA-sporing-graft is just that, and a viral-vector,
+                    antigen-vaccine merely goes towards booning mutations while
+                    the neutralizing titer without an antigen and only a human
+                    cell to attack certainly causes non-oncogenic or malignant
+                    adaptive-memory-cells, identified by the onset of fatigue in
+                    vaccination and pneumatic symptoms when having the latter,
+                    but alive.
+                    <div
+                      style={{
+                        fontWeight: "bolder",
+                        backgroundColor: "white",
+                        margin: "4px",
+                        color: "grey"
+                      }}
+                    >
+                      Finally,&nbsp;
+                      <b style={{ color: "blue" }}>
+                        excrement is likely the source of the virons
+                      </b>
+                      ,&nbsp;
+                      <b>
+                        if it is at all harmful and not byproduct of digesting
+                        the weapon that is bacteria
+                      </b>
+                      , &nbsp;and 2k/yr are discovered, without testing the
+                      highly-plausible scenario that multiple-virons affect the
+                      same host upon pneumatic-symptoms;&nbsp;
+                      <b style={{ color: "red" }}>
+                        5% of suspected cases in the Pfizer Phase III trial
+                      </b>
+                      , and now hospitalizations are dealing with still the old,
+                      but suspected aren't far from confirmed in the
+                      hospitalization data here
+                      https://healthdata.gov/dataset/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/6xf2-c3ie
+                      <br />
+                      <br />
+                      https://pubmed.ncbi.nlm.nih.gov/12049024/
+                      <br />
+                      http://trajectory-inc.com/about-us/#team-members
+                    </div>
+                  </div>
+                  {/**Uh, getting as many people as possible vaccinated is what would get us to herd immunity.
+                  #DefundThePolice 🌻🌹 @ Tom4CongressNY6 Not if the vaccine does not provide immunity. And......it doesn't provide immunity. */}
+                  {/* Surgical masks work! That means it isn’t airborne just when
+                    we spit, which only reaches 1ft when we talk. Masks are
+                    useless use the inside of your elbow when you sneeze and it
+                   will be more than effective - it will keep your face clean*/}
+                  {/**This is hardly in vitro proof of propagation by viral transmission,
+               to use embryonic cells is to study bacteria-infected cells multiplication,
+               not virion as debris going back into the cell. #COVID19 */}
+                  <TwitterTweetEmbed
+                    key="1432355213428596736"
+                    tweetId="1432355213428596736"
+                  />
+                  <img
+                    height="auto"
+                    width="100%"
+                    alt="https://sciencebasedmedicine.org/wrong-about-polio-a-review-of-suzanne-humphries-md-and-roman-bystrianyks-dissolving-illusions-part-1-the-long-version/#:~:text=Fewer"
+                    src={
+                      this.state.settleDropboxFree
+                        ? ""
+                        : "https://www.dl.dropboxusercontent.com/s/yhtm030usfcmivy/feces.jpeg?dl=0"
+                    }
+                  />
+                  {/*<TwitterTweetEmbed
+                    tweetId="1429668870151938050"
+                    key="1429668870151938050"
+                  />*/}
+                  {/**Covid-19: Fully vaccinated people can carry as much delta virus as unvaccinated people, data indicate
+bmj.com
+Covid-19: Fully vaccinated people can carry as much delta virus as unvaccinated people, data...
+Adults who have been fully vaccinated against SARS-CoV-2 can carry the same viral load of the delta variant as those who are unvaccinated, a preliminary analysis of UK data suggests.1 The latest...
+🐿socialism-is-pareto -spore virus protein 4 money
+@ frothanalysis
+·
+Aug 22
+Replying to 
+@ katalin_pota
+ and 
+@ ProMovement1
+We aren’t even sure if virons are merely harmless byproducts and bacteria causes sickness */}
+                  <div style={countstyle}>
+                    <div style={{ breakInside: "avoid", width: "100%" }}>
+                      antibodies likely cleanup the produced virons after
+                    </div>
+                    cellular-digestion of bacteria
+                    {/*<TwitterTweetEmbed
+              tweetId="1334932642366681089"
+              key="1334932642366681089"
+            />*/}
+                    being Jewish forbids tattoos, an mRNA-sporing-graft is not
+                    far off.
+                    <br />
+                    <br />
+                    I think the belief pertains to the in-body antigen-induced
+                    oncogenesis process too
+                    <br />
+                    <br />
+                     you probably think exclusion with hung jury-conviction
+                    isn’t beast system just because it’s not hand nor forehead
+                    injected. 1/4 doctors with conflict of interest to sell are
+                    antivax, 1/2 nurses, left and right. Face the facts, the
+                    virus being there during sickness isn’t order and
+                    correlation with mortality isn’t even there
+                  </div>
+                </div>
+                <div
+                  style={{
+                    display:
+                      this.state.openTopic === "Precautions" ? "block" : "none",
+                    width: "100%",
+                    height: "min-content",
+                    columnCount: count
+                    //position: "absolute"
+                  }}
+                >
+                  <div style={countstyle}>
+                    Racketeering and share-split benefits for what? so the ask
+                    isn't forced to meet price? reverse debt:cash,
+                    timelesspaydayroyalty scoped for industry-type, all for
+                    bond-laundering withdrawn, and impossible to earn back,
+                    third party beneficiary has claim, or moot
+                    <br />
+                    <br />
+                    “Democratic democrats, honor system,” authoritarian is
+                    against honor system signatures?
+                    <br />
+                    <br />
+                    Receptors or anus?{" "}
+                    {/**"injects dna intermediate stage snapshot," is
+              assumed */}
+                    <br />
+                    boy, “scientists could only wonder how a virus injects their
+                    DNA into a cell, because it happens in an instant,”
+                  </div>
+                  <div style={countstyle}>
+                    <iframe
+                      style={{ width: "100%" }}
+                      src="https://www.youtube.com/embed/Weqb9KrQ-TU?start=21"
+                      title="YouTube video player"
+                    ></iframe>
+                    Don’t believe any cartoon, they literally only use electron
+                    microscope for actual proof; S Cohen show antibodies clear
+                    blood clots and …onset illness. But never infected a cell in
+                    a controlled study, only J M Sweere did that with bacteria
+                    in an open wound
+                  </div>
+                  <div
+                    style={{
+                      ...countstyle,
+                      marginBottom: "4px",
+                      backgroundColor: "rgb(220,100,80)",
+                      color: "rgb(230,230,230)",
+                      borderBottom: "1px solid grey"
+                    }}
+                  >
+                    FDA is ignoring prevalence of lymphomatic-node discharging
+                    of the mRNA-sporing-graphs,
+                    <div
+                      style={{
+                        fontWeight: "bolder",
+                        backgroundColor: "white",
+                        margin: "4px",
+                        color: "grey"
+                      }}
+                    >
+                      In 17 of the vaccinated patients with HLN (5.1%), the
+                      “hot” nodes reflected&nbsp;
+                      <a href="https://link.springer.com/article/10.1007/s00259-021-05314-2#:~:text=In%20332">
+                        malignant nodal disease
+                      </a>
+                      &nbsp;(MHL). An estimated 1,297,027 people in the US are
+                      either living with, or are in remission from, &nbsp;
+                      <a href="https://www.lls.org/facts-and-statistics/facts-and-statistics-overview#:~:text=Prevalence">
+                        leukemia, lymphoma or myeloma
+                      </a>
+                      .
+                      <br />
+                      idk what&nbsp;
+                      <span style={{ textDecoration: "underline" }}>
+                        a malignant hot node
+                      </span>
+                      &nbsp;looks like, lo it is larger by 4.8% than the
+                      population estimate of lymphoma and melanoma
+                      <br />
+                      Virons are byproducts,&nbsp;
+                      <a href="https://2052.live">bacteria cause sickness</a>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      ...countstyle,
+                      marginBottom: "4px",
+                      backgroundColor: "rgb(20,20,230)",
+                      color: "rgb(230,230,230)",
+                      borderBottom: "1px solid grey"
+                    }}
+                  >
+                    can we please test for all virons before certifying the
+                    cause as only one of them
+                    <div
+                      style={{
+                        fontWeight: "bolder",
+                        backgroundColor: "white",
+                        margin: "4px",
+                        color: "grey"
+                      }}
+                    >
+                      26% of Doctors believe vaccines are useless or harmful
+                      <br />
+                      <br />
+                      Never before has nonunanimous consentsus been used to
+                      convict or desist. Involuntary-servitude, duress beyond
+                      incontrovertable, absent of reasonable doubt, consensus
+                      prior to conviction, permitting, or ordering of
+                      desistation #BasisRateFallacy, #Epiology, #NullHypothesis
+                    </div>
+                  </div>
+                  <div style={countstyle}>
+                    <b style={{ color: "blue" }}>Covid</b>: 5% is suspected,
+                    <br />
+                    <b style={{ color: "blue" }}>breakthrough/breakout</b>
+                    &nbsp;is expectd,
+                    <br />
+                    <br />
+                    covid cases are all testing, not even on the basis of
+                    symptoms. prevalence is not necessarily a cause, there are
+                    thousands of virons and they are LIKELY-HARMLESS BYPRODUCTS
+                    of BACTERIAL-DIGESTION OF THE CELL
+                  </div>
+                  <div
+                    style={{
+                      ...countstyle,
+                      margin: "10px",
+                      marginBottom: "4px",
+                      backgroundColor: "rgb(20,190,20)",
+                      color: "rgb(230,230,230)",
+                      breakInside: "avoid",
+                      borderBottom: "1px solid grey"
+                    }}
+                  >
+                    though virons are&nbsp;
+                    <b style={{ color: "blue" }}>of load by the subject</b>, not
+                    transmitted
+                    <br />
+                    as would mutations, which might matter if it weren't merely
+                    a byproduct, artifact, of another cause - like bacteria
+                    <br />
+                    <a
+                      style={{ color: "black" }}
+                      href="https://www.cell.com/molecular-therapy-family/molecular-therapy/fulltext/S1525-0016(00)90212-0"
+                    >
+                      https://www.cell.com/molecular-therapy-family/molecular-therapy/fulltext/S1525-0016(00)90212-0
+                    </a>
+                    <br />
+                    Bacteria causes sickness, vaccines merely clean up cellular
+                    secretion of contact with bacteria - and is harmless.
+                    However, vaccines without an antigen may cause lymphoma and
+                    the like
+                    <a
+                      style={{ color: "black" }}
+                      href="https://link.springer.com/article/10.1007/s00259-021-05314-2#:~:text=The%20high%20incidence"
+                    >
+                      https://link.springer.com/article/10.1007/s00259-021-05314-2#:~:text=The%20high%20incidence
+                    </a>
+                    <div
+                      style={{
+                        fontWeight: "bolder",
+                        backgroundColor: "white",
+                        margin: "4px",
+                        color: "grey"
+                      }}
+                    >
+                      <div style={{ color: "grey", fontWeight: "bolder" }}>
+                        "In some of the patients, this unfortunate nonconclusive
+                        report was caused by the fact that vaccines were
+                        administrated in the same side as the tumor expected
+                        nodal drainage. Therefore, patients with breast cancer,
+                        axillary lymphoma, and malignancy of the upper limb
+                        (melanoma, for instance) should be advised to be
+                        vaccinated in the arm contralateral to the tumor
+                        expected nodal drainage."
+                      </div>
+                    </div>
+                    <a href="https://2052.live">2052.live</a>
+                    <iframe
+                      style={countstyle}
+                      title="2% of the population owns 4400% of the assets"
+                      src="https://2052.live"
+                    />
+                    <iframe
+                      style={countstyle}
+                      title="plandemic"
+                      src="https://www.youtube-nocookie.com/embed/UQAekSF34TY"
+                    ></iframe>
+                    I later discovered that although antibody production is
+                    correlated with symptoms in hospitalizations, to which
+                    hospitalizations are without the virus vaccinated with, the
+                    hospitalizations haven't changed year to year (bottom of
+                    froth.app/stats using cdc fluview) so the cause is something
+                    else, I suggest all viral-illness is borne by
+                    bacterial-infection and viral excrement, especially after
+                    reviewing gold standard diagnosis of lateral/both-lungs{" "}
+                    <a href="pfizer.com/news/hot-topics/viral_vs_bacterial_pneumonia_understanding_the_difference">
+                      discrepancy of bacterial/viral by Pfizer
+                    </a>
+                    , and death/hospitalization of{" "}
+                    <a href="https://wyss.harvard.edu/news/the-secret-life-of-bacteria-revealed/">
+                      bacterial-infection by Harvard Wyss
+                    </a>
+                  </div>
+                  <div style={countstyle}>
+                    <div style={{ padding: "10px 4px" }}>
+                      <a href="https://humanharvest.info">humanharvest.info</a>
+                      &nbsp;placenta vintage 1985 J&J antigen
+                    </div>
+                    <div style={{ padding: "10px 4px" }}>
+                      <a href="https://moldmask.co">moldmask.co</a>
+                      &nbsp;spittle-humidity gestates virons, if they aren't
+                      merely a byproduct, or bacteria, either of which is
+                      subject to atmospheric convection anyway, so there is no
+                      gain unless you may sneeze into an open body during
+                      cardiac-surgery
+                    </div>
+                    <div style={{ padding: "10px 4px" }}>
+                      <a href="https://nationalsecuritycasino.com">
+                        nationalsecuritycasino.com
+                      </a>
+                      &nbsp;away from Article 4 scope is nonunanimous consensus
+                      of 50% by nurses and of COI doctors half that proportion
+                      is vaccine mandates; never had such contention been met
+                      with virulance of opinions, for obvious government
+                      monopsony/gentrification and #M2Laundering
+                      #CreditCounterfeitLaundering When you launder, it matters
+                      not what your promotion. only consumers with currency can
+                      discriminate beyond price
+                    </div>
+                    <div style={{ padding: "10px 4px" }}>
+                      <a href="https://2052.live">2052.live</a>
+                    </div>
+                    &bull;
+                    <div style={{ padding: "10px 4px" }}>
+                      <a href="https://micro-theory.com">micro-theory.com</a>
+                    </div>
+                  </div>
+
+                  <div style={countstyle}>
+                    54:45 say vaccine passports of 21k nj profiles on facebook
+                    (non-"scientific"*)*?
+                    <br />
+                    <TwitterTweetEmbed
+                      key="1428312309685002241"
+                      tweetId="1428312309685002241"
+                    />
+                    {/**there are more deaths than expected with greg kelly reel @ frothanalysis */}
+                    I’m for government mandates under Article 4 but not before
+                    it is proven beyond a reasonable doubt. Right now, 1/2
+                    nurses & 1/4 doctors with something to sell are antivaxx.
+                    Counterpoint is that Rutgers showed 1/3 doctors know smoking
+                    causes birth defects. Duress of a minimal viable product
+                    wouldn’t include jumping out of airplanes without parachute,
+                    therefore any deal to do that would be involuntary servitude
+                    before there is a smoking gun without a hung jury (11/12 can
+                    permit duress to be laid and discriminate)
+                    <br />
+                    <br />
+                    if you want to go by logic and case studies, J Sweere made
+                    virus with bacteria and S Cohen made illness with virus, so
+                    the mechanism is illness upon antibody creation, but
+                    bacteria is the cause of illness. Virus only ever leave,
+                    never infect cells, or spread by mitosis
+                    <br />
+                    <br />
+                    there isn’t a database with hospitalizations and vaccines
+                    together, for HIPPA. Just word of mouth you hear this,
+                    right? If you look at CDC flu view you can see
+                    hospitalizations for influenza-like-illness and it’s the
+                    same growth-rate year to year….
+                  </div>
+                </div>
+                {this.state.openTopic === "Stats" && this.state.width && (
+                  <CovidStuff
+                    settleDropboxFree={this.state.settleDropboxFree}
+                    count={count}
+                    ios={ios}
+                    openTopic={this.state.openTopic}
+                    lastWidth={this.state.width}
+                  />
+                )}
+                <div
+                  style={{
+                    display:
+                      this.state.openTopic === "Debt" ? "inline-block" : "none",
+                    position: "relative",
+                    width: "calc(100% - 4px)",
+                    columnCount: count
+                  }}
+                >
+                  <div style={countstyle}>
+                    I'm sandman in his place
+                    <br />
+                    Collective bargaining fails when schedule of hours or
+                    payables...
+                    <a href="https://teapharmacy.party">Except sports</a>.
+                    Imagine nfl new draft non compete every season to&nbsp;
+                    <a href="https://saverparty.xyz">bona fide</a>
+                    &nbsp;collective bargain of concurrentabel goods... like
+                    equity-investment bank private communes.
+                    <br />
+                    <br />
+                    Family discount discrimination; my chorers match elderson
+                    with care can’t wait! Cursing is compelled in issue
+                    printouts, per voting age 5 years for price/hours to double,
+                    it should be decreasing as a measure of tech advancement.
+                    Landlords, lenders and non-concurrent collective bargain
+                    brokers, I have tables for you to bus; cap 5 units not
+                    price, allow ask to meet bid-price
+                    <br />
+                    <br />
+                    Seniors on fixed or limited income had their entire lives to
+                    save, just amortize reimbursement of down payments upon repo
+                    by reverse debt:cash and ween sewage police lawsuits free
+                    rider immutable into truncated sales tax of geohash/month
+                    that can be triggered 3% under $2k like when repeat-regular
+                    items for pay tech to report to congress
+                    <br />
+                    <br />
+                    Trade secrets are counterproductive, nothing new under the
+                    sun means utility patents are bonk, impossibilities
+                    purposeful lest moot
+                  </div>
+                  <div style={countstyle}>
+                    borrowers loiter & jigger profits from consumers;
+                    finite-producers will not save consumers
+                    <br />
+                    <br />
+                    There isn't a socialist that would describe share-split
+                    free, expecially during concurrent deficit, but Jen Psaki
+                    and Rudy Giuliani declare it so. I don't care what you call
+                    yourself, public or private; if you're a dead-weight between
+                    supply==demand by communism of non-concurrentable goods
+                    (hours) or grandiose scopes, you're invoking economic
+                    retardation by price inelasticity from ask meeting
+                    bid-priceAsk a socialis what happens after torts to reverse
+                    debt:cash they will describe capitalism without delusional
+                    counterfeit in contract, with timelesspaydayroyalty scoped
+                    for industry-type for p2p only, keep investment banks in
+                    concurrentable collective bargaining and equity. Regular
+                    business designated by goods exchanged & similar price
+                    invokes truncated sales tax for free rider immutable sewage
+                    poilice lawsuits, Republicans and Democrats want to own the
+                    pipes instead of regulate the led out, libertarians want
+                    fractional reserve in contract, greens want growth of hours
+                    and bailout. Don't Obama my Bernie! #GlassSteagall
+                    <br />
+                    <br />
+                    prices don't necessarily go up when demand/supply if labor
+                    is demand, as propensity-hours/money produces elasticity but
+                    finished goods produce scarcity, to which productivity is
+                    change in (1/price)/hours, the exact reciprocal of what
+                    current economist will try to cajole you into supporting
+                    residual share split of your public park deeds in
+                    counterfeit-in-contract teach you
+                  </div>
+                  <div style={countstyle}>
+                    Eldersons match care can't wait! or bust, preferably
+                    (reverse debt:cash to amortize reimburse downpayments upon
+                    repo on third party beneficiary grounds) Care worker
+                    gentrification by gov isn't socialist, saver, nor
+                    microeconiomics, like shoveling water over a porous fence.
+                    <br />
+                    <br />
+                    $170t value, $88t bond value, $2-6t cash, how the heck when
+                    $4t/yr federal spending is normal?
+                    <br />
+                    <br />
+                    greg kelly considering paying monika lewinski money, what a
+                    frikken rhino
+                    <br />
+                    <br />
+                    when you launder it matters not what you spend on
+                    <br />
+                    <br />
+                    "shortage of truckers before 3/2020, increase hours limit,"
+                    says Mike K. how about cap rent to 5 units and reverse
+                    debt:cash, collective bargaining is inelastic-monopsony &
+                    nothing gained lest concurrentable goods (not hours).
+                    <br />
+                    <br />
+                    Regulate competing with consumers, don't discriminate;
+                    eldest son match care can't wait! ---- off
+                  </div>
+                  <div style={countstyle}>
+                    <iframe
+                      src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2F108986904353225%2Fvideos%2F4404002109665977%2F&show_text=true&width=220&t=0"
+                      style={{
+                        width: "100%",
+                        height: "450px",
+                        border: 0,
+                        position: "relative"
+                      }}
+                      title="https://fb.watch/8vc_WNxnzq/"
+                    ></iframe>
+                    1970 working age unemployment was&nbsp;
+                    <a href="https://fred.stlouisfed.org/graph/?g=HHju">
+                      6m/20m
+                    </a>
+                    , today is 6m/40m per decade cohort
+                    <br />
+                    <br />
+                    Can make profit off net loss with bond laundering
+                    inelasticity on free rider mutable tax or immutable bonds
+                    again
+                    <br />
+                    <br />
+                    How is there only $2-6t cash but federal government spending
+                    alone is $4t/yr? Federal reserve&nbsp;
+                    <a href="https://www.federalreserve.gov/monetarypolicy/bst_recenttrends.htm">
+                      assets are price-fixed at $8t
+                    </a>
+                    . We are to fix prohibiting trade, not price. the basis of
+                    price stability is the prevention of accrual of assumed
+                    third party beneficiary and non-concurrentable collective
+                    bargaining fraud
+                    <br />
+                    It is faster to steal but then the loss in comparative
+                    advantage productivity of hours under price-deflation (tech
+                    advancement) is astronomical
+                    <br />
+                    Incentives to get back to work as in share-split is not how
+                    you set prices. If you need to regulate, don’t discriminate.
+                    Target margin networks, finite producers & hung-jury-permits
+                  </div>
+                  <div style={countstyle}>
+                    https://www.goldmansachs.com/insights/archive/millennials/
+                    <img
+                      alt=""
+                      style={{
+                        width: "100%",
+                        height: "auto"
+                      }}
+                      src={
+                        this.state.settleDropboxFree
+                          ? ""
+                          : "https://www.dl.dropboxusercontent.com/s/9v12zzy9m60b5tu/Millenials%20goldman%20sachs.png?dl=0"
+                      }
+                    />
+                    There are 56m 65+ usually 40m, now&nbsp;
+                    <a href="https://fred.stlouisfed.org/graph/?g=HKnK">
+                      becoming 75+ at 1.2m/yr
+                    </a>
+                    <br />
+                    Excess deaths of 8b is expected from life expectancy ago to
+                    be 50m for the world, or 330m “” 1.2m for the US
+                    <br />
+                    Prices/hours doubles every 5 years
+                    <br />
+                    6m/20m unemployed was sustained, our tech advancement is
+                    going the wrong way
+                    <br />
+                    Hours under price deflation is productivity not redundant
+                    gdp. Even Paul Krugman himself says insurance is a net loss,
+                    economic retardation nation!
+                    <br />
+                    <br />
+                    Inflation in the long-term?&nbsp;
+                    <a href="https://data.worldbank.org/indicator/CM.MKT.LCAP.CD?end=2020&most_recent_value_desc=true&start=1975">
+                      $170t value
+                    </a>
+                    ,{" "}
+                    <a href="https://fred.stlouisfed.org/graph/?g=HKgN">
+                      $88t bond-value
+                    </a>
+                    ,&nbsp;
+                    <a href="https://fred.stlouisfed.org/graph/?g=HzBb">
+                      $2-6t cash
+                    </a>
+                    <br />
+                    <a href="https://arxiv.org/pdf/1208.0642.pdf#page=12">
+                      https://arxiv.org/pdf/1208.0642.pdf#page=12
+                    </a>
+                  </div>
+                  <div style={countstyle}>
+                    <a href="https://saverparty.xyz">Article 4 only tax</a>
+                    ,&nbsp;
+                    <a href="https://vaults.biz">flat flat tax</a>,&nbsp;
+                    <a href="https://2052.live">truncated sales tax</a>
+                    <br />
+                    Everyone has to say it to make it stop,
+                    "timlesspaydayroyalty scoped for industry-type for p2p only,
+                    reverse debt:cash. concurrentable collective pargaining, cap
+                    rent at 5 units. for implausible use rentier intent to
+                    compete with consumers, or impossibilities are purposeful or
+                    moot."
+                    <br />
+                    <br />
+                    10x more hours to own house 5%/yr outright, from debt:cash
+                    7.%/yr not cash inflation effect on rent&goods alone 2%. Cap
+                    rent at 5 or under 30 days for implausible use. reverse
+                    debt:cash to reappropriate appropriately by
+                    cash:debt*purchases. Bernie Sanders hypocrite with
+                    #GlassSteagall designate savings as not bonds, flopped, dont
+                    obama my bernie. saverparty.xyz. <br />
+                    <br />
+                    Former economic director of the United States: "Can we slow
+                    down m2" wants growth of accrual but not fractional reserve,
+                    and cannot figure that it would take 44 years to spend
+                    current income on debt and be free of transitory obligations
+                    in non-rollover surrenderance as well
+                    <br />
+                    <br />
+                    truncate sales tax free rider mutables spoofable-geohash,
+                    tranquility for public-park-shares and depositary, sewage
+                    police roads, target margin networks and finite producers.
+                    Democrats and Republicans are fawning care for led in pipes
+                    instead of just suing for negligence, but bipartisan
+                    monopsony and labor equity gentrification
+                    <br />
+                    <br />
+                    rank choice voting prohibits a third party to win if 62%
+                    voters (voting-people) in nj vote for the big two parties
+                  </div>
+                  <div style={countstyle}>
+                    That GDP is more than 1/11 of GDP is the biggest lie of the
+                    last 5 centuries. Not only is our current theoretical
+                    calculus redundant, like e=mc^2 is laughable, or
+                    poorness=poverty/equality is worse than poverty, in C + I +
+                    G, lest being redundant, P is integrally in the denominator
+                    of the GDP scale, and without debt(M2-index-fund-value)
+                    minus checking it is $6k/person, $66k if you include bond
+                    trading
+                    <br />
+                    <br />
+                    for comparative advantage labor should have means and supply
+                    equate demand, where the competition and negotiation, or
+                    bargaining is done on the axis of price or voluntary not
+                    brought forward or non-rollover demand since 3/2020 only 65+
+                    are -2m employed, yet those replaced are getting
+                    unemployment on the basis that the job cannot be done with
+                    covid
+                    <br />
+                    <br />
+                    Taxes of property for bonds
+                    <br />
+                    <br />
+                    Capitalism is not free markets when with accrual &
+                    non-rollover
+                    <br />
+                    <br />
+                    <a href="https://wavv.art/forumZY6ggYTyahoO6qj6J9N8">
+                      Utility
+                    </a>
+                    &nbsp;cannot be owned, there is nothing new under the sun
+                    (except copyright) Virus only comes from bacteria father, J
+                    M Sweere. Excess antibodies for plaque causes 2%+
+                    baseline-population-median cellular immunity dysregulation
+                    or blood disorders. S Cohen invoke antibody and illness.
+                    1.6b/8b latent virus expected, we only tested 500m. An
+                    economic joke, delusions, bizarre, nightmare,
+                    hung-jury-permit of minimal viable product duress is illegal
+                    appropriation of guilt or malfeasance in national security
+                    or regulated-safety (slavery of laurels by scientific
+                    monopoly instead of without doubt and scientific-consensus.
+                    Covid is the first virus asymptomatically tested for, 2k/yr
+                    are discovered by CDC
+                    <br />
+                    <br />
+                    invoices are theft, dollars are public-park-deeds,
+                    third-party-beneficiary is law
+                  </div>
+                  <div style={countstyle}>
+                    Borrowers are actually loitering, then the lender keeps the
+                    down payments & collateral? I don't get it!
+                    <br />
+                    <br />
+                    use your cash advances on&nbsp;
+                    <a href="https://www.census.gov/library/stories/2018/07/educational-attainment.html#:~:text=This,%20in%20part,%20reflects%20the%20age">
+                      $TVIX & $TBT
+                    </a>
+                    <br />
+                    <br />
+                    Affordable life insurance money-ponzi without rollover,
+                    coverage is not being front-ran brought forward without
+                    rollover
+                    <br />
+                    <br />
+                    The only way to stop the application of Article 4 (nor
+                    private business due to the infinite-producer=assumption of
+                    choice self-regulating unreasonable-duress) with vaccines is
+                    to prove these nerds wrong with science, although any
+                    product duress needs to have consensus to be called part of
+                    a wholly-voluntary minimal viable product (mvp: what is, not
+                    involuntary-servitude by unnecessary-duress). That’s why,
+                    for instance apple now asks you to track, because it isn't
+                    part of the MVP, GDPR, and my pressure on them to only deal
+                    in minimal-viable-products and leave what is optional or not
+                    settled with a hung jury, optional. You cannot leave finite
+                    producers to self-regulate, nor weigh for-profit nor
+                    governmental operators in the industry over activists,
+                    customers and concerned bystranders prior to class
+                    precedence malfeasance noticed by complaint. They will want
+                    to delay, tranche by ARBitrarily place-limitations instead
+                    of a full-reversal, or compete rather than manufacture
+                    consent. For, by science monopsony (hung-jury-permit,
+                    <a href="https://www.rutgers.edu/news/rutgers-led-national-survey-uncovers-doctors-misconceptions-about-nicotine-risks">
+                      counterpoint
+                    </a>
+                    ), accrual (third-party-beneficiary), nor does rollover
+                    (non-improvement competing with consumers), do
+                    non-third-parties pay the cost like when pooling without
+                    rollover nor isolation of contract, even with
+                    investment-banking which could be useless but legal when
+                    investing by debt is replaced by timelesspaydayroyalty by
+                    industry-type not general-income). The borrowers loiter but
+                    the lenders profit on rental-income that is implausible to
+                    use on their own, instead of improving it and settling.
+                    Precedence isn't legal, some laws countervail like third
+                    party beneficiary and precedence of not carfacing Jamie
+                    Dimon for coutnerfeit in contract and conspiring with
+                    pharmaceutial-licensed-conflict-of-interests/instead of
+                    activists for instance
+                  </div>
+                  <div style={countstyle}>
+                    <img
+                      style={countstyle}
+                      src={
+                        this.state.settleDropboxFree
+                          ? ""
+                          : "https://www.dl.dropboxusercontent.com/s/3x1tzkgciseaa05/duress%20average%20weekly%20earnings.jpeg?dl=0"
+                      }
+                      alt="logging, mining and finance greatest hourly earnings"
+                    />
+                  </div>
+                  <div style={countstyle}>
+                    <div
+                      style={{
+                        position: "relative",
+                        width: "100%"
+                      }}
+                    >
+                      It’s slavery, it is impossible. It is price-fixing, and
+                      prohibits trade between the actual producer and consumer,
+                      and adds nothing in output or quality, as it just moves
+                      both microeconomic curves up. Supply is demand
+                      <br />
+                      <br />
+                      If bills cannot be paid, they don’t, “have to be paid.”
+                      Impossible doctrine, forced majeure, impossibilities are
+                      always unforeseen, third-party-standing,
+                      comparative-innocence, lender inculpability-conspiracy for
+                      down-payment lost which is not an option to buy that
+                      doesn’t expire
+                      <br />
+                      <br />
+                      “How do you exactly forensically audit the magnets?” Asks
+                      @GaSecofState #ConflictOfInterests #Domain #Malfeasance
+                      nationalsecuritycasino.com http://thumbprint.us
+                      #FaultyElection #TranchedEarlyVoting #PandemicOfTheVaxxed
+                      #HonorSystemSignatures #ExtrapolatingBeforeShuffling
+                      #ExcessDeathsAreExpected
+                      <br />
+                      <br />
+                      Even though there is lessening population growth
+                      1800-today, GDP/person was stagnant before the federal
+                      reserve and the #GreenNewDeal using public credit for
+                      private debt @People4Bernie . More people doesn’t beget
+                      higher prices but competition #MeansOfProduction #Epiology
+                      <br />
+                      <br />
+                      GDP is only to be a measure between countries, not
+                      productivity. Relatively more whites loiter on credit
+                      counterfeit laundered borne homes. Wealth is relative if
+                      it is not utility. #Marxism
+                      <br />
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      position: "relative",
+                      width: "100%"
+                    }}
+                  >
+                    Backdoor for sec but&nbsp;
+                    <a href="https://nationalsecuritycasino.com">
+                      @logindotgov
+                    </a>
+                    &nbsp;upcoming state-issued, photoID -like api for brokers
+                    to anonymously account for positions, for brokers to be a
+                    platform like insurance to be&nbsp;
+                    <a href="https://2052.live">
+                      rollover-collective-bargaining
+                    </a>
+                    &nbsp;like classified-ads&nbsp;
+                    <a href="https://saverparty.xyz">#FairBrokerAct</a>
+                    <br />
+                    <br />
+                    #ImplausibleLandlordUse ya get 5 over 30 days!
+                    #FreePeopleLawsuits #FundSewagePolice 3% under $2k
+                    spoofable-geohash. THAT’S IT! NO ISSUANCE NOR ACCRUAL FOR
+                    BONDS NOR @NJTRANSIT republicans want to pay it off instead
+                    <br />
+                    <br />
+                    What government did Marx ever run ;)
+                    <br />
+                    <br />
+                    Government DOES use its “power for other purposes,” than
+                    even free-rider-mutable schools and tollable roads
+                    @GovMikeHuckabee ... #FundSewagePolice #DefundThePolice
+                    #FreePeopleLawsuits #ReverseM2DontCancel 3under2.us #NoM4A
+                    #RolloverInsurance #BottomIsBest #ReverseM2
+                    <br />
+                    <br />
+                    #TaxPayerVacation is when tax-payers don’t pay 1/10
+                    operating-outlays-expenses and bond-holders can
+                    withdrawal-outstanding at 44/1 debt:cash
+                    <br />
+                    <br />
+                    “Don’t work, free money.” It comes not from another but
+                    ourselves. You KNOW what a stock-split is @JCats2013 when
+                    you say it comes from someone else, you want to pay off the
+                    accrual on residualsplit.us @gop @USProgressives .
+                    Dollar-splits come from @SaverParty savers not u
+                    <br />
+                    <br />
+                    Socialists/microeconomists do not want #HumanInfrastructure
+                    nor @SBAgov loans for that is #M2Laundering, 10%
+                    debt-service for 44x potential-book. @USProgressives
+                    @People4Bernie . The Communist neo Dems and Republicans do
+                    @LindseyGrahamSC #NoM4A
+                    <br />
+                    <br />
+                    “Regressives,” are not those who want to “tear down
+                    America,” but @USProgressives want to make people
+                    poor=poverty/equality by bonds #PostalBanking
+                    #ThirdPartyStanding
+                    <br />
+                    <br />
+                    Reversing M2 is certainly more socialist than conservative,
+                    but socialism is more conservative than republicans
+                  </div>
+                  {/*<TwitterTweetEmbed
+              key="1334950345764646913"
+              tweetId="1334950345764646913"
+              />*/}
+                  <TwitterTweetEmbed
+                    key="1429182687588278276"
+                    tweetId="1429182687588278276"
+                  />
+                  <TwitterTweetEmbed
+                    key="1403099718511644673"
+                    tweetId="1403099718511644673"
+                  />
+                  <div style={countstyle}>
+                    <iframe
+                      style={videostyle}
+                      src="https://www.youtube.com/embed/nUNYL8V0GK4"
+                      title="YouTube video player"
+                    ></iframe>
+                  </div>
+                  <div style={countstyle}>
+                    <iframe
+                      style={videostyle}
+                      src="https://www.youtube.com/embed/iT84Pu_u2xs"
+                      title="YouTube video player"
+                    ></iframe>
+                  </div>
+                  <div style={countstyle}>
+                    flat flat tax, truncated sales tax
+                    <iframe
+                      style={videostyle}
+                      src="https://www.youtube.com/embed/va9GBd5kgDA"
+                      title="YouTube video player"
+                    ></iframe>
+                  </div>
+                  <div style={countstyle}>
+                    <a href="https://vaults.biz">
+                      vaults.biz - employment by cohort
+                    </a>
+                    <br />
+                    25-54/3 6m/40m today unemployed compared to boomers at that
+                    age 6m/20m
+                  </div>
+                  <div style={countstyle}>
+                    {/*<iframe
+              style={{ width: "100%", height: "400px" }}
+              title="2% of the population owns 4400% of the assets"
+              src="https://vaults.biz"
+              />*/}
+                    <iframe
+                      style={videostyle}
+                      src="https://www.youtube.com/embed/NBTw_p-WChI"
+                      title="YouTube video player"
+                    ></iframe>
+                  </div>
+                  <div style={countstyle}>
+                    <iframe
+                      style={videostyle}
+                      src="https://www.youtube.com/embed/xuOq_JFs5m4"
+                      title="YouTube video player"
+                    ></iframe>
+                  </div>
+                  <div style={countstyle}>
+                    since 3/2020 -1.4m/56m 65+, -1.2m/120m 25-54, -300k/36m
+                    15-24 continuing claims (more than eligible)
+                  </div>
+                  <div style={countstyle}>
+                    <iframe
+                      style={videostyle}
+                      src="https://www.youtube.com/embed/TjvqmfDvOfQ"
+                      title="YouTube video player"
+                    ></iframe>
+                  </div>
+                  <div style={countstyle}>
+                    no social program is socialist where supply == demand,
+                    target margin networks free rider immutable truncated sales
+                    tax sewage police lawsuits (all congress needs to see is
+                    geohash/month & regulate networks, finite producers
+                    and&nbsp;
+                    <a href="https://30under5.us">
+                      implausible rentier/landlord use
+                    </a>
+                    )... timelesspaydayroyalty scoped by industry-type to wait
+                    for consumers without brought forward demand for growth of
+                    people, hours or prices (economic retardation) instead of
+                    (1/price)/hours
+                  </div>
+                  <div styyle={countstyle}>
+                    C+I+G is redundant, NE is bad, free rider mutable tax is
+                    inelasticity, gentrification, gerontocracy. prices/hours
+                    doubles every 5 years, debt every 10 years, homes every 20,
+                    goods every 40
+                    <br />
+                    <br />
+                    third party beneficiary impossible is intent, reimburse down
+                    payments or go to jail, reverse debt:cash,&nbsp;
+                    <a href="https://bankingisnot.biz">
+                      carface jamie dimon like floyd
+                    </a>
+                    <br />
+                    <br />
+                    no rollover to amass a bid for hours or grandiose delusions
+                    of grandeur but items to margain, else fantasy doctors and
+                    useless price inelasticity or due to quantity cap of rent by
+                    scalping implausible use and abject intent to compete with
+                    consumers
+                    <br />
+                    <br />
+                    It will take 44 years to work out of what boomers made us,
+                    imagining pensions & debt-principal now that CDC has to
+                    write down and mislead on the basis of excess being without
+                    epiology or per capita effects.
+                    <br />
+                    <br />
+                    Pay for government internet with $48b Alex describes eminent
+                    domain of icann as public goods, but&nbsp;
+                    <a href="https://lightte.ch">
+                      it cannot be used by bonds assholes
+                    </a>
+                    , non-profit NGO would suffice as long as without rents pro
+                    growth, discrimination, income tax chores, borrowers loiter
+                    on bartender-money/public-park-deeds. not consent
+                  </div>
+                  <div style={countstyle}>
+                    If it doesn’t rollover it is competing with consumers by
+                    abetting invoices which usurps third party standing by
+                    duress instead of settling
+                    <br />
+                    Huh?
+                    <br />
+                    collective bargaining is an abject intent to harm if the
+                    goods/services don’t rollover, essentially invoices are
+                    instigated by pooling non-rollover which are “third party
+                    beneficiary*” standing usurped
+                  </div>
+                </div>
+              </div>
+            )}
             <div
-              onClick={() => this.setState({ footer: false })}
+              onClick={() => this.props.history.push("/")}
               style={{
-                userSelect: "none",
-                cursor: "pointer",
-                WebkitTextStroke: "2px rgb(100,200,140)",
-                fontSize: "26px",
-                fontWeight: "bold",
-                color: "black",
+                backgroundColor: "rgba(250,250,250,0.8)",
+                display: this.state.page === "home" ? "none" : "flex",
                 position: "fixed",
-                bottom: "0px",
-                left: 0 /* 600 -( !isNaN(this.state.width)
-              ? Math.min(600, this.state.width)
-              : 0),*/,
-                padding: "6px 10px",
-                backgroundColor: "rgba(240,240,240,.6)",
-                borderTopRightRadius: "25px",
-                borderTop: "2px solid rgba(100,200,250,.6)",
-                borderLeft: "2px solid rgba(200,100,250,.6)"
+                right: "10px",
+                bottom: "10px",
+                height: "56px",
+                width: "56px",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "30px",
+                zIndex: "9"
               }}
             >
               &times;
             </div>
-          )}
-          <div
-            style={{
-              overflow: "hidden",
-              //color: !this.state.footer ? "rgb(180,180,250)" : "black",
-              height: this.state.footer ? "" : "0px"
-            }}
-          >
-            Immunity is proven to not be correlated with per capita sickness, so
-          </div>
-          <a style={{ color: "black" }} href="https://paydayt.com">
-            take care of eachother
-          </a>
-          , globalism,
-          {space}
-          <a style={{ color: "black" }} href="https://qr.ae/pGEuMc">
-            nuclear family
-          </a>
-          <h2 onClick={() => this.setState({ footer: true })}>
-            New technologies, on the market (not free)
-          </h2>
-          <div
-            style={{
-              overflow: "hidden",
-              //color: !this.state.footer ? "rgb(180,180,250)" : "black",
-              height: this.state.footer ? "" : "0px"
-            }}
-          >
-            Superfluous intra juris. Con i see convict interntl intranet. Enough
-            said (bona fide politics: doubt, move on). Behaving the way they
-            did, while the rest of us couldn’t.{space}
-            <a style={{ color: "black" }} href="https://vaults.biz/pdt">
-              Pattern day trading
-            </a>
-            .
-            <br />
-            <br />
-            <a style={{ color: "black" }} href="https://vaults.biz/dns">
-              dns
-            </a>
-            {space}
-            <a style={{ color: "black" }} href="https://vaults.biz/biz">
-              biz
-            </a>
-            {space}
-            <a style={{ color: "black" }} href="https://vaults.biz/con">
-              con
-            </a>
-            {space}
-            <a style={{ color: "black" }} href="https://vaults.biz/sci">
-              sci
-            </a>
-            {space}
-            <a style={{ color: "black" }} href="https://vaults.biz/trust">
-              trust
-            </a>
-            {space}
-            <a style={{ color: "black" }} href="https://vaults.biz/sdr">
-              sdr
-            </a>
-            {space}
-            <a style={{ color: "black" }} href="https://vaults.biz/rec">
-              receipts
-            </a>
-            {space}
-            <a style={{ color: "black" }} href="https://vaults.biz/work">
-              work
-            </a>
-            {space}
-            <a style={{ color: "black" }} href="https://vaults.biz/gdp">
-              gdp
-            </a>
-            {space}
-            <a style={{ color: "black" }} href="https://vaults.biz/party">
-              party
-            </a>
-            {space}
-            <a style={{ color: "black" }} href="https://vaults.biz/marx">
-              marx
-            </a>
-            {space}
-            <a style={{ color: "black" }} href="https://vaults.biz/air">
-              air
-            </a>
-            {space}
-            <a style={{ color: "black" }} href="https://vaults.biz/immi">
-              immigration
-            </a>
-            <br />
-            <br />
-            per hour price deflation spam
-            <br />
-            gentrification
-            <br />
-            juryduty
-            <br />
-            ftccomplains
-            <br />
-            censorship
-            <br />
-            wwii
+            {/*<TwitterTweetEmbed
+          key={"1305400264535486466"}
+          tweetId={"1305400264535486466"}
+        />*/}
           </div>
         </div>
-        <div
-          onClick={
-            () =>
-              this.state.scrollTop !== 0 && !this.state.footer
-                ? this.setState({ footer: true })
-                : this.state.scrollTop !== 0
-                ? window.scroll(0, 0)
-                : this.state.footer
-                ? this.setState({ footer: false })
-                : window.scrollBy(0, this.bottom.current.offsetTop) //this.state.pageYOffset)
-
-            /*({
-              top: 0,
-              left: 0,
-              behavior: "smooth"
-            })*/
-          }
-          style={{
-            userSelect: "none",
-            cursor:
-              this.state.scrollTop !== 0 && !this.state.footer
-                ? "pointer"
-                : this.state.scrollTop !== 0
-                ? "n-resize"
-                : this.state.footer
-                ? "pointer"
-                : "s-resize",
-            WebkitTextStroke: "2px rgb(100,200,140)",
-            fontSize: "26px",
-            fontWeight: "bold",
-            color: "black",
-            position: "fixed",
-            bottom: "0px",
-            right: 0 /* 600 -( !isNaN(this.state.width)
-              ? Math.min(600, this.state.width)
-              : 0),*/,
-            padding: "6px 10px",
-            backgroundColor: "rgba(240,240,240,.6)",
-            borderTopLeftRadius: "25px",
-            borderTop: "2px solid rgba(100,200,250,.6)",
-            borderLeft: "2px solid rgba(200,100,250,.6)"
-          }}
-        >
-          {this.state.scrollTop === 0 && !this.state.footer ? "Plan" : "^"}
-        </div>
-        <hr ref={this.bottom} />
-      </div>
-    );
+      );
+    } else return <div>sizing you up</div>;
   }
 }
+export default withRouter(App);
+
+//`<div><blockquote class="twitter-tweet" data-dnt="true" data-theme="dark"><p lang="en" dir="ltr">It’s slavery, it is impossible. It is price-fixing, and prohibits trade between the actual producer and consumer, and adds nothing in output or quality, as it just moves both microeconomic curves up</p>&mdash; Saver Party (@SaverParty) <a href="https://twitter.com/SaverParty/status/1334950345764646913?ref_src=twsrc%5Etfw">December 4, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div>`;
+//`<div><blockquote class="twitter-tweet" data-dnt="true" data-theme="dark"><p lang="en" dir="ltr">spike protein in not conclusively harmless <a href="https://twitter.com/Facebook?ref_src=twsrc%5Etfw">@facebook</a> <a href="https://twitter.com/cdc?ref_src=twsrc%5Etfw">@cdc</a> <a href="https://twitter.com/NIH?ref_src=twsrc%5Etfw">@nih</a> it may cause oncogenesis (I say this after reading this <a href="https://t.co/HEQTTBVRTL">https://t.co/HEQTTBVRTL</a><br>&quot;... B cells [made by mRNA] [could] acquire an aggressive phenotype and thus have a major role in oncogenesis.&quot;<br><br> <a href="https://t.co/ZdVUR4c1wW">https://t.co/ZdVUR4c1wW</a></p>&mdash; Saver Party (@SaverParty) <a href="https://twitter.com/SaverParty/status/1334608763387580425?ref_src=twsrc%5Etfw">December 3, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div>`;
+//`<div><blockquote class="twitter-tweet" data-dnt="true" data-theme="dark"><p lang="en" dir="ltr">I want sublingual mRNA graft lol 🤢</p>&mdash; Saver Party (@SaverParty) <a href="https://twitter.com/SaverParty/status/1334932642366681089?ref_src=twsrc%5Etfw">December 4, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div>`;
+
+/*const PrivateRoute = ({ render: Component, ...rest }, props) => {
+      return (
+        <Route
+          {...rest}
+          render={(props) =>
+            this.props.auth !== undefined ? (
+              <Component {...props} />
+            ) : (
+              <Redirect
+                to={{
+                  pathname: "/login",
+                  state: { bumpedFrom: props.location.pathname }
+                }}
+              />
+            )
+          }
+        />
+      );
+    };
+
+    <Route
+    render={({ location, history }) => {
+      if (location.pathname !== this.props.pathname) {
+        clearTimeout(this.pauseRender);
+        this.pauseRender = setTimeout(() => {
+          this.setState(
+            { pathname: location.pathname, history },
+            () =>
+              location.pathname === "/stats" &&
+              this.setState({ openTopic: "Stats" })
+          );
+        }, 200);
+      }
+      return (
+        <TransitionGroup key="1">
+          <CSSTransition
+            key="1"
+            //key={location.key}
+            timeout={300}
+            classNames={"fade"}
+          >
+            <Switch key={location.key} location={location}>
+              {/*<Route
+                  exact
+                  path="/positions"
+                  render={(props) => (
+                    <Positioning
+                      settleDropboxFree={this.state.settleDropboxFree}
+                      pathname={this.props.pathname}
+                      lastWidth={this.state.lastWidth}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/sectors"
+                  render={(props) => (
+                    <Sectors
+                      pathname={
+                        width === this.state.lastWidth &&
+                        this.props.pathname
+                      }
+                      width={width}
+                      lastWidth={this.state.lastWidth}
+                      clear={() =>
+                        this.setState({
+                          lastWidth: this.props.width
+                        })
+                      }
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/consumption"
+                  render={(props) => (
+                    <Consumption
+                      pathname={
+                        width === this.state.lastWidth &&
+                        this.props.pathname
+                      }
+                      width={width}
+                      lastWidth={this.state.lastWidth}
+                      clear={() =>
+                        this.setState({
+                          lastWidth: this.props.width
+                        })
+                      }
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/debt"
+                  render={(props) => (
+                    <Interest
+                      settleDropboxFree={this.state.settleDropboxFree}
+                      pathname={
+                        width === this.state.lastWidth &&
+                        this.props.pathname
+                      }
+                      width={width}
+                      lastWidth={this.state.lastWidth}
+                      clear={() =>
+                        this.setState({
+                          lastWidth: this.props.width
+                        })
+                      }
+                    />
+                  )}
+                />
+                    <Route path="/" render={(props) => <div />} />
+            </Switch>
+          </CSSTransition>
+        </TransitionGroup>
+      );
+    }}
+  />
+  {/*</div>
+    </div>*/
 
