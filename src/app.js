@@ -224,6 +224,16 @@ class App extends React.Component {
               >
                 Interest / Debt
               </Link>
+              <div style={{ width: "max-content" }}>
+                target margin donee duress beyond mvp;
+                <br />
+                <a href="https://fred.stlouisfed.org/graph/?g=LmzU">
+                  GDP/hour-GDP/p
+                </a>{" "}
+                productive-efficiency. growth means
+                <br />
+                -GDP/p tech adv. now
+              </div>
             </div>
           </div>
           <div
