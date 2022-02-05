@@ -230,7 +230,7 @@ class App extends React.Component {
                 <a href="https://fred.stlouisfed.org/graph/?g=LmzU">
                   GDP/hour-GDP/p
                 </a>{" "}
-                productive-efficiency. growth means
+                productive-efficiency. growth means cap rent by units, not price
                 <br />
                 -GDP/p tech adv. now
               </div>
