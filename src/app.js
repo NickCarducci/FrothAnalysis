@@ -230,9 +230,7 @@ class App extends React.Component {
                 <a href="https://fred.stlouisfed.org/graph/?g=LmzU">
                   GDP/hour-GDP/p
                 </a>{" "}
-                productive-efficiency. growth means cap rent by units, not price
-                <br />
-                -GDP/p tech adv. now
+                productive-efficiency. growth means -GDP/p tech adv. now
               </div>
             </div>
           </div>
@@ -243,6 +241,14 @@ class App extends React.Component {
               position: "relative"
             }}
           >
+            <div style={{ width: "max-content", maxWidth: "100%" }}>
+              cap rent by units, not price. not operational monopoly investment
+              for inefficient (material+rent)/income poverty decline for
+              inequality and national-bond ($170t good will cornering/$2t donee
+              checking state-lands' exploratory-rights) prosperity.
+              {/**david mccormick */} Truncated Production Tax for <br />
+              Free rider mutable and non-entrenched juris.
+            </div>
             {this.props.pathname === "/work" ? (
               <div>
                 we have half unemployment to population than when you were our
