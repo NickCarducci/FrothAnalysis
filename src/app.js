@@ -94,7 +94,7 @@ class App extends React.Component {
       clearTimeout(this.check);
       const check = () => {
         if (this.props.pathname === "/") {
-        } else if (this.props.pathname === "/hadley") {
+        } else if (["/hadley", "/physics"].includes(this.props.pathname)) {
           this.setState({ openTopic: "Masks & Physics" });
           //window.scroll(0, this.polio.current.offsetTop);
         }
