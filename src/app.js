@@ -177,7 +177,7 @@ class App extends React.Component {
                   src={
                     this.state.settleDropboxFree
                       ? ""
-                      : "https://www.dl.dropboxusercontent.com/s/oi43wpcc0h9phcz/saverAcorn%20%281%29.png?dl=0"
+                      : "https://www.dropbox.com/s/oi43wpcc0h9phcz/saverAcorn%20%281%29.png?raw=1"
                   }
                 />
                 <div style={{ padding: "6px 10px", color: "black" }}>
@@ -340,7 +340,7 @@ class App extends React.Component {
                       src={
                         this.props.settleDropboxFree
                           ? ""
-                          : "https://www.dl.dropboxusercontent.com/s/ohyyc9wensqjmar/interest%20dead%20weight%20%282%29.png?dl=0"
+                          : "https://www.dropbox.com/s/ohyyc9wensqjmar/interest%20dead%20weight%20%282%29.png?raw=1"
                       }
                       alt="err"
                     />
@@ -352,7 +352,7 @@ class App extends React.Component {
                         src={
                           this.props.settleDropboxFree
                             ? ""
-                            : "https://www.dl.dropboxusercontent.com/s/027c9fnbex54vv5/jewishdebt.jpeg?dl=0"
+                            : "https://www.dropbox.com/s/027c9fnbex54vv5/jewishdebt.jpeg?raw=1"
                         }
                         alt="The Talmud dwells on Ezekiel's condemnation of charging interest. The Torah and Talmud encourage lending money without interest. But the halakha (Jewish law) that prescribes interest-free loans applies only to loans made to other Jews. Jewish law allows making loans with interest to persons who are not Jewish."
                       />
@@ -363,7 +363,7 @@ class App extends React.Component {
                         src={
                           this.props.settleDropboxFree
                             ? ""
-                            : "https://www.dl.dropboxusercontent.com/s/q06z0f1a8irozfx/Screen%20Shot%202021-01-27%20at%2012.59.30%20AM.png?dl=0"
+                            : "https://www.dropbox.com/s/q06z0f1a8irozfx/Screen%20Shot%202021-01-27%20at%2012.59.30%20AM.png?raw=1"
                         }
                         alt="Wiki hypocrit checkmate"
                       />
@@ -463,7 +463,7 @@ class App extends React.Component {
                     src={
                       this.props.settleDropboxFree
                         ? ""
-                        : "https://www.dl.dropboxusercontent.com/s/b3ywv62waw7rccp/1800%20taxation.jpeg?dl=0"
+                        : "https://www.dropbox.com/s/b3ywv62waw7rccp/1800%20taxation.jpeg?raw=1"
                     }
                   />
                 </div>
@@ -1051,7 +1051,7 @@ class App extends React.Component {
                       src={
                         this.state.iosNoPhoto
                           ? ""
-                          : "https://www.dl.dropboxusercontent.com/s/06e2iibx0mirkng/1937%20notice.jpeg?dl=0"
+                          : "https://www.dropbox.com/s/06e2iibx0mirkng/1937%20notice.jpeg?raw=1"
                       }
                       float="left"
                       title="general revenue asset sales inception 1937 SSA market concentration, by dollar, over labor costs"
@@ -1140,7 +1140,7 @@ class App extends React.Component {
                       src={
                         this.state.iosNoPhoto
                           ? ""
-                          : "https://www.dl.dropboxusercontent.com/s/w7he0a3gqtpt3jn/ssa%20general%20revenue.jpeg?dl=0"
+                          : "https://www.dropbox.com/s/w7he0a3gqtpt3jn/ssa%20general%20revenue.jpeg?raw=1"
                       }
                       float="left"
                       title="https://www.ssa.gov/OACT/TRSUM/2020/tr20summary.pdf#page=17"
@@ -1262,7 +1262,7 @@ class App extends React.Component {
                       src={
                         this.state.settleDropboxFree
                           ? ""
-                          : "https://www.dl.dropboxusercontent.com/s/a1vy0q7ahbrlduf/globe%20weather%20system.jpeg?dl=0"
+                          : "https://www.dropbox.com/s/a1vy0q7ahbrlduf/globe%20weather%20system.jpeg?raw=1"
                       }
                     />
                     weather systems are from heat which is really density from
@@ -1280,7 +1280,7 @@ class App extends React.Component {
                       src={
                         this.state.settleDropboxFree
                           ? ""
-                          : "https://www.dl.dropboxusercontent.com/s/fm92t9anyr47j2t/goldberg.jpeg?dl=0"
+                          : "https://www.dropbox.com/s/fm92t9anyr47j2t/goldberg.jpeg?raw=1"
                       }
                     />
                     <div style={{ width: "100%", wordBreak: "break-all" }}>
@@ -1386,7 +1386,7 @@ class App extends React.Component {
                     src={
                       this.state.settleDropboxFree
                         ? ""
-                        : "https://www.dl.dropboxusercontent.com/s/21qr4z03x0itzrg/surgicalmaskwarning.jpeg?dl=0"
+                        : "https://www.dropbox.com/s/21qr4z03x0itzrg/surgicalmaskwarning.jpeg?raw=1"
                     }
                     alt="surgical masks only stop spittle which on average travels no more than 1 foot during non-quited talking"
                   />
@@ -1395,7 +1395,7 @@ class App extends React.Component {
                     src={
                       this.state.settleDropboxFree
                         ? ""
-                        : "https://www.dl.dropboxusercontent.com/s/xrxzi5oexmizg8a/n95maskbox.jpeg?dl=0"
+                        : "https://www.dropbox.com/s/xrxzi5oexmizg8a/n95maskbox.jpeg?raw=1"
                     }
                     alt="n95 masks/gas masks stop aerosols"
                   />
@@ -1404,7 +1404,7 @@ class App extends React.Component {
                     src={
                       this.state.settleDropboxFree
                         ? ""
-                        : "https://www.dl.dropboxusercontent.com/s/00cuqd9k6zts7vv/salonmaskeffect.jpg?dl=0"
+                        : "https://www.dropbox.com/s/00cuqd9k6zts7vv/salonmaskeffect.jpg?raw=1"
                     }
                     alt="Absence of Apparent Transmission of SARS-CoV-2 from Two Stylists After Exposure at a Hair Salon with a Universal Face Covering Policy — Springfield, Missouri, May 2020"
                   />
@@ -1413,7 +1413,7 @@ class App extends React.Component {
                     src={
                       this.state.settleDropboxFree
                         ? ""
-                        : "https://www.dl.dropboxusercontent.com/s/5xwv1ieiqopdib3/abc_cdc.jpeg?dl=0"
+                        : "https://www.dropbox.com/s/5xwv1ieiqopdib3/abc_cdc.jpeg?raw=1"
                     }
                     alt="When COVID-19 is reported as a cause of death on the death certificate, it is coded and counted as a death due to COVID-19..."
                   />
@@ -1422,7 +1422,7 @@ class App extends React.Component {
                     src={
                       this.state.settleDropboxFree
                         ? ""
-                        : "https://www.dl.dropboxusercontent.com/s/xemvtyyx9vy7siu/macrotrendsdeathratesnapshot.jpeg?dl=0"
+                        : "https://www.dropbox.com/s/xemvtyyx9vy7siu/macrotrendsdeathratesnapshot.jpeg?raw=1"
                     }
                     alt="US deaths have been trending up since 2013"
                   />
@@ -1431,7 +1431,7 @@ class App extends React.Component {
                 src={
                   this.state.settleDropboxFree
                     ? ""
-                    : "https://www.dl.dropboxusercontent.com/s/amd4iuusdt3tetn/allcause.png?dl=0"
+                    : "https://www.dropbox.com/s/amd4iuusdt3tetn/allcause.png?raw=1"
                 }
                 alt="Fluid-filled lung season comparison"
               />*/}
@@ -1440,7 +1440,7 @@ class App extends React.Component {
                     src={
                       this.state.settleDropboxFree
                         ? ""
-                        : "https://www.dl.dropboxusercontent.com/s/twqrwxr85km8ctu/Screen%20Shot%202021-01-06%20at%2012.10.28%20AM.png?dl=0"
+                        : "https://www.dropbox.com/s/twqrwxr85km8ctu/Screen%20Shot%202021-01-06%20at%2012.10.28%20AM.png?raw=1"
                     }
                     alt="Fluid-filled lung season comparison"
                   />
@@ -1449,7 +1449,7 @@ class App extends React.Component {
                     src={
                       this.state.settleDropboxFree
                         ? ""
-                        : "https://www.dl.dropboxusercontent.com/s/y9b0g6bjcrt6naw/spanishflu.jpeg?dl=0"
+                        : "https://www.dropbox.com/s/y9b0g6bjcrt6naw/spanishflu.jpeg?raw=1"
                     }
                     alt="Spanish flu historical notion of larger second wave fourfold"
                   />
@@ -1625,7 +1625,7 @@ class App extends React.Component {
                       src={
                         this.state.settleDropboxFree
                           ? ""
-                          : "https://www.dl.dropboxusercontent.com/s/zu3gxwmh34ui7aq/Electron%20infection%20covid%20microscope.png?dl=0"
+                          : "https://www.dropbox.com/s/zu3gxwmh34ui7aq/Electron%20infection%20covid%20microscope.png?raw=1"
                       }
                     />
                     <br />
@@ -1652,7 +1652,7 @@ class App extends React.Component {
                       src={
                         this.state.settleDropboxFree
                           ? ""
-                          : "https://www.dl.dropboxusercontent.com/s/2jmslkl1zf0lg3s/virus%20frontiers%20young%20minds.jpeg?dl=0"
+                          : "https://www.dropbox.com/s/2jmslkl1zf0lg3s/virus%20frontiers%20young%20minds.jpeg?raw=1"
                       }
                     />
                   </div>
@@ -1912,7 +1912,7 @@ class App extends React.Component {
                     src={
                       this.state.settleDropboxFree
                         ? ""
-                        : "https://www.dl.dropboxusercontent.com/s/yhtm030usfcmivy/feces.jpeg?dl=0"
+                        : "https://www.dropbox.com/s/yhtm030usfcmivy/feces.jpeg?raw=1"
                     }
                   />
                   {/*<TwitterTweetEmbed
@@ -2395,7 +2395,7 @@ We aren’t even sure if virons are merely harmless byproducts and bacteria caus
                       src={
                         this.state.settleDropboxFree
                           ? ""
-                          : "https://www.dl.dropboxusercontent.com/s/9v12zzy9m60b5tu/Millenials%20goldman%20sachs.png?dl=0"
+                          : "https://www.dropbox.com/s/9v12zzy9m60b5tu/Millenials%20goldman%20sachs.png?raw=1"
                       }
                     />
                     There are 56m 65+ usually 40m, now&nbsp;
@@ -2579,7 +2579,7 @@ We aren’t even sure if virons are merely harmless byproducts and bacteria caus
                       src={
                         this.state.settleDropboxFree
                           ? ""
-                          : "https://www.dl.dropboxusercontent.com/s/3x1tzkgciseaa05/duress%20average%20weekly%20earnings.jpeg?dl=0"
+                          : "https://www.dropbox.com/s/3x1tzkgciseaa05/duress%20average%20weekly%20earnings.jpeg?raw=1"
                       }
                       alt="logging, mining and finance greatest hourly earnings"
                     />
