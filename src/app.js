@@ -182,6 +182,15 @@ class App extends React.Component {
                 />
                 <div style={{ padding: "6px 10px", color: "black" }}>
                   <a href="https://saverparty.xyz">SaverParty.xyz</a>
+                  <br />
+                  <a
+                    href="https://2024nj.com/carducci"
+                    style={{
+                      textDecoration: "none"
+                    }}
+                  >
+                    2024nj.com/carducci
+                  </a>
                 </div>
               </div>
               <Link
@@ -224,13 +233,29 @@ class App extends React.Component {
               >
                 Interest / Debt
               </Link>
-              <div style={{ width: "max-content" }}>
-                target margin donee duress beyond mvp;
+              <div
+                style={{
+                  padding: "6px 10px",
+                  backgroundColor: "rgba(0,0,0,.1)"
+                }}
+              >
+                <a
+                  href="https://commie.dev"
+                  style={{
+                    textDecoration: "none"
+                  }}
+                >
+                  Commie.dev
+                </a>
                 <br />
-                <a href="https://fred.stlouisfed.org/graph/?g=LmzU">
-                  GDP/hour-GDP/p
-                </a>{" "}
-                productive-efficiency. growth means -GDP/p tech adv. now
+                <a
+                  href="https://2024nj.com/carducci"
+                  style={{
+                    textDecoration: "none"
+                  }}
+                >
+                  2024nj.com/carducci
+                </a>
               </div>
             </div>
           </div>
@@ -241,10 +266,16 @@ class App extends React.Component {
               position: "relative"
             }}
           >
-            <h2>
-              Saver-dollar v bond donee getting in the way of land exploration
-            </h2>
             <div style={{ width: "max-content", maxWidth: "100%" }}>
+              target margin donee duress beyond mvp;
+              <br />
+              <a href="https://fred.stlouisfed.org/graph/?g=LmzU">
+                GDP/hour-GDP/p
+              </a>{" "}
+              productive-efficiency. growth means -GDP/p tech adv. now
+              <h2>
+                Saver-dollar v bond donee getting in the way of land exploration
+              </h2>
               cap rent by units, not price. not operational monopoly investment
               for inefficient (material+rent)/income poverty decline for
               inequality and national-bond ($170t good will cornering/$2t donee
@@ -1130,7 +1161,7 @@ class App extends React.Component {
                       maxWidth: "calc(100% - 15px)"
                     }}
                   >
-                    <Cable
+                    {/* <Cable
                       style={{
                         height: "auto",
                         width: "100%"
@@ -1150,7 +1181,19 @@ class App extends React.Component {
                         this.state.scrollTop + window.innerHeight
                       }
                       scrollTop={this.state.scrollTop}
-                    />
+                    />*/}
+                    <a
+                      href="https://2024nj.com/ssa"
+                      style={{
+                        width: "100%",
+                        padding: "10px",
+                        lineHeight: "40px",
+                        backgroundColor: "black",
+                        color: "white"
+                      }}
+                    >
+                      Social Security Book
+                    </a>
                     <div>
                       <a href="https://www.ssa.gov/OACT/TRSUM/2020/tr20summary.pdf#page=17">
                         2020 Medicare revenue/44% asset sales,
