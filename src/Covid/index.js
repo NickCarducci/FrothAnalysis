@@ -509,7 +509,7 @@ class CovidStuff extends React.Component {
             src={
               this.props.settleDropboxFree
                 ? ""
-                : "https://www.dl.dropboxusercontent.com/s/2ii69nnw5kc4toh/1800%20pop%20growth.jpeg?dl=0"
+                : "https://www.dropbox.com/s/2ii69nnw5kc4toh/1800%20pop%20growth.jpeg?raw=1"
             }
           />
         </div>
@@ -519,7 +519,7 @@ class CovidStuff extends React.Component {
           src={
             this.props.settleDropboxFree
               ? ""
-              : "https://www.dl.dropboxusercontent.com/s/viywk9c9s87ktd5/death%20rate%20youth%201900.jpeg?dl=0"
+              : "https://www.dropbox.com/s/viywk9c9s87ktd5/death%20rate%20youth%201900.jpeg?raw=1"
           }
         />
         <img
@@ -528,7 +528,7 @@ class CovidStuff extends React.Component {
           src={
             this.props.settleDropboxFree
               ? ""
-              : "https://www.dl.dropboxusercontent.com/s/lvo3drdp3amxlva/Screen%20Shot%202021-08-16%20at%204.24.43%20AM.png?dl=0"
+              : "https://www.dropbox.com/s/lvo3drdp3amxlva/Screen%20Shot%202021-08-16%20at%204.24.43%20AM.png?raw=1"
           }
         />
         <img
@@ -537,7 +537,7 @@ class CovidStuff extends React.Component {
           src={
             this.props.settleDropboxFree
               ? ""
-              : "https://www.dl.dropboxusercontent.com/s/ksgevghqmyc7t6u/us%20southern%20migration.jpeg?dl=0"
+              : "https://www.dropbox.com/s/ksgevghqmyc7t6u/us%20southern%20migration.jpeg?raw=1"
           }
         />
         <div
@@ -557,7 +557,7 @@ class CovidStuff extends React.Component {
           src={
             this.props.settleDropboxFree
               ? ""
-              : "https://www.dl.dropboxusercontent.com/s/3lmwgcqcvrj1gx2/Projected%20mortality%20census.png?dl=0"
+              : "https://www.dropbox.com/s/3lmwgcqcvrj1gx2/Projected%20mortality%20census.png?raw=1"
           }
         />
         <div
