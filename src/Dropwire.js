@@ -208,22 +208,9 @@ class Cable extends React.Component {
           width: optionalwidth
         }}
       >
-        {src === "" || (!img && !mount) ? (
+        {src === "" ? (
           <span style={{ border: "2px gray solid" }}>{title}</span>
-        ) : img ? (
-          <img
-            onError={onError}
-            alt={title}
-            style={{
-              position: "relative",
-              border: src === "" ? "2px gray solid" : 0,
-              height: Style && !isNaN(Style.width) ? "auto" : optionalheight,
-              width: Style && !isNaN(Style.height) ? "auto" : optionalwidth
-            }}
-            ref={this.props.fwd}
-            src={src}
-          />
-        ) : (
+        ) : !img ? (
           <iframe
             onLoad={onLoad}
             onError={onError}
@@ -238,6 +225,21 @@ class Cable extends React.Component {
             src={src}
             iframe={{ ...this.props.iframe }}
           />
+        ) : mount ? (
+          <img
+            onError={onError}
+            alt={title}
+            style={{
+              position: "relative",
+              border: src === "" ? "2px gray solid" : 0,
+              height: Style && !isNaN(Style.width) ? "auto" : optionalheight,
+              width: Style && !isNaN(Style.height) ? "auto" : optionalwidth
+            }}
+            ref={this.props.fwd}
+            src={src}
+          />
+        ) : (
+          <span style={{ border: "2px gray solid" }}>{title}</span>
         )}
       </div>
     );
