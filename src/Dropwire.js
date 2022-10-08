@@ -67,57 +67,58 @@ class Cable extends React.Component {
           console.log("loaded");
           var initheight = this.state.optionalheight,
             initwidth = this.state.optionalwidth;
-          this.setState(
-            {
-              optionalheight: 0,
-              optionalwidth: 0,
-              firstheight:
-                this.props.fwd &&
-                this.props.fwd.current &&
-                this.props.fwd.current.offsetHeight,
-              firstwidth:
-                this.props.fwd &&
-                this.props.fwd.current &&
-                this.props.fwd.current.offsetWidth
-            },
-            () => {
-              if (![200, "auto"].includes(initwidth)) {
-                //console.log(this.state.firstheight);
-                var targetheight =
-                  //initheight !== "auto" ?
-                  this.state.firstheight;
-                // : 376;
+          clearTimeout(this.dyntime3);
+          this.dyntime3 = setTimeout(() => {
+            this.setState(
+              {
+                optionalheight: 0,
+                optionalwidth: 0,
+                firstheight:
+                  this.props.fwd &&
+                  this.props.fwd.current &&
+                  this.props.fwd.current.offsetHeight,
+                firstwidth:
+                  this.props.fwd &&
+                  this.props.fwd.current &&
+                  this.props.fwd.current.offsetWidth
+              },
+              () => {
+                if (![200, "auto"].includes(initwidth)) {
+                  //console.log(this.state.firstheight);
+                  var targetheight =
+                    //initheight !== "auto" ?
+                    this.state.firstheight;
+                  // : 376;
 
-                this.dyntime = setInterval(() => {
-                  if (this.state.optionalheight > targetheight)
-                    clearInterval(this.dyntime);
-                  this.setState({
-                    optionalheight: this.state.optionalheight + 3
-                  });
-                }, 10);
-              } else this.setState({ optionalheight: initheight });
+                  this.dyntime = setInterval(() => {
+                    if (this.state.optionalheight > targetheight)
+                      clearInterval(this.dyntime);
+                    this.setState({
+                      optionalheight: this.state.optionalheight + 3
+                    });
+                  }, 10);
+                } else this.setState({ optionalheight: initheight });
 
-              var targetwidth =
-                //initwidth !== "auto"?
-                this.state.firstwidth;
-              //: window.innerWidth;
-              if (!["auto"].includes(initheight)) {
-                this.dyntime2 = setInterval(() => {
-                  if (this.state.optionalwidth > targetwidth)
-                    clearInterval(this.dyntime2);
-                  this.setState({
-                    optionalwidth: this.state.optionalwidth + 3
-                  });
-                }, 10);
-              } else this.setState({ optionalwidth: initwidth });
-            }
-          );
+                var targetwidth =
+                  //initwidth !== "auto"?
+                  this.state.firstwidth;
+                //: window.innerWidth;
+                if (!["auto"].includes(initheight)) {
+                  this.dyntime2 = setInterval(() => {
+                    if (this.state.optionalwidth > targetwidth)
+                      clearInterval(this.dyntime2);
+                    this.setState({
+                      optionalwidth: this.state.optionalwidth + 3
+                    });
+                  }, 10);
+                } else this.setState({ optionalwidth: initwidth });
+              }
+            );
+          }, 1000);
         } else {
           this.setState({
             optionalheight: this.state.initheight,
-            optionalwidth: this.state.initwidth,
-            firstheight: null,
-            firstwidth: null
+            optionalwidth: this.state.initwidth
           });
         }
       });
@@ -132,6 +133,7 @@ class Cable extends React.Component {
   };
   componentWillUnmount = () => {
     clearInterval(this.dyntime);
+    clearTimeout(this.dyntime3);
     clearInterval(this.dyntime2);
     clearTimeout(this.setset);
   };
