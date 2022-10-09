@@ -5,7 +5,7 @@ class Cable extends React.Component {
     super(props);
     const { style: S } = props;
     var initheight =
-        (!S || !isNaN(S.width)) && isNaN(S.height) ? "auto" : S.height,
+        !S || (!isNaN(S.width) && isNaN(S.height)) ? "auto" : S.height,
       initwidth =
         !S || !isNaN(S.height) ? "auto" : !isNaN(S.width) ? 200 : S.width;
     this.state = {
