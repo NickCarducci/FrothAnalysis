@@ -572,6 +572,8 @@ class Startup extends React.Component {
               backgroundColor: "rgba(250,250,250,.6)"
             }}
           >
+            max: ${shortNumber(this.state.highpop * 1000000000)}
+            <br />
             Startup -&nbsp;
             <br />
             <div
@@ -586,8 +588,6 @@ class Startup extends React.Component {
               {new Date(this.state.lowDate).toLocaleDateString()}&nbsp;
               {new Date(this.state.highDate).toLocaleDateString()}
             </div>
-            <br />
-            max: {shortNumber(this.state.highpop * 1000000000)}
           </div>
           <svg
             className="all"
