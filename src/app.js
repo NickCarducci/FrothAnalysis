@@ -1040,6 +1040,7 @@ class App extends React.Component {
                       maxWidth: "550px"
                     }}
                   >
+                    <a href="https://www.bea.gov/itable/">National tables</a>
                     {this.state.width && (
                       <PCE
                         lastWidth={Math.min(550, this.state.width) - 150}
@@ -3025,3 +3026,4 @@ export default withRouter(App);
   />
   {/*</div>
     </div>*/
+
